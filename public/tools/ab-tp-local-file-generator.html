@@ -1,0 +1,382 @@
+<!-- ABAdvisory Group LLP — TP Local File Generator (OECD Format) v2.0 -->
+<div class="tlf-root">
+<style>
+.tlf-root,.tlf-root *,.tlf-root *::before,.tlf-root *::after{box-sizing:border-box;margin:0;padding:0}
+.tlf-root{--g:#22430c;--gd:#162d06;--gm:#2e5510;--gold:#e6b91e;--gdd:#b89014;--gs:#f0d168;--gol:rgba(230,185,30,0.12);--bg:#f7f1e0;--bg2:#ede4cc;--paper:#fcf7e9;--ink:#22430c;--ink2:#4a5e35;--ink3:#7a866a;--line:#d6cba8;--ls:#b3a684;--err:#8a2a1f;--ok:#4a6b2a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);padding:24px 14px;border-radius:4px;max-width:1100px;margin:0 auto;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse 80% 50% at 15% 0%,rgba(230,185,30,0.08) 0%,transparent 60%)}
+@media(min-width:700px){.tlf-root{padding:32px 28px}}
+.tlf-hdr{background:var(--g);color:var(--paper);padding:18px 22px;border-radius:3px;margin-bottom:22px;position:relative;overflow:hidden}.tlf-hdr::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent)}.tlf-hdr-ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-family:ui-monospace,monospace}.tlf-hdr-t{font-family:Georgia,serif;font-size:24px;font-weight:500;letter-spacing:-.5px;line-height:1.15}.tlf-hdr-t em{font-style:italic;color:var(--gs);font-weight:300}.tlf-hdr-sub{font-size:12.5px;color:rgba(252,247,233,.75);margin-top:6px}
+.tlf-card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px;margin-bottom:14px;box-shadow:0 1px 0 rgba(34,67,12,.02),0 6px 18px -12px rgba(34,67,12,.1)}
+.tlf-sl{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:12px}.tlf-sl .n{color:var(--gdd);font-weight:500}
+.tlf-h3{font-family:Georgia,serif;font-size:18px;font-weight:400;color:var(--g);margin-bottom:8px;letter-spacing:-.2px}.tlf-h3 em{font-style:italic;color:var(--gdd)}
+.tlf-prose{font-size:13.5px;color:var(--ink2);line-height:1.6}.tlf-prose p{margin-bottom:8px}.tlf-prose strong{color:var(--g);font-weight:600}
+.tlf-disc{border-left:3px solid var(--gold)}.tlf-ack{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--gold);border-radius:2px;cursor:pointer;margin-top:14px}.tlf-ack input{margin-top:3px;cursor:pointer}.tlf-ack label{font-size:13px;color:var(--g);font-weight:500;cursor:pointer;flex:1}
+.tlf-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.tlf-col{flex:1;min-width:180px}.tlf-field{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}.tlf-lbl{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}.tlf-inp,.tlf-ta{font-family:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);background:white;border-radius:2px;color:var(--ink);outline:none;transition:border-color .15s;width:100%}.tlf-ta{resize:vertical;min-height:80px;line-height:1.5}.tlf-inp:focus,.tlf-ta:focus{border-color:var(--g);box-shadow:inset 0 0 0 1px var(--g)}
+.tlf-sec{background:var(--paper);border:1px solid var(--line);border-radius:3px;margin-bottom:10px;overflow:hidden}.tlf-sec.tlf-filled{border-color:var(--ls)}.tlf-sec-head{padding:14px 18px;background:var(--bg2);cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .15s}.tlf-sec-head:hover{background:var(--line)}.tlf-sec.tlf-open .tlf-sec-head{background:var(--g);color:var(--paper)}.tlf-sec.tlf-open .tlf-sec-head .tlf-sec-t{color:var(--paper)}.tlf-sec.tlf-open .tlf-sec-head .tlf-sec-m{color:rgba(252,247,233,.65)}.tlf-sec.tlf-open .tlf-sec-head .tlf-chev{color:var(--gold);transform:rotate(90deg)}.tlf-sec-tw{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.tlf-sec-t{font-family:Georgia,serif;font-size:15.5px;font-weight:500;color:var(--g);letter-spacing:-.2px}.tlf-sec-m{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}.tlf-chev{font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--gdd);transition:transform .2s;flex-shrink:0}.tlf-dot{width:8px;height:8px;border-radius:50%;background:var(--ls);flex-shrink:0}.tlf-sec.tlf-filled .tlf-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(230,185,30,.18)}.tlf-sec-body{padding:20px 22px;display:none}.tlf-sec.tlf-open .tlf-sec-body{display:block}
+.tlf-item{margin-bottom:20px;padding-bottom:18px;border-bottom:1px dashed var(--line)}.tlf-item:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}.tlf-item-l{font-family:Georgia,serif;font-size:15px;font-weight:500;color:var(--g);margin-bottom:4px}.tlf-item-h{font-size:12.5px;color:var(--ink3);margin-bottom:8px;line-height:1.5}
+.tlf-tbl-wrap{overflow-x:auto;margin-top:6px}.tlf-tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:480px}.tlf-tbl th,.tlf-tbl td{padding:6px 8px;border:1px solid var(--line);vertical-align:top}.tlf-tbl thead th{background:var(--bg2);font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:500;text-align:left}.tlf-tbl input{width:100%;border:1px solid transparent;background:transparent;padding:5px 6px;font-family:inherit;font-size:12.5px;color:var(--ink);outline:none}.tlf-tbl input:focus{border-color:var(--g);background:white;box-shadow:inset 0 0 0 1px var(--g)}.tlf-tbl td.tlf-act{width:50px;text-align:center;background:var(--bg2)}.tlf-rm{background:none;border:1px solid var(--line);color:var(--err);padding:2px 8px;font-size:10px;cursor:pointer;border-radius:2px;font-family:ui-monospace,monospace}.tlf-rm:hover{border-color:var(--err);background:rgba(138,42,31,.06)}
+.tlf-img-block{border:1.5px dashed var(--ls);padding:14px;border-radius:2px;background:var(--bg2)}.tlf-img-empty{text-align:center;padding:18px 10px;cursor:pointer;color:var(--ink3)}.tlf-img-empty:hover{color:var(--g)}.tlf-img-icon{font-family:Georgia,serif;font-size:30px;color:var(--gdd);font-style:italic;display:block;margin-bottom:4px}.tlf-img-preview{display:flex;flex-direction:column;gap:8px}.tlf-img-preview img{max-width:100%;max-height:240px;object-fit:contain;background:white;border:1px solid var(--line);border-radius:2px}.tlf-img-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.tlf-img-cap{flex:1;min-width:160px;border:1px solid var(--line);padding:6px 8px;font-family:inherit;font-size:12.5px;background:white;border-radius:2px;color:var(--ink);outline:none}.tlf-img-cap:focus{border-color:var(--g)}
+.tlf-prompt-card{background:linear-gradient(135deg,rgba(34,67,12,.04),rgba(230,185,30,.06));border:1px solid var(--gold);border-radius:3px;padding:16px 18px;margin:16px 0;position:relative;overflow:hidden}.tlf-prompt-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold)}.tlf-prompt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;cursor:pointer;user-select:none}.tlf-prompt-badge{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gdd);display:flex;align-items:center;gap:8px}.tlf-prompt-badge::before{content:"✦";font-size:14px;color:var(--gold)}.tlf-prompt-toggle{font-size:12px;color:var(--gdd);background:rgba(230,185,30,.15);border:1px solid var(--gold);padding:4px 10px;border-radius:2px;cursor:pointer;font-family:ui-monospace,monospace;letter-spacing:.06em}.tlf-prompt-toggle:hover{background:rgba(230,185,30,.25)}.tlf-prompt-body{display:none}.tlf-prompt-card.tlf-prompt-open .tlf-prompt-body{display:block}.tlf-prompt-how{font-size:12px;color:var(--ink2);margin-bottom:10px;line-height:1.6;padding:10px 12px;background:rgba(252,247,233,.6);border-radius:2px}.tlf-prompt-how strong{color:var(--g)}.tlf-prompt-text{background:white;border:1px solid var(--line);border-radius:2px;padding:14px 16px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.65;color:var(--ink);white-space:pre-wrap;max-height:300px;overflow-y:auto}.tlf-prompt-text .tlf-ph{background:rgba(230,185,30,.18);padding:1px 4px;border-radius:2px;color:var(--gdd);font-weight:500}.tlf-prompt-copy{margin-top:10px;padding:8px 16px;background:var(--g);color:var(--paper);border:none;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;cursor:pointer;border-radius:2px;display:inline-flex;align-items:center;gap:8px}.tlf-prompt-copy:hover{background:var(--gd)}.tlf-prompt-copy.tlf-copied{background:var(--ok)}.tlf-prompt-note{font-size:11px;color:var(--ink3);margin-top:8px;font-style:italic}
+.tlf-cta{background:var(--g);border-radius:3px;padding:18px 20px;margin:18px 0;position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;flex-wrap:wrap}.tlf-cta::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.6}.tlf-cta-text{flex:1;min-width:200px}.tlf-cta-ey{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}.tlf-cta-t{font-family:Georgia,serif;font-size:16px;font-weight:500;color:var(--paper);margin-bottom:4px}.tlf-cta-t em{font-style:italic;color:var(--gs);font-weight:300}.tlf-cta-sub{font-size:12px;color:rgba(252,247,233,.7)}.tlf-cta-btn{padding:10px 20px;background:var(--gold);color:var(--g);border:none;font-family:Georgia,serif;font-size:13px;font-weight:600;cursor:pointer;border-radius:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}.tlf-cta-btn:hover{background:var(--gs)}.tlf-cta-btn .tlf-arr{font-style:italic;font-size:16px}
+.tlf-btn{padding:10px 18px;background:var(--g);color:var(--paper);border:none;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:background .15s}.tlf-btn:hover:not(:disabled){background:var(--gd)}.tlf-btn:disabled{opacity:.4;cursor:not-allowed}.tlf-btn .tlf-arr{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--gold)}.tlf-btn-s{background:transparent;color:var(--g);border:1px solid var(--ls)}.tlf-btn-s:hover:not(:disabled){background:var(--bg2);border-color:var(--g)}.tlf-btn-m{padding:6px 10px;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;background:var(--bg2);border:1px solid var(--line);color:var(--ink2);cursor:pointer}.tlf-btn-m:hover{border-color:var(--g);color:var(--g);background:white}
+.tlf-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tlf-toolbar{position:sticky;top:0;z-index:10;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;padding:12px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 18px -14px rgba(34,67,12,.18)}.tlf-toolbar-left{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.tlf-toolbar-st{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}.tlf-toolbar-st strong{color:var(--gdd);font-weight:600}
+.tlf-pill{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--g);background:var(--bg2);border:1px solid var(--line);padding:4px 9px;border-radius:2px}.tlf-pill-g{background:var(--gol);border-color:var(--gold);color:var(--gdd)}
+.tlf-footer{margin-top:28px;padding:22px 20px;background:var(--g);color:var(--paper);border-radius:3px;text-align:center;position:relative;overflow:hidden}.tlf-footer::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.7}.tlf-footer-ey{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}.tlf-footer-n{font-family:Georgia,serif;font-size:19px;font-weight:500;margin-bottom:4px}.tlf-footer-n em{font-style:italic;color:var(--gold);font-weight:300}.tlf-footer-tag{font-size:12.5px;color:rgba(252,247,233,.75);font-style:italic;font-family:Georgia,serif}
+.tlf-msg{padding:12px 16px;font-size:13px;margin:12px 0;border-radius:2px;display:none}.tlf-msg.tlf-show{display:block}.tlf-err{background:rgba(138,42,31,.06);border-left:3px solid var(--err);color:var(--err)}.tlf-ok-m{background:rgba(74,107,42,.08);border-left:3px solid var(--ok);color:var(--ok)}.tlf-hidden{display:none!important}
+</style>
+
+<div class="tlf-hdr">
+  <div class="tlf-hdr-ey">ABAdvisory Group LLP · Free Utility</div>
+  <div class="tlf-hdr-t">TP Local File <em>Generator.</em></div>
+  <div class="tlf-hdr-sub">OECD BEPS Action 13 format — practical report structure with AI prompt suggestions</div>
+</div>
+
+<div class="tlf-card tlf-disc" id="tlf-disc">
+  <div class="tlf-sl"><span class="n">00</span> Disclaimer</div>
+  <div class="tlf-prose">
+    <p>This tool structures your inputs into a Word document following the OECD BEPS Action 13 Local File format. AI prompt suggestions are provided for key sections — prompts are copied to your clipboard for use in your own AI tool (Claude, ChatGPT). <strong>No data leaves your device.</strong></p>
+    <p>ABAdvisory Group LLP makes no warranty as to the accuracy or fitness of the output and shall not be liable for any loss arising from reliance. The user is responsible for all substance.</p>
+  </div>
+  <div class="tlf-ack" id="tlf-ack-w"><input type="checkbox" id="tlf-ack-c"><label for="tlf-ack-c">I accept the above and will use this as a structuring aid only.</label></div>
+  <div class="tlf-actions" style="margin-top:14px"><button class="tlf-btn" id="tlf-ack-btn" disabled>Continue <span class="tlf-arr">→</span></button></div>
+</div>
+
+<div id="tlf-tool" class="tlf-hidden">
+  <div class="tlf-toolbar">
+    <div class="tlf-toolbar-left">
+      <button class="tlf-btn-m" id="tlf-save">↓ Save (.json)</button>
+      <button class="tlf-btn-m" id="tlf-load">↑ Load (.json)</button>
+      <input type="file" id="tlf-load-f" accept=".json" style="display:none">
+      <button class="tlf-btn-m" id="tlf-clear">⟲ Clear</button>
+    </div>
+    <div class="tlf-toolbar-st"><strong id="tlf-prog">0</strong>/10 sections started</div>
+  </div>
+
+  <div class="tlf-card">
+    <div class="tlf-sl"><span class="n">01</span> Document details</div>
+    <div class="tlf-h3">Identify the <em>local entity.</em></div>
+    <div class="tlf-row"><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Local Entity Name *</div><input class="tlf-inp" id="tlf-m-entity"></div></div><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">MNE Group Name</div><input class="tlf-inp" id="tlf-m-group"></div></div></div>
+    <div class="tlf-row"><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Jurisdiction *</div><input class="tlf-inp" id="tlf-m-juris"></div></div><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Fiscal Year *</div><input class="tlf-inp" id="tlf-m-fy"></div></div><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Currency</div><input class="tlf-inp" id="tlf-m-ccy"></div></div></div>
+    <div class="tlf-row"><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Date of Preparation</div><input class="tlf-inp" id="tlf-m-date"></div></div><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Prepared By</div><input class="tlf-inp" id="tlf-m-firm" value="ABAdvisory Group LLP"></div></div><div class="tlf-col"><div class="tlf-field"><div class="tlf-lbl">Prepared For</div><input class="tlf-inp" id="tlf-m-client"></div></div></div>
+  </div>
+
+  <div id="tlf-sections"></div>
+  <div class="tlf-msg tlf-err" id="tlf-err"></div>
+  <div class="tlf-msg tlf-ok-m" id="tlf-ok"></div>
+  <div class="tlf-actions" style="margin:18px 0"><button class="tlf-btn" id="tlf-gen" style="font-size:14px;padding:14px 24px">Generate Local File (.docx) <span class="tlf-arr">→</span></button><span class="tlf-pill tlf-pill-g">Word doc · formatted · ready to file</span></div>
+</div>
+
+<div class="tlf-footer">
+  <div class="tlf-footer-ey">DEVELOPED BY</div>
+  <div class="tlf-footer-n">ABAdvisory Group <em>LLP</em></div>
+  <div class="tlf-footer-tag">Your Global Transfer Pricing Partner</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+const PROMPTS={
+  scope:`You are a transfer pricing specialist. Draft the "Scope of Report" section for an OECD Local File.
+
+Entity: [ENTITY NAME]
+MNE Group: [GROUP NAME]
+Jurisdiction: [JURISDICTION]
+Fiscal Year: [FISCAL YEAR]
+Transactions covered: [LIST THE KEY INTERCOMPANY TRANSACTIONS]
+
+Draft 200-300 words covering:
+1. Purpose of the report (OECD BEPS Action 13 compliance)
+2. Scope — which transactions and periods are covered
+3. Basis of preparation — information sources, management representations
+4. Limitations and disclaimer
+5. Confidentiality notice
+
+Professional, formal language. Reference OECD Transfer Pricing Guidelines Chapter V.`,
+
+  biz:`You are a transfer pricing specialist. Draft the "Business Overview" section for an OECD Local File.
+
+Entity: [ENTITY NAME]
+Industry: [INDUSTRY / SECTOR]
+Principal activities: [LIST MAIN ACTIVITIES]
+Products/services: [DESCRIBE]
+Key customers: [GROUP ENTITIES / THIRD PARTIES / BOTH]
+Business strategy: [e.g., expansion / cost optimisation / stable operations]
+Restructurings during year: [YES/NO — describe if yes]
+
+Draft 300-400 words covering operations, strategy, market position, and material changes. Professional language for tax authority audience.`,
+
+  far:`You are a transfer pricing specialist. Draft the "Functional Analysis" (FAR) section for an OECD Local File.
+
+Entity: [ENTITY NAME]
+Transaction: [e.g., provision of IT services to Parent]
+Value: [AMOUNT AND CURRENCY]
+Counterparty: [RELATED PARTY NAME AND JURISDICTION]
+Entity characterisation: [e.g., limited-risk service provider / routine manufacturer]
+
+Functions by entity: [LIST]
+Functions by counterparty: [LIST]
+Assets used by entity: [LIST]
+Assets used by counterparty: [LIST]
+Risks borne by entity: [LIST]
+Risks borne by counterparty: [LIST]
+
+Draft a comprehensive FAR analysis (400-600 words) covering functions, assets, risks, and characterisation conclusion. Reference OECD TPG Chapter I paragraphs 1.51-1.58 and Chapter III. Defensible language.`,
+
+  econ:`You are a transfer pricing specialist. Draft the "Economic Analysis" section for an OECD Local File.
+
+Transaction: [DESCRIBE]
+Tested party: [ENTITY NAME]
+Method: [CUP / RPM / CPM / TNMM / PSM / Other]
+PLI: [OP/OC / OP/OR / GP/Revenue / Rate of Interest / etc.]
+Database: [TP Catalyst / BvD Orbis / Capital IQ / etc.]
+Search strategy: [SIC codes, filters, exclusion criteria — briefly]
+Final comparables: [NUMBER]
+Tested party margin: [X.XX%]
+Comparable range: [LOW% to HIGH%]
+Median: [X.XX%]
+
+Draft 300-500 words covering:
+1. Method selection rationale (why selected, why alternatives rejected)
+2. Search methodology and database
+3. Screening criteria (quantitative and qualitative)
+4. Results and arm's length range
+5. Conclusion on whether tested party is at arm's length
+6. Adjustment basis if needed
+
+Reference OECD TPG Chapter II and III. Professional, defensible language.`,
+
+  industry:`You are a transfer pricing specialist. Draft the "Industry Overview" section for an OECD Local File.
+
+Entity: [ENTITY NAME]
+Industry: [INDUSTRY / SECTOR — e.g., pharmaceutical, IT services, automotive components]
+Jurisdiction: [JURISDICTION]
+
+Draft 400-600 words covering:
+1. Global industry overview — market size, key players, trends
+2. Regional / jurisdictional overview — local market dynamics specific to [JURISDICTION]
+3. Industry outlook and value drivers
+4. Regulatory and governance environment relevant to the industry
+5. Key challenges (competitive, regulatory, technological)
+6. Concluding remarks on how industry factors affect the entity's transfer pricing
+
+Use current publicly available information. Professional language suitable for tax authority review.`
+};
+
+const SECTIONS=[
+  {id:'s_abbr',title:'Abbreviations & Acronyms',meta:'Standard terms used in this report',items:[
+    {type:'text',key:'abbreviations',label:'Abbreviations and acronyms',helper:'List standard abbreviations used throughout the report (e.g., AE — Associated Enterprise, ALP — Arm\'s Length Price, FAR — Functions, Assets, Risks, MAM — Most Appropriate Method, OECD — Organisation for Economic Co-operation and Development, PLI — Profit Level Indicator, TP — Transfer Pricing, TNMM — Transactional Net Margin Method).',rows:6,
+      defaultValue:'AE — Associated Enterprise\nALP — Arm\'s Length Price\nBEPS — Base Erosion and Profit Shifting\nCUP — Comparable Uncontrolled Price Method\nCPM — Cost Plus Method\nFAR — Functions, Assets and Risks\nFY — Financial Year\nIQR — Inter-Quartile Range\nMAM — Most Appropriate Method\nMNE — Multinational Enterprise\nOECD — Organisation for Economic Co-operation and Development\nOP — Operating Profit\nOC — Operating Cost\nOR — Operating Revenue\nPLI — Profit Level Indicator\nPSM — Profit Split Method\nRPM — Resale Price Method\nTNMM — Transactional Net Margin Method\nTP — Transfer Pricing\nTPG — Transfer Pricing Guidelines'}
+  ]},
+  {id:'s_scope',title:'Scope of Report',meta:'Purpose · coverage · basis of preparation · limitations',items:[
+    {type:'text',key:'scope',label:'Scope of report',helper:'Describe the purpose, scope, basis of preparation, and limitations of this Local File.',rows:6,prompt:'scope',
+      defaultValue:'This Local File has been prepared for [ENTITY NAME] (the "Company") in accordance with the transfer pricing documentation requirements set out in Chapter V of the OECD Transfer Pricing Guidelines for Multinational Enterprises and Tax Administrations ("OECD Guidelines"), specifically Annex II (Local File).\n\nThis report covers the intercompany transactions entered into by the Company with its associated enterprises during the fiscal year [FISCAL YEAR]. The purpose of this document is to provide the local tax authority with sufficient information to evaluate the arm\'s length nature of the Company\'s controlled transactions.\n\nThe information presented herein is based on data, documents, and representations provided by the management of the Company. The preparer has not independently audited or verified the accuracy or completeness of such information.\n\nThis document is confidential and has been prepared solely for use by the Company and its advisors in connection with transfer pricing compliance. It should not be distributed or relied upon by any third party without prior written consent.'}
+  ]},
+  {id:'s_exec',title:'Executive Summary',meta:'Background · related parties · report overview · transaction summary',items:[
+    {type:'text',key:'exec_bg',label:'Background',helper:'Brief background of the Company, its role in the MNE group, and the context for this report.',rows:5},
+    {type:'table',key:'exec_rp',label:'Related parties / connected persons',helper:'List the associated enterprises with whom the Company has entered into controlled transactions.',
+      columns:[{key:'name',label:'Entity Name',width:28},{key:'jurisdiction',label:'Jurisdiction',width:16},{key:'relationship',label:'Relationship',width:22},{key:'nature',label:'Nature of Transaction',width:34}],initialRows:3},
+    {type:'text',key:'exec_overview',label:'Report overview',helper:'Briefly describe the structure and contents of this report.',rows:4},
+    {type:'table',key:'exec_txn_summary',label:'Summary of transactions analysed',helper:'Position summary for each transaction — nature, value, MAM, PLI, tested party margin, ALP range, ALP status, and key notes.',
+      columns:[{key:'nature',label:'Transaction',width:16},{key:'value',label:'Value',width:10},{key:'mam',label:'MAM',width:10},{key:'pli',label:'PLI',width:10},{key:'margin',label:'TP Margin',width:10},{key:'range',label:'ALP Range',width:12},{key:'alp',label:'At ALP?',width:8},{key:'notes',label:'Notes',width:24}],initialRows:3}
+  ]},
+  {id:'s_org',title:'Shareholding & Organisational Structure',meta:'Ownership · org chart · group entities',items:[
+    {type:'text',key:'org_shareholding',label:'Shareholding structure',helper:'Describe the ownership and shareholding structure of the Company within the MNE group.',rows:5},
+    {type:'image',key:'org_chart',label:'Organisational chart',helper:'Upload the group / local entity organisational chart.'},
+    {type:'table',key:'org_entities',label:'List of group entities',helper:'Principal entities in the MNE group.',
+      columns:[{key:'name',label:'Entity Name',width:28},{key:'jurisdiction',label:'Jurisdiction',width:18},{key:'function',label:'Principal Function',width:32},{key:'ownership',label:'Ownership %',width:12}],initialRows:3}
+  ],cta:{eyebrow:'Need help with entity characterisation?',title:'Our team structures <em>FAR analyses</em> across 40+ jurisdictions.',sub:'Entity characterisation directly impacts method selection and benchmarking outcomes.'}},
+  {id:'s_biz',title:'Business Overview',meta:'Group overview · local entity · competitors',items:[
+    {type:'text',key:'biz_group',label:'Group overview',helper:'Describe the MNE group\'s global operations, principal business lines, and geographic presence.',rows:5,prompt:'biz'},
+    {type:'text',key:'biz_local',label:'Local entity description',helper:'Describe the Company\'s specific operations, products/services, key customers, and role within the group.',rows:6},
+    {type:'text',key:'biz_competitors',label:'Key competitors',helper:'Identify the Company\'s principal competitors in its local market.',rows:3}
+  ]},
+  {id:'s_industry',title:'Industry Overview (Optional)',meta:'Global · regional · outlook · value drivers · challenges',items:[
+    {type:'text',key:'ind_global',label:'Global industry overview',helper:'Describe the global industry landscape — market size, key players, recent trends.',rows:5,prompt:'industry'},
+    {type:'text',key:'ind_regional',label:'Regional / jurisdictional overview',helper:'Describe industry dynamics specific to the Company\'s jurisdiction.',rows:4},
+    {type:'text',key:'ind_outlook',label:'Industry outlook & value drivers',helper:'Key growth drivers, emerging trends, and factors shaping industry profitability.',rows:4},
+    {type:'text',key:'ind_governance',label:'Governance & regulatory environment',helper:'Relevant regulatory and compliance landscape affecting the industry.',rows:3},
+    {type:'text',key:'ind_challenges',label:'Key challenges',helper:'Competitive, regulatory, technological, or macroeconomic challenges facing the industry.',rows:3},
+    {type:'text',key:'ind_conclusion',label:'Concluding remarks',helper:'How industry factors affect the Company\'s transfer pricing and comparability.',rows:3}
+  ]},
+  {id:'s_txns',title:'Intercompany Transactions',meta:'Description · amounts · agreements',items:[
+    {type:'text',key:'txn_desc',label:'Description of controlled transactions',helper:'Describe each material intercompany transaction — nature, flow of goods/services, payment terms.',rows:6},
+    {type:'table',key:'txn_amounts',label:'Transaction amounts by category',helper:'Summarise amounts by transaction category.',
+      columns:[{key:'category',label:'Transaction Category',width:24},{key:'counterparty',label:'Counterparty',width:22},{key:'received',label:'Received',width:14},{key:'paid',label:'Paid',width:14},{key:'nature',label:'Nature / Terms',width:26}],initialRows:3},
+    {type:'text',key:'txn_agreements',label:'Key intercompany agreements',helper:'Reference or summarise the key intercompany agreements governing the transactions.',rows:4}
+  ]},
+  {id:'s_far',title:'Functional Analysis',meta:'Functions · assets · risks · economic characterisation',items:[
+    {type:'text',key:'far_functions',label:'Functions performed',helper:'Describe the functions performed by the Company and its associated enterprises in the context of each controlled transaction.',rows:6,prompt:'far'},
+    {type:'text',key:'far_assets',label:'Assets employed',helper:'Describe the tangible and intangible assets employed by each party.',rows:5},
+    {type:'text',key:'far_risks',label:'Risks assumed',helper:'Analyse the risks assumed by each party — market risk, credit risk, inventory risk, operational risk, etc.',rows:5},
+    {type:'text',key:'far_characterisation',label:'Economic characterisation',helper:'Based on the FAR analysis, state the characterisation of the Company (e.g., limited-risk manufacturer, routine service provider, full-fledged distributor) and the rationale.',rows:5}
+  ],cta:{eyebrow:'Functional analysis support',title:'Need a robust <em>FAR framework?</em>',sub:'ABAdvisory\'s team handles FAR analyses, entity characterisation, and comparability assessments across jurisdictions.'}},
+  {id:'s_econ',title:'Economic Analysis',meta:'Method selection · benchmarking · comparables · conclusion',items:[
+    {type:'text',key:'econ_method',label:'Selection of most appropriate method and tested party',helper:'For each transaction: identify the selected TP method, explain why it is most appropriate, provide rationale for rejecting alternatives, and identify the tested party.',rows:8,prompt:'econ'},
+    {type:'text',key:'econ_benchmark',label:'Benchmarking study / comparable search',helper:'Describe the comparable search — database used, search strategy, screening criteria (quantitative and qualitative), and the final comparable set.',rows:6},
+    {type:'text',key:'econ_adjustments',label:'Comparability adjustments',helper:'Describe any adjustments made to the comparable data — working capital, accounting differences, capacity utilisation, etc.',rows:4},
+    {type:'text',key:'econ_conclusion',label:'ALP range and arm\'s length conclusion',helper:'State the arm\'s length range, the tested party\'s result, and the conclusion. If adjustment is needed, state the basis and amount.',rows:5}
+  ],cta:{eyebrow:'Benchmarking & economic analysis',title:'Need a robust comparable <em>search?</em>',sub:'ABAdvisory handles database searches, comparable screening, WC adjustments, and range computation across 40+ jurisdictions.'}},
+  {id:'s_conclusion',title:'Conclusion / Documentation Summary',meta:'Overall conclusion · documentation summary',items:[
+    {type:'text',key:'conclusion',label:'Conclusion',helper:'Summarise the overall conclusion — are the Company\'s controlled transactions at arm\'s length? Reference the results for each transaction.',rows:6}
+  ]},
+  {id:'s_appendix',title:'Appendix: OECD Requirement Reconciliation',meta:'Annex II requirement mapping to report sections',items:[
+    {type:'table',key:'recon_table',label:'OECD Local File requirement reconciliation',helper:'Map each OECD Annex II requirement to the section of this report where it is addressed.',
+      columns:[{key:'sr',label:'Sr.',width:6},{key:'requirement',label:'OECD Annex II Requirement',width:42},{key:'section',label:'Report Section',width:26},{key:'remarks',label:'Remarks',width:26}],initialRows:12,
+      defaultRows:[
+        {sr:'1',requirement:'Description of management structure and local org chart',section:'Shareholding & Organisational Structure',remarks:''},
+        {sr:'2',requirement:'Description of business and business strategy',section:'Business Overview',remarks:''},
+        {sr:'3',requirement:'Key competitors',section:'Business Overview — Key Competitors',remarks:''},
+        {sr:'4',requirement:'Description of controlled transactions',section:'Intercompany Transactions',remarks:''},
+        {sr:'5',requirement:'Amounts of intra-group payments/receipts',section:'Intercompany Transactions — Amounts',remarks:''},
+        {sr:'6',requirement:'Copies of material intercompany agreements',section:'Intercompany Transactions — Agreements',remarks:'Annexed separately'},
+        {sr:'7',requirement:'Comparability and functional analysis',section:'Functional Analysis',remarks:''},
+        {sr:'8',requirement:'Most appropriate TP method and reasons',section:'Economic Analysis — Method Selection',remarks:''},
+        {sr:'9',requirement:'Tested party selection and rationale',section:'Economic Analysis — Method Selection',remarks:''},
+        {sr:'10',requirement:'List and description of comparables',section:'Economic Analysis — Benchmarking Study',remarks:''},
+        {sr:'11',requirement:'Comparability adjustments',section:'Economic Analysis — Adjustments',remarks:''},
+        {sr:'12',requirement:'Financial data used in TP methodology',section:'Economic Analysis / Appendix',remarks:''},
+        {sr:'13',requirement:'Existing APAs and other tax rulings',section:'Executive Summary / Conclusion',remarks:'If applicable'}
+      ]}
+  ]}
+];
+
+const ST={meta:{entity:'',group:'',juris:'',fy:'',ccy:'',date:'',firm:'ABAdvisory Group LLP',client:''},data:{},openSections:new Set()};
+function $(id){return document.getElementById(id)}
+function escH(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function showErr(m){const e=$('tlf-err');e.textContent=m;e.classList.add('tlf-show');$('tlf-ok').classList.remove('tlf-show');e.scrollIntoView({behavior:'smooth',block:'center'})}
+function clearMsg(){$('tlf-err').classList.remove('tlf-show')}
+function showOk(m){const e=$('tlf-ok');e.textContent=m;e.classList.add('tlf-show');$('tlf-err').classList.remove('tlf-show');setTimeout(()=>e.classList.remove('tlf-show'),4000)}
+function syncMeta(){ST.meta.entity=$('tlf-m-entity').value;ST.meta.group=$('tlf-m-group').value;ST.meta.juris=$('tlf-m-juris').value;ST.meta.fy=$('tlf-m-fy').value;ST.meta.ccy=$('tlf-m-ccy').value;ST.meta.date=$('tlf-m-date').value;ST.meta.firm=$('tlf-m-firm').value||'ABAdvisory Group LLP';ST.meta.client=$('tlf-m-client').value}
+function applyMeta(){$('tlf-m-entity').value=ST.meta.entity||'';$('tlf-m-group').value=ST.meta.group||'';$('tlf-m-juris').value=ST.meta.juris||'';$('tlf-m-fy').value=ST.meta.fy||'';$('tlf-m-ccy').value=ST.meta.ccy||'';$('tlf-m-date').value=ST.meta.date||'';$('tlf-m-firm').value=ST.meta.firm||'ABAdvisory Group LLP';$('tlf-m-client').value=ST.meta.client||''}
+function emptyRow(cols){const r={};cols.forEach(c=>r[c.key]='');return r}
+function findItemByKey(k){for(const s of SECTIONS)for(const it of s.items)if(it.key===k)return it;return null}
+function isItemFilled(k){const v=ST.data[k];if(v==null)return false;if(typeof v==='string')return v.trim().length>0;if(v.rows)return v.rows.some(r=>Object.values(r).some(c=>String(c||'').trim().length>0));if(v.dataUrl)return true;return false}
+
+function renderSections(){
+  $('tlf-sections').innerHTML=SECTIONS.map((s,i)=>renderSection(s,i+2)).join('');
+  setupDelegation();refreshProgress();
+}
+function renderSection(s,num){
+  const isOpen=ST.openSections.has(s.id);
+  let body=s.items.map(item=>renderItem(s.id,item)).join('');
+  if(s.cta)body+=`<div class="tlf-cta"><div class="tlf-cta-text"><div class="tlf-cta-ey">${s.cta.eyebrow}</div><div class="tlf-cta-t">${s.cta.title}</div><div class="tlf-cta-sub">${s.cta.sub}</div></div><a class="tlf-cta-btn" href="https://www.abadvisorygroup.in/contact" target="_blank" rel="noopener">Get in touch <span class="tlf-arr">→</span></a></div>`;
+  return`<div class="tlf-sec ${isOpen?'tlf-open':''}" data-sid="${s.id}"><div class="tlf-sec-head" data-action="toggle-sec" data-sid="${s.id}"><span class="tlf-dot" data-dot="${s.id}"></span><div class="tlf-sec-tw"><div class="tlf-sec-t">${escH(s.title)}</div><div class="tlf-sec-m">${String(num).padStart(2,'0')} · ${escH(s.meta)}</div></div><span class="tlf-chev">›</span></div><div class="tlf-sec-body">${body}</div></div>`;
+}
+function renderItem(sId,item){
+  let inner='';const v=ST.data[item.key];
+  if(item.type==='text'){const val=v!==undefined?v:(item.defaultValue||'');inner=`<textarea class="tlf-ta" data-key="${item.key}" rows="${item.rows||4}">${escH(val)}</textarea>`}
+  else if(item.type==='table')inner=renderTable(item,v);
+  else if(item.type==='image')inner=renderImage(item,v);
+  let promptHtml='';
+  if(item.prompt&&PROMPTS[item.prompt]){
+    const pt=PROMPTS[item.prompt].replace(/\[([A-Z_ /]+)\]/g,'<span class="tlf-ph">[$1]</span>');
+    promptHtml=`<div class="tlf-prompt-card" data-prompt="${item.prompt}"><div class="tlf-prompt-head" data-action="toggle-prompt"><div class="tlf-prompt-badge">AI Prompt Suggestion</div><button class="tlf-prompt-toggle">Show prompt</button></div><div class="tlf-prompt-body"><div class="tlf-prompt-how"><strong>How to use:</strong> Click "Copy prompt" below. Open <strong>Claude</strong> (claude.ai) or ChatGPT. Paste the prompt. Replace the <span class="tlf-ph">[PLACEHOLDER]</span> values with your entity's details. The AI generates a professional first draft. Review, edit, and paste the result into the field above. <em>No data is sent from this tool.</em></div><div class="tlf-prompt-text" data-prompt-text="${item.prompt}">${pt}</div><button class="tlf-prompt-copy" data-action="copy-prompt" data-prompt="${item.prompt}">Copy prompt to clipboard</button><div class="tlf-prompt-note">Recommended: use with Claude (claude.ai) for best results. Also works with ChatGPT.</div></div></div>`;
+  }
+  return`<div class="tlf-item" data-item-key="${item.key}"><div class="tlf-item-l">${escH(item.label)}</div>${item.helper?`<div class="tlf-item-h">${escH(item.helper)}</div>`:''}${inner}${promptHtml}</div>`;
+}
+function renderTable(item,tableData){
+  const defaultRows=item.defaultRows||null;
+  const rows=(tableData&&Array.isArray(tableData.rows)&&tableData.rows.length>0)?tableData.rows:(defaultRows||Array.from({length:item.initialRows||2},()=>emptyRow(item.columns)));
+  const hd=item.columns.map(c=>`<th style="width:${c.width||''}%">${escH(c.label)}</th>`).join('');
+  const bd=rows.map((r,ri)=>`<tr>${item.columns.map(c=>`<td><input type="text" data-table="${item.key}" data-row="${ri}" data-col="${c.key}" value="${escH(r[c.key]||'')}"></td>`).join('')}<td class="tlf-act"><button class="tlf-rm" data-table="${item.key}" data-action="rm-row" data-row="${ri}">×</button></td></tr>`).join('');
+  return`<div class="tlf-tbl-wrap"><table class="tlf-tbl"><thead><tr>${hd}<th style="width:50px">—</th></tr></thead><tbody>${bd}</tbody></table></div><div class="tlf-actions" style="margin-top:8px"><button class="tlf-btn-m" data-table="${item.key}" data-action="add-row">+ Add row</button></div>`;
+}
+function renderImage(item,imageData){
+  const has=imageData&&imageData.dataUrl;
+  if(!has)return`<div class="tlf-img-block"><div class="tlf-img-empty" data-image="${item.key}" data-action="img-upload"><span class="tlf-img-icon">↑</span><div>Click to upload image (PNG/JPG)</div></div><input type="file" data-img-input="${item.key}" accept="image/png,image/jpeg" style="display:none"></div>`;
+  return`<div class="tlf-img-block"><div class="tlf-img-preview"><img src="${imageData.dataUrl}" alt=""><div class="tlf-img-controls"><input type="text" class="tlf-img-cap" data-img-cap="${item.key}" value="${escH(imageData.caption||'')}" placeholder="Caption (optional)"><button class="tlf-btn-m" data-image="${item.key}" data-action="img-upload">Replace</button><button class="tlf-btn-m" data-image="${item.key}" data-action="img-remove" style="color:var(--err)">Remove</button></div></div><input type="file" data-img-input="${item.key}" accept="image/png,image/jpeg" style="display:none"></div>`;
+}
+function reRenderItem(key){
+  const el=document.querySelector(`[data-item-key="${key}"]`);if(!el)return;
+  const item=findItemByKey(key);if(!item)return;const v=ST.data[key];
+  let inner='';if(item.type==='table')inner=renderTable(item,v);else if(item.type==='image')inner=renderImage(item,v);
+  if(inner){const lbl=el.querySelector('.tlf-item-l');const hlp=el.querySelector('.tlf-item-h');const prm=el.querySelector('.tlf-prompt-card');
+  el.innerHTML='';if(lbl)el.appendChild(lbl);if(hlp)el.appendChild(hlp);const w=document.createElement('div');w.innerHTML=inner;while(w.firstChild)el.appendChild(w.firstChild);if(prm)el.appendChild(prm);refreshProgress()}
+}
+function refreshProgress(){let n=0;SECTIONS.forEach(s=>{const f=s.items.some(it=>isItemFilled(it.key));const d=document.querySelector(`[data-dot="${s.id}"]`);const se=document.querySelector(`[data-sid="${s.id}"]`);if(se)se.classList.toggle('tlf-filled',f);if(f)n++});$('tlf-prog').textContent=n}
+
+async function compressImage(file){return new Promise((res,rej)=>{const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{const max=1200;let w=img.width,h=img.height;if(w>max||h>max){const r=max/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r)}const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='white';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);res({dataUrl:c.toDataURL('image/jpeg',.85),width:w,height:h})};img.onerror=()=>rej(new Error('Image load failed'));img.src=e.target.result};reader.onerror=()=>rej(new Error('Read failed'));reader.readAsDataURL(file)})}
+
+function setupDelegation(){const root=$('tlf-sections');if(root._w)return;root._w=true;
+  root.addEventListener('input',e=>{const t=e.target;
+    if(t.matches('textarea[data-key]')){ST.data[t.getAttribute('data-key')]=t.value;refreshProgress();return}
+    if(t.matches('input[data-table][data-row][data-col]')){const k=t.getAttribute('data-table'),ri=parseInt(t.getAttribute('data-row')),col=t.getAttribute('data-col');const cur=ST.data[k]||{rows:[]};while(cur.rows.length<=ri)cur.rows.push({});cur.rows[ri][col]=t.value;ST.data[k]=cur;refreshProgress();return}
+    if(t.matches('input[data-img-cap]')){const k=t.getAttribute('data-img-cap');if(ST.data[k])ST.data[k].caption=t.value;return}
+  });
+  root.addEventListener('click',e=>{const t=e.target;
+    const ts=t.closest('[data-action="toggle-sec"]');if(ts){const id=ts.getAttribute('data-sid');const sec=ts.closest('.tlf-sec');sec.classList.toggle('tlf-open');if(sec.classList.contains('tlf-open'))ST.openSections.add(id);else ST.openSections.delete(id);return}
+    const ar=t.closest('[data-action="add-row"]');if(ar){const k=ar.getAttribute('data-table');const item=findItemByKey(k);if(!item)return;const cur=ST.data[k]||{rows:[]};cur.rows.push(emptyRow(item.columns));ST.data[k]=cur;reRenderItem(k);return}
+    const rr=t.closest('[data-action="rm-row"]');if(rr){const k=rr.getAttribute('data-table');const ri=parseInt(rr.getAttribute('data-row'));const cur=ST.data[k];if(cur&&cur.rows){cur.rows.splice(ri,1);if(cur.rows.length===0)delete ST.data[k];else ST.data[k]=cur}reRenderItem(k);return}
+    const iu=t.closest('[data-action="img-upload"]');if(iu){const k=iu.getAttribute('data-image');const inp=root.querySelector(`input[data-img-input="${k}"]`);if(inp)inp.click();return}
+    const ir=t.closest('[data-action="img-remove"]');if(ir){delete ST.data[ir.getAttribute('data-image')];reRenderItem(ir.getAttribute('data-image'));return}
+    const tp=t.closest('[data-action="toggle-prompt"]');if(tp){const card=tp.closest('.tlf-prompt-card');card.classList.toggle('tlf-prompt-open');const btn=tp.querySelector('.tlf-prompt-toggle');btn.textContent=card.classList.contains('tlf-prompt-open')?'Hide prompt':'Show prompt';return}
+    const cp=t.closest('[data-action="copy-prompt"]');if(cp){const k=cp.getAttribute('data-prompt');const raw=PROMPTS[k]||'';navigator.clipboard.writeText(raw).then(()=>{cp.textContent='✓ Copied!';cp.classList.add('tlf-copied');setTimeout(()=>{cp.textContent='Copy prompt to clipboard';cp.classList.remove('tlf-copied')},2000)}).catch(()=>{const ta=document.createElement('textarea');ta.value=raw;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);cp.textContent='✓ Copied!';cp.classList.add('tlf-copied');setTimeout(()=>{cp.textContent='Copy prompt to clipboard';cp.classList.remove('tlf-copied')},2000)});return}
+  });
+  root.addEventListener('change',async e=>{const t=e.target;
+    if(t.matches('input[data-img-input]')){const file=t.files&&t.files[0];if(!file)return;const k=t.getAttribute('data-img-input');try{const c=await compressImage(file);const prev=ST.data[k]||{};ST.data[k]={dataUrl:c.dataUrl,width:c.width,height:c.height,caption:prev.caption||''};reRenderItem(k);showOk('Image uploaded.')}catch(err){showErr('Image error: '+err.message)}t.value='';return}
+  });
+}
+
+function saveJSON(){syncMeta();const p={_tool:'TP Local File Generator',_version:2,_savedAt:new Date().toISOString(),meta:ST.meta,data:ST.data};const blob=new Blob([JSON.stringify(p,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');const s=(ST.meta.entity||'local-file').replace(/[^a-z0-9_-]+/gi,'-').slice(0,50);a.href=url;a.download=`${s}-local-file-${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),1000);showOk('Progress saved.')}
+function loadJSON(file){const reader=new FileReader();reader.onload=e=>{try{const p=JSON.parse(e.target.result);if(!p._tool)throw new Error('Not a Local File progress file.');ST.meta=Object.assign({entity:'',group:'',juris:'',fy:'',ccy:'',date:'',firm:'ABAdvisory Group LLP',client:''},p.meta||{});ST.data=p.data||{};applyMeta();renderSections();showOk('Progress loaded.')}catch(err){showErr('Could not load: '+err.message)}};reader.readAsText(file)}
+
+async function generateDocx(){
+  clearMsg();syncMeta();
+  if(!ST.meta.entity){showErr('Please enter the Local Entity Name.');return}
+  if(typeof docx==='undefined'){showErr('Word library failed to load. Check internet and refresh.');return}
+  const{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle,ImageRun,Footer,PageNumber,LevelFormat,convertInchesToTwip}=docx;
+  const G='22430C',GL='E8EBE0',GOLD='E6B91E',GDD='B89014',INK='1A1614',INK3='7A866A',W='FFFFFF';
+  const bodyP=text=>String(text||'').split(/\n+/).filter(l=>l.length>0).map(l=>{const bm=l.trim().match(/^[•\-\*]\s+(.+)$/);if(bm)return new Paragraph({children:[new TextRun({text:bm[1],size:22,color:INK})],numbering:{reference:'lf-b',level:0},spacing:{after:80}});return new Paragraph({children:[new TextRun({text:l,size:22,color:INK})],spacing:{after:120,line:320},alignment:AlignmentType.JUSTIFIED})});
+  const head=(text,lvl,opts={})=>new Paragraph({children:[new TextRun({text,bold:true,color:G,size:lvl===1?36:26,font:'Georgia'})],spacing:{before:lvl===1?240:200,after:120},pageBreakBefore:opts.pb||false});
+  const subH=text=>new Paragraph({children:[new TextRun({text,bold:true,color:INK,size:24,font:'Georgia'})],spacing:{before:200,after:100}});
+  function d2b(d){const b=atob(d.split(',')[1]);const a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+  function imgBlock(d){if(!d||!d.dataUrl)return[];try{const b=d2b(d.dataUrl);const mw=480;const r=d.height/d.width;const w=Math.min(mw,d.width);const h=Math.round(w*r);const bl=[new Paragraph({children:[new ImageRun({data:b,transformation:{width:w,height:h}})],alignment:AlignmentType.CENTER,spacing:{before:120,after:80}})];if(d.caption)bl.push(new Paragraph({children:[new TextRun({text:d.caption,italics:true,size:20,color:INK3})],alignment:AlignmentType.CENTER,spacing:{after:160}}));return bl}catch(e){return[new Paragraph({children:[new TextRun({text:'[Image error]',italics:true,color:INK3})]})]}}
+  function buildTbl(item,data){const rows=(data&&data.rows&&data.rows.length>0)?data.rows:[];const filled=rows.filter(r=>Object.values(r).some(c=>String(c||'').trim().length>0));if(filled.length===0)return null;const hr=new TableRow({tableHeader:true,children:item.columns.map(c=>new TableCell({width:{size:c.width||20,type:WidthType.PERCENTAGE},shading:{fill:G},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:c.label,bold:true,color:W,size:20,font:'Arial'})]})]}))});const brs=filled.map((r,idx)=>new TableRow({children:item.columns.map(c=>new TableCell({width:{size:c.width||20,type:WidthType.PERCENTAGE},shading:idx%2===1?{fill:GL}:undefined,margins:{top:60,bottom:60,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:String(r[c.key]||''),size:20,color:INK})]})]}))}));return new Table({width:{size:100,type:WidthType.PERCENTAGE},rows:[hr,...brs],borders:{top:{style:BorderStyle.SINGLE,size:6,color:INK3},bottom:{style:BorderStyle.SINGLE,size:6,color:INK3},left:{style:BorderStyle.SINGLE,size:6,color:INK3},right:{style:BorderStyle.SINGLE,size:6,color:INK3},insideHorizontal:{style:BorderStyle.SINGLE,size:4,color:'D6CBA8'},insideVertical:{style:BorderStyle.SINGLE,size:4,color:'D6CBA8'}}})}
+  const ch=[];
+  // Cover
+  ch.push(new Paragraph({children:[new TextRun({text:'',size:22})],spacing:{before:1800}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'LOCAL FILE',bold:true,size:56,color:G,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:280}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'Transfer Pricing Documentation',italics:true,size:28,color:GDD,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:120}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'OECD BEPS Action 13',italics:true,size:22,color:INK3,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:600}}));
+  ch.push(new Paragraph({children:[new TextRun({text:ST.meta.entity,bold:true,size:36,color:INK,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:180}}));
+  if(ST.meta.group)ch.push(new Paragraph({children:[new TextRun({text:'Part of '+ST.meta.group+' Group',size:24,color:INK3,font:'Georgia',italics:true})],alignment:AlignmentType.CENTER,spacing:{after:180}}));
+  if(ST.meta.fy)ch.push(new Paragraph({children:[new TextRun({text:'For '+ST.meta.fy,size:26,color:INK3,font:'Georgia',italics:true})],alignment:AlignmentType.CENTER,spacing:{after:800}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'Prepared by',size:20,color:INK3})],alignment:AlignmentType.CENTER,spacing:{after:80}}));
+  ch.push(new Paragraph({children:[new TextRun({text:ST.meta.firm||'ABAdvisory Group LLP',bold:true,size:28,color:G,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:80}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'Your Global Transfer Pricing Partner',italics:true,size:20,color:GDD,font:'Georgia'})],alignment:AlignmentType.CENTER,spacing:{after:1200}}));
+  ch.push(new Paragraph({children:[new TextRun({text:'Generated using ABAdvisory Group LLP TP Local File Generator',size:18,italics:true,color:INK3})],alignment:AlignmentType.CENTER}));
+  // TOC
+  ch.push(new Paragraph({children:[new TextRun({text:'Table of Contents',bold:true,size:40,color:G,font:'Georgia'})],pageBreakBefore:true,spacing:{after:240}}));
+  SECTIONS.forEach((s,i)=>{ch.push(new Paragraph({children:[new TextRun({text:String(i+1).padStart(2,'0')+'   ',bold:true,color:GDD,size:22,font:'Georgia'}),new TextRun({text:s.title,size:22,color:INK,font:'Georgia'})],spacing:{after:100}}))});
+  // Sections
+  SECTIONS.forEach(section=>{
+    ch.push(head(section.title,1,{pb:true}));
+    ch.push(new Paragraph({children:[new TextRun({text:section.meta,italics:true,size:18,color:INK3})],spacing:{after:240}}));
+    section.items.forEach(item=>{
+      const v=ST.data[item.key];ch.push(subH(item.label));
+      if(item.type==='text'){const text=v||item.defaultValue||'';if(text.trim()){const sub=text.replace(/\[ENTITY NAME\]/g,ST.meta.entity||'[Entity]').replace(/\[GROUP NAME\]/g,ST.meta.group||'[Group]').replace(/\[FISCAL YEAR\]/g,ST.meta.fy||'[FY]');bodyP(sub).forEach(p=>ch.push(p))}else ch.push(new Paragraph({children:[new TextRun({text:'[To be provided.]',italics:true,color:INK3,size:20})],spacing:{after:120}}))}
+      else if(item.type==='table'){const defaultData=item.defaultRows?{rows:item.defaultRows}:null;const tbl=buildTbl(item,v||defaultData);if(tbl){ch.push(tbl);ch.push(new Paragraph({children:[new TextRun({text:''})],spacing:{after:120}}))}else ch.push(new Paragraph({children:[new TextRun({text:'[No entries.]',italics:true,color:INK3,size:20})],spacing:{after:120}}))}
+      else if(item.type==='image'){if(v&&v.dataUrl)imgBlock(v).forEach(p=>ch.push(p));else ch.push(new Paragraph({children:[new TextRun({text:'[Image not provided.]',italics:true,color:INK3,size:20})],spacing:{after:120}}))}
+    })
+  });
+  // Disclaimer
+  ch.push(head('Disclaimer',1,{pb:true}));
+  bodyP(`This Local File has been prepared by ${ST.meta.firm||'ABAdvisory Group LLP'} based on information provided by the management of ${ST.meta.entity||'[the Entity]'}. The preparer has not independently audited or verified the accuracy of such information.\n\nThis document does not constitute professional tax or legal advice. Users should consult qualified transfer pricing professionals before filing or relying on this output.\n\nGenerated using the ABAdvisory Group LLP TP Local File Generator.`).forEach(p=>ch.push(p));
+  const doc=new Document({creator:ST.meta.firm||'ABAdvisory Group LLP',title:ST.meta.entity+' - Local File',styles:{default:{document:{run:{font:'Georgia'}}}},numbering:{config:[{reference:'lf-b',levels:[{level:0,format:LevelFormat.BULLET,text:'\u2022',alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:480,hanging:240}},run:{font:'Georgia'}}}]}]},sections:[{properties:{page:{margin:{top:convertInchesToTwip(1),bottom:convertInchesToTwip(1),left:convertInchesToTwip(1),right:convertInchesToTwip(1)}}},footers:{default:new Footer({children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:(ST.meta.entity||'Local File')+'  ·  Generated using ABAdvisory Group LLP Local File Generator  ·  Page ',size:16,color:INK3}),new TextRun({children:[PageNumber.CURRENT],size:16,color:INK3})]})]}),},children:ch}]});
+  try{const blob=await Packer.toBlob(doc);const url=URL.createObjectURL(blob);const a=document.createElement('a');const s=(ST.meta.entity||'local-file').replace(/[^a-z0-9_-]+/gi,'-').slice(0,50);a.href=url;a.download=`${s}-local-file-${new Date().toISOString().slice(0,10)}.docx`;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),1000);showOk('Local File generated and downloaded.')}catch(err){console.error(err);showErr('Could not generate: '+(err.message||err))}
+}
+
+$('tlf-ack-w').addEventListener('click',e=>{if(e.target.tagName!=='INPUT'&&e.target.tagName!=='LABEL'){$('tlf-ack-c').checked=!$('tlf-ack-c').checked;$('tlf-ack-c').dispatchEvent(new Event('change'))}});
+$('tlf-ack-c').addEventListener('change',e=>{$('tlf-ack-btn').disabled=!e.target.checked});
+$('tlf-ack-btn').addEventListener('click',()=>{$('tlf-disc').classList.add('tlf-hidden');$('tlf-tool').classList.remove('tlf-hidden');renderSections()});
+['tlf-m-entity','tlf-m-group','tlf-m-juris','tlf-m-fy','tlf-m-ccy','tlf-m-date','tlf-m-firm','tlf-m-client'].forEach(id=>{const el=$(id);if(el)el.addEventListener('input',syncMeta)});
+$('tlf-save').addEventListener('click',saveJSON);
+$('tlf-load').addEventListener('click',()=>$('tlf-load-f').click());
+$('tlf-load-f').addEventListener('change',e=>{if(e.target.files[0])loadJSON(e.target.files[0])});
+$('tlf-clear').addEventListener('click',()=>{if(!confirm('Clear all?'))return;ST.meta={entity:'',group:'',juris:'',fy:'',ccy:'',date:'',firm:'ABAdvisory Group LLP',client:''};ST.data={};ST.openSections=new Set();applyMeta();renderSections();clearMsg();showOk('Cleared.')});
+$('tlf-gen').addEventListener('click',generateDocx);
+})();
+</script>

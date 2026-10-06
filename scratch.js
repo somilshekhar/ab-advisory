@@ -1,0 +1,10 @@
+const { transform } = require('framer-motion');
+const revealStart = 0;
+const revealEnd = 0.15;
+const op2 = transform([0, revealStart, revealEnd, 1], [0, 0, 1, 1]);
+console.log('0.01:', op2(0.01));
+console.log('0.05:', op2(0.05));
+console.log('0.10:', op2(0.10));
+console.log('0.15:', op2(0.15));
+console.log('0.5:', op2(0.5));
+console.log('1.0:', op2(1.0));

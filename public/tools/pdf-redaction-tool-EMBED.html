@@ -1,0 +1,518 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#22430c;--gd:#162d06;--gold:#e6b91e;--gdd:#b89014;--gs:#f0d168;--gol:rgba(230,185,30,.12);--bg:#f7f1e0;--bg2:#ede4cc;--paper:#fcf7e9;--ink:#22430c;--ink2:#4a5e35;--ink3:#7a866a;--line:#d6cba8;--ls:#b3a684;--err:#8a2a1f;--ok:#4a6b2a}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse 80% 50% at 15% 0%,rgba(230,185,30,.08) 0%,transparent 60%)}
+.wrap{max-width:1150px;margin:0 auto;padding:26px 16px 60px}
+.hdr{background:var(--g);color:var(--paper);padding:18px 22px;border-radius:3px;margin-bottom:16px;position:relative;overflow:hidden}
+.hdr::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent)}
+.hdr-ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-family:ui-monospace,monospace}
+.hdr-t{font-family:Georgia,serif;font-size:24px;font-weight:500;letter-spacing:-.5px}
+.hdr-t em{font-style:italic;color:var(--gs);font-weight:300}
+.hdr-sub{font-size:12.5px;color:rgba(252,247,233,.75);margin-top:6px}
+.trust{background:var(--paper);border:1.5px solid var(--gold);border-radius:3px;padding:14px 18px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start}
+.trust-i{font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--gdd);line-height:1}
+.trust-t{font-weight:600;color:var(--g);font-size:13.5px;margin-bottom:3px}
+.trust-d{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px;margin-bottom:14px;box-shadow:0 1px 0 rgba(34,67,12,.02),0 6px 18px -12px rgba(34,67,12,.1)}
+.drop{border:2px dashed var(--ls);border-radius:4px;padding:46px 20px;text-align:center;cursor:pointer;background:var(--bg2);transition:.15s}
+.drop:hover,.drop.drag{border-color:var(--g);background:var(--bg)}
+.drop-i{font-family:Georgia,serif;font-style:italic;font-size:34px;color:var(--gdd);margin-bottom:10px}
+.drop-t{font-family:Georgia,serif;font-size:17px;color:var(--g);margin-bottom:4px}
+.drop-s{font-size:12px;color:var(--ink3)}
+.hidden{display:none!important}
+.toolbar{position:sticky;top:0;z-index:20;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;padding:10px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 18px -14px rgba(34,67,12,.18)}
+.tb-grp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mode-btn{padding:7px 13px;border:1px solid var(--line);background:#fff;border-radius:2px;font-size:12.5px;cursor:pointer;color:var(--ink2);font-family:inherit}
+.mode-btn.active{background:var(--g);color:var(--paper);border-color:var(--g)}
+.mode-btn:hover:not(.active){border-color:var(--g);color:var(--g)}
+.search-row{display:flex;gap:6px;align-items:center}
+.sinp{font-family:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:2px;width:170px}
+.sinp:focus{outline:none;border-color:var(--g)}
+.btn{padding:9px 16px;background:var(--g);color:var(--paper);border:none;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;border-radius:2px;display:inline-flex;align-items:center;gap:8px}
+.btn:hover:not(:disabled){background:var(--gd)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn .arr{font-family:Georgia,serif;font-style:italic;font-size:15px;color:var(--gold)}
+.btn-s{background:transparent;color:var(--g);border:1px solid var(--ls)}
+.btn-s:hover:not(:disabled){background:var(--bg2);border-color:var(--g)}
+.btn-m{padding:6px 10px;font-size:10.5px;font-family:ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:2px;background:var(--bg2);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
+.btn-m:hover{border-color:var(--g);color:var(--g);background:#fff}
+.pill{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;color:var(--g);background:var(--bg2);border:1px solid var(--line);padding:4px 9px;border-radius:2px;white-space:nowrap}
+.pill-g{background:var(--gol);border-color:var(--gold);color:var(--gdd)}
+.nav{display:flex;align-items:center;gap:6px}
+.nbtn{width:28px;height:28px;border:1px solid var(--line);background:#fff;border-radius:2px;cursor:pointer;font-size:14px;color:var(--ink2);display:flex;align-items:center;justify-content:center}
+.nbtn:hover:not(:disabled){border-color:var(--g);color:var(--g)}
+.nbtn:disabled{opacity:.35;cursor:not-allowed}
+.pnum{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);white-space:nowrap}
+.hint{font-size:11.5px;color:var(--ink3);margin-bottom:10px;line-height:1.5}
+.viewer{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:20px;display:flex;justify-content:center;overflow-x:auto}
+.page-wrap{position:relative;display:inline-block;background:#fff;box-shadow:0 4px 22px -8px rgba(34,67,12,.3);line-height:0}
+.page-wrap canvas{display:block;max-width:100%;height:auto;cursor:crosshair}
+.overlay{position:absolute;inset:0;cursor:crosshair}
+.rbox{position:absolute;background:#0a0a0a;cursor:pointer}
+.rbox:hover{outline:2px solid var(--gold)}
+.rbox .x{position:absolute;top:-9px;right:-9px;width:18px;height:18px;background:var(--err);color:#fff;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;cursor:pointer;font-family:ui-monospace,monospace}
+.rbox:hover .x{display:flex}
+.dragbox{position:absolute;border:1.5px dashed var(--gdd);background:rgba(230,185,30,.22);pointer-events:none}
+.wbox-hl{position:absolute;background:rgba(34,67,12,.18);pointer-events:none}
+.msg{padding:12px 16px;font-size:13px;margin:10px 0;border-radius:2px;display:none}
+.msg.show{display:block}
+.err{background:rgba(138,42,31,.06);border-left:3px solid var(--err);color:var(--err)}
+.okm{background:rgba(74,107,42,.08);border-left:3px solid var(--ok);color:var(--ok)}
+.modal-bg{position:fixed;inset:0;background:rgba(22,45,6,.72);z-index:100;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--paper);border:1px solid var(--gold);border-radius:4px;padding:26px 30px;min-width:300px;text-align:center}
+.modal-t{font-family:Georgia,serif;font-size:16px;color:var(--g);margin-bottom:6px}
+.modal-s{font-size:12.5px;color:var(--ink3)}
+.spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;margin:0 auto 14px;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.footer{margin-top:22px;padding:20px;background:var(--g);color:var(--paper);border-radius:3px;text-align:center}
+.footer-ey{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.footer-n{font-family:Georgia,serif;font-size:18px;font-weight:500}
+.footer-n em{font-style:italic;color:var(--gold);font-weight:300}
+.footer-tag{font-size:12px;color:rgba(252,247,233,.75);font-style:italic;font-family:Georgia,serif;margin-bottom:10px}
+.footer-cta{display:inline-block;margin-top:4px;padding:8px 18px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:12px;border-radius:2px;font-family:ui-monospace,monospace;letter-spacing:.05em}
+.footer-cta:hover{background:var(--gold);color:var(--gd)}
+</style>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-ey">ABAdvisory Group LLP · Free Utility</div>
+  <div class="hdr-t">PDF Redaction <em>Tool.</em></div>
+  <div class="hdr-sub">Permanently remove sensitive content from a PDF before sharing it with AI tools or third parties</div>
+</div>
+
+<div class="trust">
+  <div class="trust-i">✦</div>
+  <div>
+    <div class="trust-t">100% client-side. Your file never leaves this browser tab.</div>
+    <div class="trust-d">There is no upload, no server and no storage anywhere. The PDF is opened, redacted and re-saved entirely on your own device. Redaction here is <strong>permanent</strong> — each page is flattened into a fresh image, so nothing hidden beneath a black box (text, metadata, or an underlying layer) can be recovered, copied or read by any AI model or service provider you share the result with.</div>
+  </div>
+</div>
+
+<div class="card" id="drop-card">
+  <div class="drop" id="drop">
+    <div class="drop-i">↑</div>
+    <div class="drop-t">Click to choose a PDF, or drag one here</div>
+    <div class="drop-s">Works with normal PDFs and scanned/image-only PDFs · nothing is uploaded</div>
+  </div>
+  <input type="file" id="file-inp" accept="application/pdf" style="display:none">
+</div>
+
+<div id="msg-err" class="msg err"></div>
+<div id="msg-ok" class="msg okm"></div>
+
+<div id="app" class="hidden">
+
+<div class="toolbar">
+  <div class="tb-grp">
+    <button class="mode-btn active" id="mode-rect" data-mode="rect">▭ Draw box</button>
+    <button class="mode-btn" id="mode-word" data-mode="word">Aa Click text</button>
+    <span class="pill" id="page-textinfo"></span>
+  </div>
+  <div class="tb-grp search-row">
+    <input type="text" class="sinp" id="search-inp" placeholder="Find &amp; redact everywhere…">
+    <button class="btn-m" id="search-btn">Redact all matches</button>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="nav">
+    <button class="nbtn" id="prev-btn">‹</button>
+    <span class="pnum" id="page-ind">Page 1 / 1</span>
+    <button class="nbtn" id="next-btn">›</button>
+  </div>
+  <div class="tb-grp">
+    <span class="pill pill-g" id="redact-count">0 redactions</span>
+    <button class="btn-m" id="clear-page-btn">Clear this page</button>
+    <button class="btn-m" id="clear-all-btn">Clear all</button>
+    <button class="btn-m" id="new-file-btn">↺ New file</button>
+  </div>
+</div>
+
+<div class="hint">Draw-box mode: click and drag over anything you want permanently blacked out. Click-text mode: click a word/text run to redact just that run (only available where the PDF has selectable text). Use "Redact all matches" to black out every occurrence of a name, number or phrase across the whole document in one click.</div>
+
+<div class="viewer"><div class="page-wrap" id="page-wrap">
+  <canvas id="pdf-canvas"></canvas>
+  <div class="overlay" id="overlay"></div>
+</div></div>
+
+<div class="card" style="margin-top:16px">
+  <div class="item-l" style="font-family:Georgia,serif;font-size:15px;font-weight:500;color:var(--g);margin-bottom:8px">Output file size</div>
+  <div class="hint" style="margin-bottom:10px">Every page is rebuilt as an image so the redactions are permanent — the setting below only controls how that image is compressed. It has no effect on security: the covered content is already gone before compression runs, so a smaller file cannot leak anything a larger one wouldn't.</div>
+  <div class="tb-grp" id="quality-group">
+    <label class="mode-btn" data-q="compact">Compact <span class="pill" style="margin-left:6px">smallest</span></label>
+    <label class="mode-btn active" data-q="balanced">Balanced <span class="pill pill-g" style="margin-left:6px">recommended</span></label>
+    <label class="mode-btn" data-q="high">High quality <span class="pill" style="margin-left:6px">largest</span></label>
+  </div>
+</div>
+
+<div class="actions" style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+  <button class="btn" id="export-btn" style="font-size:14px;padding:13px 22px">Download redacted PDF <span class="arr">→</span></button>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-ey">FREE IN-HOUSE UTILITY · BY</div>
+  <div class="footer-n">ABAdvisory Group <em>LLP</em></div>
+  <div class="footer-tag">Your Global Transfer Pricing Partner</div>
+  <a class="footer-cta" href="https://www.abadvisorygroup.in/contact" target="_blank" rel="noopener">Get in touch →</a>
+</div>
+
+</div>
+<script>
+(function(){
+'use strict';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ===================== STATE ===================== */
+const ST={
+  pdfDoc:null,
+  fileName:'',
+  numPages:0,
+  pageMeta:[],      // [{widthPt,heightPt}]
+  pageItems:[],     // [null|[{str,x,y,w,h fractional}]]  computed lazily, cached
+  pageRects:[],     // [[{x,y,w,h fractional,id}]]
+  currentPage:1,
+  mode:'rect',
+  canvasCache:{}     // pageNum -> {canvas, scale}  (display-resolution render cache)
+};
+let ridSeed=1;
+
+function $(id){return document.getElementById(id)}
+function showErr(m){const e=$('msg-err');e.textContent=m;e.classList.add('show');$('msg-ok').classList.remove('show')}
+function showOk(m){const e=$('msg-ok');e.textContent=m;e.classList.add('show');$('msg-err').classList.remove('show');setTimeout(function(){e.classList.remove('show')},4000)}
+function clearMsg(){$('msg-err').classList.remove('show')}
+
+/* ===================== FILE LOADING ===================== */
+$('drop').addEventListener('click',function(){$('file-inp').click()});
+$('drop').addEventListener('dragover',function(e){e.preventDefault();$('drop').classList.add('drag')});
+$('drop').addEventListener('dragleave',function(){$('drop').classList.remove('drag')});
+$('drop').addEventListener('drop',function(e){
+  e.preventDefault();$('drop').classList.remove('drag');
+  const f=e.dataTransfer.files&&e.dataTransfer.files[0];
+  if(f)loadFile(f);
+});
+$('file-inp').addEventListener('change',function(e){
+  const f=e.target.files&&e.target.files[0];
+  if(f)loadFile(f);
+  e.target.value='';
+});
+
+async function loadFile(file){
+  clearMsg();
+  if(file.type!=='application/pdf'&&!/\.pdf$/i.test(file.name)){showErr('Please choose a PDF file.');return}
+  if(typeof pdfjsLib==='undefined'||typeof window.jspdf==='undefined'){showErr('Required library failed to load. Please check your internet connection and refresh the page.');return}
+  try{
+    const buf=await file.arrayBuffer();
+    const doc=await pdfjsLib.getDocument({data:buf}).promise;
+    ST.pdfDoc=doc;ST.fileName=file.name.replace(/\.pdf$/i,'');ST.numPages=doc.numPages;
+    ST.pageMeta=[];ST.pageItems=new Array(doc.numPages).fill(null);ST.pageRects=[];ST.canvasCache={};
+    for(let n=1;n<=doc.numPages;n++){
+      const p=await doc.getPage(n);const vp=p.getViewport({scale:1});
+      ST.pageMeta.push({widthPt:vp.width,heightPt:vp.height});
+      ST.pageRects.push([]);
+    }
+    ST.currentPage=1;
+    $('drop-card').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    if(ST.numPages>150)showOk('Large file loaded ('+ST.numPages+' pages) — export may take a little while.');
+    updateNav();updateCounts();
+    await renderPage(1);
+  }catch(err){showErr('Could not open this PDF: '+err.message)}
+}
+
+$('new-file-btn').addEventListener('click',function(){
+  if(!confirm('Discard current file and start over?'))return;
+  location.reload();
+});
+
+/* ===================== TEXT BOX EXTRACTION (fractional, scale-independent) ===================== */
+async function computeItemBoxes(n){
+  if(ST.pageItems[n-1])return ST.pageItems[n-1];
+  const page=await ST.pdfDoc.getPage(n);
+  const vp1=page.getViewport({scale:1});
+  const tc=await page.getTextContent();
+  const boxes=[];
+  tc.items.forEach(function(it){
+    if(!it.str||!it.str.trim())return;
+    const tx=pdfjsLib.Util.transform(vp1.transform,it.transform);
+    const fontH=Math.hypot(tx[2],tx[3])||(it.height||8);
+    const w=it.width||fontH*0.5*it.str.length;
+    const left=tx[4],top=tx[5]-fontH;
+    boxes.push({str:it.str,x:left/vp1.width,y:top/vp1.height,w:w/vp1.width,h:fontH/vp1.height});
+  });
+  ST.pageItems[n-1]=boxes;
+  return boxes;
+}
+
+/* ===================== PAGE RENDERING ===================== */
+function targetDisplayScale(page,vp1){
+  const containerW=Math.min(document.querySelector('.viewer').clientWidth-44,1000);
+  let s=containerW/vp1.width;
+  if(s<0.4)s=0.4;if(s>2.2)s=2.2;
+  return s;
+}
+async function renderPage(n){
+  ST.currentPage=n;
+  const canvas=$('pdf-canvas');
+  let cached=ST.canvasCache[n];
+  if(!cached){
+    const page=await ST.pdfDoc.getPage(n);
+    const vp1=page.getViewport({scale:1});
+    const scale=targetDisplayScale(page,vp1);
+    const viewport=page.getViewport({scale:scale});
+    const off=document.createElement('canvas');
+    off.width=viewport.width;off.height=viewport.height;
+    const ctx=off.getContext('2d');
+    await page.render({canvasContext:ctx,viewport:viewport}).promise;
+    cached={canvas:off,scale:scale};
+    ST.canvasCache[n]=cached;
+  }
+  canvas.width=cached.canvas.width;canvas.height=cached.canvas.height;
+  canvas.getContext('2d').drawImage(cached.canvas,0,0);
+  await computeItemBoxes(n);
+  const info=ST.pageItems[n-1]&&ST.pageItems[n-1].length?'':'⚠ No selectable text on this page — use Draw box mode';
+  $('page-textinfo').textContent=info;
+  $('page-textinfo').style.display=info?'inline-block':'none';
+  renderOverlay();
+  updateNav();updateCounts();
+}
+function updateNav(){
+  $('page-ind').textContent='Page '+ST.currentPage+' / '+ST.numPages;
+  $('prev-btn').disabled=ST.currentPage<=1;
+  $('next-btn').disabled=ST.currentPage>=ST.numPages;
+}
+function updateCounts(){
+  const total=ST.pageRects.reduce(function(a,r){return a+r.length},0);
+  const onPage=(ST.pageRects[ST.currentPage-1]||[]).length;
+  $('redact-count').textContent=total+' redaction'+(total===1?'':'s')+' total · '+onPage+' on this page';
+}
+$('prev-btn').addEventListener('click',function(){if(ST.currentPage>1)renderPage(ST.currentPage-1)});
+$('next-btn').addEventListener('click',function(){if(ST.currentPage<ST.numPages)renderPage(ST.currentPage+1)});
+window.addEventListener('resize',function(){
+  if(!ST.pdfDoc)return;
+  ST.canvasCache={};
+  renderPage(ST.currentPage);
+});
+
+/* ===================== MODE SWITCH ===================== */
+document.querySelectorAll('.mode-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    ST.mode=b.getAttribute('data-mode');
+    document.querySelectorAll('.mode-btn').forEach(function(x){x.classList.remove('active')});
+    b.classList.add('active');
+    $('overlay').style.cursor=ST.mode==='word'?'text':'crosshair';
+  });
+});
+
+/* ===================== OVERLAY RENDER ===================== */
+function renderOverlay(){
+  const ov=$('overlay');
+  ov.innerHTML='';
+  const rects=ST.pageRects[ST.currentPage-1]||[];
+  rects.forEach(function(r){
+    const d=document.createElement('div');
+    d.className='rbox';
+    d.style.left=(r.x*100)+'%';d.style.top=(r.y*100)+'%';
+    d.style.width=(r.w*100)+'%';d.style.height=(r.h*100)+'%';
+    const x=document.createElement('span');x.className='x';x.textContent='✕';
+    x.title='Remove this redaction';
+    x.addEventListener('click',function(e){
+      e.stopPropagation();
+      const arr=ST.pageRects[ST.currentPage-1];
+      const idx=arr.findIndex(function(rr){return rr.id===r.id});
+      if(idx>-1)arr.splice(idx,1);
+      renderOverlay();updateCounts();
+    });
+    d.appendChild(x);
+    ov.appendChild(d);
+  });
+}
+
+function addRect(x,y,w,h){
+  if(w<=0||h<=0)return;
+  ST.pageRects[ST.currentPage-1].push({x:x,y:y,w:w,h:h,id:ridSeed++});
+  renderOverlay();updateCounts();
+}
+
+/* ===================== DRAW-BOX MODE ===================== */
+let dragging=false,dragStart=null,dragEl=null;
+const overlayEl=$('overlay');
+
+overlayEl.addEventListener('mousedown',function(e){
+  if(ST.mode!=='rect'||!ST.pdfDoc)return;
+  dragging=true;
+  const rect=overlayEl.getBoundingClientRect();
+  dragStart={x:e.clientX-rect.left,y:e.clientY-rect.top,rect:rect};
+  dragEl=document.createElement('div');dragEl.className='dragbox';
+  dragEl.style.left=dragStart.x+'px';dragEl.style.top=dragStart.y+'px';
+  dragEl.style.width='0px';dragEl.style.height='0px';
+  overlayEl.appendChild(dragEl);
+});
+overlayEl.addEventListener('mousemove',function(e){
+  if(!dragging||!dragEl)return;
+  const rect=dragStart.rect;
+  const cx=e.clientX-rect.left,cy=e.clientY-rect.top;
+  const left=Math.min(cx,dragStart.x),top=Math.min(cy,dragStart.y);
+  const w=Math.abs(cx-dragStart.x),h=Math.abs(cy-dragStart.y);
+  dragEl.style.left=left+'px';dragEl.style.top=top+'px';
+  dragEl.style.width=w+'px';dragEl.style.height=h+'px';
+});
+function endDrag(e){
+  if(!dragging)return;
+  dragging=false;
+  if(dragEl){
+    const rect=dragStart.rect;
+    const cx=(e.clientX!=null?e.clientX-rect.left:parseFloat(dragEl.style.left)+parseFloat(dragEl.style.width));
+    const cy=(e.clientY!=null?e.clientY-rect.top:parseFloat(dragEl.style.top)+parseFloat(dragEl.style.height));
+    const left=Math.min(cx,dragStart.x),top=Math.min(cy,dragStart.y);
+    const w=Math.abs(cx-dragStart.x),h=Math.abs(cy-dragStart.y);
+    overlayEl.removeChild(dragEl);dragEl=null;
+    if(w>6&&h>6){
+      addRect(left/rect.width,top/rect.height,w/rect.width,h/rect.height);
+    }
+  }
+}
+overlayEl.addEventListener('mouseup',endDrag);
+overlayEl.addEventListener('mouseleave',function(e){if(dragging)endDrag(e)});
+
+/* ===================== CLICK-TEXT MODE ===================== */
+overlayEl.addEventListener('click',async function(e){
+  if(ST.mode!=='word'||!ST.pdfDoc||dragging)return;
+  const rect=overlayEl.getBoundingClientRect();
+  const fx=(e.clientX-rect.left)/rect.width, fy=(e.clientY-rect.top)/rect.height;
+  const items=await computeItemBoxes(ST.currentPage);
+  const pad=0.0015;
+  const hit=items.find(function(b){
+    return fx>=b.x-pad&&fx<=b.x+b.w+pad&&fy>=b.y-pad&&fy<=b.y+b.h+pad;
+  });
+  if(!hit){
+    if(!items.length)showOk('This page has no selectable text — try Draw box mode.');
+    return;
+  }
+  addRect(Math.max(0,hit.x-0.001),Math.max(0,hit.y-0.05*hit.h),hit.w+0.002,hit.h*1.1);
+});
+
+/* ===================== CLEAR ===================== */
+$('clear-page-btn').addEventListener('click',function(){
+  if(!ST.pdfDoc)return;
+  ST.pageRects[ST.currentPage-1]=[];
+  renderOverlay();updateCounts();
+});
+$('clear-all-btn').addEventListener('click',function(){
+  if(!ST.pdfDoc)return;
+  if(!confirm('Remove all redactions on every page?'))return;
+  ST.pageRects=ST.pageRects.map(function(){return[]});
+  renderOverlay();updateCounts();
+});
+
+/* ===================== FIND & REDACT EVERYWHERE ===================== */
+$('search-btn').addEventListener('click',async function(){
+  clearMsg();
+  if(!ST.pdfDoc){showErr('Load a PDF first.');return}
+  const q=$('search-inp').value.trim().toLowerCase();
+  if(!q){showErr('Type a word or phrase to search for.');return}
+  const btn=$('search-btn');btn.disabled=true;btn.textContent='Searching…';
+  let matches=0,pagesHit=0;
+  for(let n=1;n<=ST.numPages;n++){
+    const items=await computeItemBoxes(n);
+    let hitOnPage=false;
+    items.forEach(function(it){
+      if(it.str.toLowerCase().indexOf(q)>-1){
+        ST.pageRects[n-1].push({x:Math.max(0,it.x-0.001),y:Math.max(0,it.y-0.05*it.h),w:it.w+0.002,h:it.h*1.1,id:ridSeed++});
+        matches++;hitOnPage=true;
+      }
+    });
+    if(hitOnPage)pagesHit++;
+  }
+  btn.disabled=false;btn.textContent='Redact all matches';
+  renderOverlay();updateCounts();
+  if(matches===0)showErr('No matches found for "'+$('search-inp').value+'". Note: this searches selectable text only and matches within a single text run — for scanned pages or text split across runs, use Draw box / Click text mode instead.');
+  else showOk('Redacted '+matches+' match'+(matches===1?'':'es')+' across '+pagesHit+' page'+(pagesHit===1?'':'s')+'.');
+});
+$('search-inp').addEventListener('keydown',function(e){if(e.key==='Enter')$('search-btn').click()});
+
+/* ===================== EXPORT (flatten to image, bake redactions) ===================== */
+function showModal(title,sub){
+  const bg=document.createElement('div');bg.className='modal-bg';bg.id='export-modal';
+  bg.innerHTML='<div class="modal"><div class="spin"></div><div class="modal-t" id="modal-t">'+title+'</div><div class="modal-s" id="modal-s">'+sub+'</div></div>';
+  document.body.appendChild(bg);
+}
+function updateModal(title,sub){
+  const t=document.getElementById('modal-t'),s=document.getElementById('modal-s');
+  if(t)t.textContent=title;if(s)s.textContent=sub;
+}
+function hideModal(){const m=document.getElementById('export-modal');if(m)m.remove()}
+
+const QUALITY_PRESETS={
+  compact:{scale:1.35,format:'JPEG',q:0.62,label:'Compact'},
+  balanced:{scale:1.65,format:'JPEG',q:0.82,label:'Balanced'},
+  high:{scale:2.2,format:'PNG',q:1,label:'High quality'}
+};
+let qualityMode='balanced';
+document.querySelectorAll('#quality-group .mode-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    qualityMode=b.getAttribute('data-q');
+    document.querySelectorAll('#quality-group .mode-btn').forEach(function(x){x.classList.remove('active')});
+    b.classList.add('active');
+  });
+});
+
+$('export-btn').addEventListener('click',async function(){
+  clearMsg();
+  if(!ST.pdfDoc){showErr('Load a PDF first.');return}
+  const totalRedactions=ST.pageRects.reduce(function(a,r){return a+r.length},0);
+  if(totalRedactions===0){
+    if(!confirm('No redactions have been added yet. Download the PDF as-is (still flattened to images, but nothing blacked out)?'))return;
+  }
+  const D=window.jspdf.jsPDF;
+  showModal('Preparing your redacted PDF…','Starting');
+  $('export-btn').disabled=true;
+  try{
+    const preset=QUALITY_PRESETS[qualityMode]||QUALITY_PRESETS.balanced;
+    let doc=null;
+    for(let n=1;n<=ST.numPages;n++){
+      updateModal('Flattening page '+n+' of '+ST.numPages+'… ('+preset.label+')','This bakes redactions permanently into the page image');
+      await new Promise(function(r){setTimeout(r,0)}); // let UI paint
+      const page=await ST.pdfDoc.getPage(n);
+      const viewport=page.getViewport({scale:preset.scale});
+      const canvas=document.createElement('canvas');
+      canvas.width=viewport.width;canvas.height=viewport.height;
+      const ctx=canvas.getContext('2d');
+      if(preset.format==='JPEG'){ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height)}
+      await page.render({canvasContext:ctx,viewport:viewport}).promise;
+      ctx.fillStyle='#000000';
+      (ST.pageRects[n-1]||[]).forEach(function(r){
+        const padX=0.004,padY=0.004;
+        const rx=Math.max(0,(r.x-padX))*canvas.width;
+        const ry=Math.max(0,(r.y-padY))*canvas.height;
+        const rw=Math.min(canvas.width-rx,(r.w+2*padX)*canvas.width);
+        const rh=Math.min(canvas.height-ry,(r.h+2*padY)*canvas.height);
+        ctx.fillRect(rx,ry,rw,rh);
+      });
+      const imgData=preset.format==='JPEG'?canvas.toDataURL('image/jpeg',preset.q):canvas.toDataURL('image/png');
+      const wPt=ST.pageMeta[n-1].widthPt,hPt=ST.pageMeta[n-1].heightPt;
+      const orient=wPt>hPt?'landscape':'portrait';
+      if(!doc){doc=new D({unit:'pt',format:[wPt,hPt],orientation:orient})}
+      else{doc.addPage([wPt,hPt],orient)}
+      doc.addImage(imgData,preset.format,0,0,wPt,hPt);
+      canvas.width=0;canvas.height=0; // free memory
+    }
+    updateModal('Saving file…','Almost done');
+    await new Promise(function(r){setTimeout(r,0)});
+    const outName=(ST.fileName||'document')+'-REDACTED.pdf';
+    doc.save(outName);
+    hideModal();
+    $('export-btn').disabled=false;
+    showOk('Redacted PDF downloaded as "'+outName+'". Every page has been flattened to an image — no hidden text or original content remains underneath the redactions.');
+  }catch(err){
+    hideModal();$('export-btn').disabled=false;
+    showErr('Export failed: '+err.message);
+  }
+});
+
+})();
+</script>

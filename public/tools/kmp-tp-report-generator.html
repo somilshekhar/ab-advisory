@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMP TP Study Report Generator — ABAdvisory Group LLP (Internal)</title>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#22430c;--gd:#162d06;--gm:#2e5510;--gold:#e6b91e;--gdd:#b89014;--gs:#f0d168;--gol:rgba(230,185,30,.12);--bg:#f7f1e0;--bg2:#ede4cc;--paper:#fcf7e9;--ink:#22430c;--ink2:#4a5e35;--ink3:#7a866a;--line:#d6cba8;--ls:#b3a684;--err:#8a2a1f;--ok:#4a6b2a}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse 80% 50% at 15% 0%,rgba(230,185,30,.08) 0%,transparent 60%)}
+.wrap{max-width:1150px;margin:0 auto;padding:26px 16px 60px}
+.hdr{background:var(--g);color:var(--paper);padding:18px 22px;border-radius:3px;margin-bottom:20px;position:relative;overflow:hidden}
+.hdr::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent)}
+.hdr-ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-family:ui-monospace,monospace}
+.hdr-t{font-family:Georgia,serif;font-size:24px;font-weight:500;letter-spacing:-.5px}
+.hdr-t em{font-style:italic;color:var(--gs);font-weight:300}
+.hdr-sub{font-size:12.5px;color:rgba(252,247,233,.75);margin-top:6px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px;margin-bottom:14px;box-shadow:0 1px 0 rgba(34,67,12,.02),0 6px 18px -12px rgba(34,67,12,.1)}
+.sl{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.sl .n{color:var(--gdd);font-weight:500}
+.h3{font-family:Georgia,serif;font-size:18px;font-weight:400;color:var(--g);margin-bottom:8px;letter-spacing:-.2px}
+.h3 em{font-style:italic;color:var(--gdd)}
+.prose{font-size:13.5px;color:var(--ink2);line-height:1.6}
+.prose p{margin-bottom:8px}
+.prose strong{color:var(--g);font-weight:600}
+.disc{border-left:3px solid var(--gold)}
+.ack{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--gold);border-radius:2px;cursor:pointer;margin-top:14px}
+.ack input{margin-top:3px;cursor:pointer}
+.ack label{font-size:13px;color:var(--g);font-weight:500;cursor:pointer;flex:1}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.col{flex:1;min-width:180px}
+.col2{flex:2;min-width:260px}
+.field{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+.lbl{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.hlp{font-size:11.5px;color:var(--ink3);margin-top:2px;line-height:1.45}
+.inp,.ta,.sel{font-family:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);background:#fff;border-radius:2px;color:var(--ink);outline:none;width:100%}
+.ta{resize:vertical;min-height:70px;line-height:1.5}
+.inp:focus,.ta:focus,.sel:focus{border-color:var(--g);box-shadow:inset 0 0 0 1px var(--g)}
+.sec{background:var(--paper);border:1px solid var(--line);border-radius:3px;margin-bottom:10px;overflow:hidden}
+.sec-head{padding:13px 18px;background:var(--bg2);cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sec-head:hover{background:var(--line)}
+.sec.open .sec-head{background:var(--g)}
+.sec.open .sec-head .sec-t{color:var(--paper)}
+.sec.open .sec-head .sec-m{color:rgba(252,247,233,.65)}
+.sec.open .sec-head .chev{color:var(--gold);transform:rotate(90deg)}
+.sec-tw{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sec-t{font-family:Georgia,serif;font-size:15.5px;font-weight:500;color:var(--g)}
+.sec-m{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}
+.chev{font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--gdd);transition:transform .2s}
+.sec-body{padding:18px 22px;display:none}
+.sec.open .sec-body{display:block}
+.item{margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.item-l{font-family:Georgia,serif;font-size:15px;font-weight:500;color:var(--g);margin-bottom:4px}
+.tbl-wrap{overflow-x:auto;margin-top:6px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:480px}
+.tbl th,.tbl td{padding:6px 8px;border:1px solid var(--line);vertical-align:top}
+.tbl thead th{background:var(--bg2);font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:500;text-align:left}
+.tbl input,.tbl textarea{width:100%;border:1px solid transparent;background:transparent;padding:4px 6px;font-family:inherit;font-size:12.5px;color:var(--ink);outline:none;resize:vertical}
+.tbl input:focus,.tbl textarea:focus{border-color:var(--g);background:#fff;box-shadow:inset 0 0 0 1px var(--g)}
+.tbl td.act{width:46px;text-align:center;background:var(--bg2)}
+.rmb{background:none;border:1px solid var(--line);color:var(--err);padding:2px 8px;font-size:10px;cursor:pointer;border-radius:2px;font-family:ui-monospace,monospace}
+.rmb:hover{border-color:var(--err);background:rgba(138,42,31,.06)}
+.btn{padding:10px 18px;background:var(--g);color:var(--paper);border:none;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border-radius:2px;display:inline-flex;align-items:center;gap:10px}
+.btn:hover:not(:disabled){background:var(--gd)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn .arr{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--gold)}
+.btn-s{background:transparent;color:var(--g);border:1px solid var(--ls)}
+.btn-s:hover:not(:disabled){background:var(--bg2);border-color:var(--g)}
+.btn-m{padding:6px 10px;font-size:10.5px;font-family:ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;background:var(--bg2);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
+.btn-m:hover{border-color:var(--g);color:var(--g);background:#fff}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:10;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;padding:11px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 18px -14px rgba(34,67,12,.18)}
+.tb-l{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--g);background:var(--bg2);border:1px solid var(--line);padding:4px 9px;border-radius:2px}
+.pill-g{background:var(--gol);border-color:var(--gold);color:var(--gdd)}
+.msg{padding:12px 16px;font-size:13px;margin:12px 0;border-radius:2px;display:none}
+.msg.show{display:block}
+.err{background:rgba(138,42,31,.06);border-left:3px solid var(--err);color:var(--err)}
+.okm{background:rgba(74,107,42,.08);border-left:3px solid var(--ok);color:var(--ok)}
+.hidden{display:none!important}
+.divider{height:1px;background:var(--line);margin:16px 0}
+.kmp-card{border:1px solid var(--line);border-radius:3px;margin-bottom:12px;background:#fff}
+.kmp-head{padding:10px 14px;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
+.kmp-title{font-family:Georgia,serif;font-size:14.5px;font-weight:500;color:var(--g)}
+.kmp-body{padding:14px 16px}
+.pcard{background:linear-gradient(135deg,rgba(34,67,12,.04),rgba(230,185,30,.06));border:1px solid var(--gold);border-radius:3px;padding:12px 14px;margin:10px 0;position:relative}
+.pcard::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold)}
+.pcard-h{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none}
+.pcard-b{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gdd)}
+.pcard-b::before{content:"✦ "}
+.pcard-t{font-size:11px;color:var(--gdd);background:rgba(230,185,30,.15);border:1px solid var(--gold);padding:3px 9px;border-radius:2px;cursor:pointer;font-family:ui-monospace,monospace}
+.pcard-body{display:none;margin-top:10px}
+.pcard.open .pcard-body{display:block}
+.ptext{background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;line-height:1.6;color:var(--ink);white-space:pre-wrap;max-height:220px;overflow-y:auto}
+.pcopy{margin-top:8px;padding:6px 12px;background:var(--g);color:var(--paper);border:none;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;cursor:pointer;border-radius:2px}
+.pcopy:hover{background:var(--gd)}
+.pcopy.copied{background:var(--ok)}
+.pnote{font-size:10.5px;color:var(--ink3);margin-top:6px;font-style:italic}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px}
+.radio-pill{border:1px solid var(--line);padding:7px 13px;border-radius:2px;cursor:pointer;font-size:12.5px;background:#fff;user-select:none;display:flex;align-items:center;gap:7px}
+.radio-pill input{display:none}
+.radio-pill.active{border-color:var(--g);background:var(--bg2);box-shadow:inset 0 0 0 1px var(--g);color:var(--g);font-weight:500}
+.radio-pill.active::before{content:"";width:7px;height:7px;background:var(--gold);border-radius:50%}
+.chk{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:2px;background:#fff;cursor:pointer;font-size:13px}
+.chk input{cursor:pointer}
+.chk.on{border-color:var(--g);background:var(--bg2)}
+.img-block{border:1.5px dashed var(--ls);padding:12px;border-radius:2px;background:var(--bg2)}
+.img-empty{text-align:center;padding:16px 10px;cursor:pointer;color:var(--ink3)}
+.img-empty:hover{color:var(--g)}
+.img-icon{font-family:Georgia,serif;font-size:26px;color:var(--gdd);font-style:italic;display:block;margin-bottom:4px}
+.img-prev{display:flex;flex-direction:column;gap:8px}
+.img-prev img{max-width:100%;max-height:200px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:2px}
+.img-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.footer{margin-top:26px;padding:20px;background:var(--g);color:var(--paper);border-radius:3px;text-align:center}
+.footer-ey{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.footer-n{font-family:Georgia,serif;font-size:18px;font-weight:500}
+.footer-n em{font-style:italic;color:var(--gold);font-weight:300}
+.footer-tag{font-size:12px;color:rgba(252,247,233,.75);font-style:italic;font-family:Georgia,serif}
+.ss-item{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:2px;padding:10px;margin-bottom:8px;background:#fff}
+.ss-item img{width:130px;height:80px;object-fit:cover;border:1px solid var(--line);border-radius:2px}
+.ss-meta{flex:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-ey">ABAdvisory Group LLP · Internal Tool · Confidential</div>
+  <div class="hdr-t">KMP TP Study Report <em>Generator.</em></div>
+  <div class="hdr-sub">UAE Corporate Tax · CTGTP1 · KMP managerial remuneration · TP Report + MRL in Word format</div>
+</div>
+
+<div class="card disc" id="gate">
+  <div class="sl"><span class="n">00</span> Employee acknowledgement</div>
+  <div class="h3">Proprietary — internal <em>use only.</em></div>
+  <div class="prose">
+    <p>This application is proprietary to <strong>ABAdvisory Group LLP</strong> and is provided exclusively for official internal use. It must not be copied, shared, stored on personal systems, or used for personal, freelance, or external engagements. By selecting <strong>"I Accept"</strong>, the user agrees to comply with these conditions.</p>
+    <p style="font-size:12px;color:var(--ink3)">All data entered remains on this device. Nothing is transmitted to any server. Internet is required only at report-generation time to load the Word document library.</p>
+  </div>
+  <div class="ack" id="ack-w"><input type="checkbox" id="ack-c"><label for="ack-c">I Accept — I will use this tool only for official ABAdvisory Group LLP engagements.</label></div>
+  <div class="actions" style="margin-top:14px"><button class="btn" id="ack-btn" disabled>Continue <span class="arr">→</span></button></div>
+</div>
+
+<div id="tool" class="hidden">
+
+<div class="toolbar">
+  <div class="tb-l">
+    <button class="btn-m" id="save-btn">↓ Save (.json)</button>
+    <button class="btn-m" id="load-btn">↑ Load (.json)</button>
+    <input type="file" id="load-f" accept=".json" style="display:none">
+    <button class="btn-m" id="clear-btn">⟲ Clear all</button>
+  </div>
+  <span class="pill pill-g" id="status-pill">New engagement</span>
+</div>
+
+<div id="sections"></div>
+
+<div class="msg err" id="msg-err"></div>
+<div class="msg okm" id="msg-ok"></div>
+
+<div class="actions" style="margin:18px 0">
+  <button class="btn" id="gen-report" style="font-size:14px;padding:14px 22px">Generate TP Report (.docx) <span class="arr">→</span></button>
+  <button class="btn btn-s" id="gen-mrl" style="font-size:14px;padding:14px 22px">Generate MRL (.docx) <span class="arr">→</span></button>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-ey">INTERNAL TOOL · DEVELOPED FOR</div>
+  <div class="footer-n">ABAdvisory Group <em>LLP</em></div>
+  <div class="footer-tag">Your Global Transfer Pricing Partner</div>
+</div>
+
+</div>
+<script>
+(function(){
+'use strict';
+
+/* ===================== STATE ===================== */
+const ST={
+  firm:{name:'',addr1:'',addr2:'',addr3:'',attention:'',logo:null,cover:null},
+  client:{name:'',abbr:'',country:'UAE',biz:'',industry:'',entityType:'spv'},
+  fin:{currency:'AED',aedNote:'',fyeLabel:'',fyeYear:'',revenue:'',reportDate:'',draft:true,
+    shareholding:[{name:'',pct:'',amt:''}],
+    relatedParties:[{name:'',cat:'RP & CP',basis:''}]},
+  kmps:[newKMP()],
+  bench:{useSG:true,useECOC:false,useOPOR:true,order:['opor','sg','ecoc'],
+    sg:{guideName:'Michael Page',industry:'',rangeSummary:'',roles:[{yr:'',role:'',from:'',avg:'',to:''}],override:''},
+    ecoc:{mode:'ratio',tpEC:'',tpOC:'',tpRatio:'',comps:null,csvName:'',override:''},
+    opor:{mode:'ratio',pl:{rev:'',oi:'',cor:'',emp:'',dep:'',fin:'',gna:'',oth:'',nonop:''},tpRatio:'',comps:null,csvName:'',override:''}},
+  search:{regions:[
+      {label:'UAE',result:'0',rows:defaultCriteria()},
+      {label:'MENA & Türkiye',result:'0',rows:defaultCriteria()},
+      {label:'Eastern Europe, EU [27], MENA, Iceland, Norway, Switzerland, UAE & UK',result:'',rows:defaultCriteria()}],
+    manual:[{reason:'Non-Comparable Services',count:''},{reason:'Non-Comparable Function',count:''},{reason:'Insufficient Information',count:''},{reason:'Possible Significant Controlled Transactions',count:''}],
+    totalFound:'',screenshots:[]},
+  risks:[
+    {risk:'Market Risks',kmp:'Limited',co:'Significant'},
+    {risk:'Operational Risks',kmp:'Limited',co:'Significant'},
+    {risk:'Compliance and Regulatory Risks',kmp:'Limited',co:'Significant'},
+    {risk:'Reputation Risks',kmp:'Limited',co:'Significant'},
+    {risk:'Financial Risks',kmp:'Limited',co:'Significant'}],
+  notes:{scope:'',exec:'',fa:'',ea:''},
+  mrl:{date:'',signatory:'Authorised Signatory'}
+};
+
+function newKMP(){return{title:'Mr.',name:'',designation:'',annual:'',monthly:'',qualification:'',experience:'',profile:'',functions:'',attributes:''}}
+function defaultCriteria(){return[
+  {c:'1. All companies in the scope of analysis',d:'',n:''},
+  {c:'2. World region/Country/Region in country',d:'Address of incorporation only: <region>',n:''},
+  {c:'3. NACE Rev. 2 (Primary codes only)',d:'',n:''},
+  {c:'4. US SIC (Primary codes only)',d:'',n:''},
+  {c:'5. NAICS 2022 (Primary codes only)',d:'',n:''},
+  {c:'6. Status',d:'Active companies, Unknown situation',n:''},
+  {c:'7. BvD Independence indicator',d:'A+, A, A-, B+, B, B-, U',n:''},
+  {c:'8. All companies with a website address',d:'',n:''},
+  {c:'9. All companies with overview information',d:'',n:''},
+  {c:'10. All companies with a trade description',d:'',n:''},
+  {c:'11. Standardised legal form',d:'Public limited company, Private limited company, Other legal form',n:''},
+  {c:'12. Operating revenue (Turnover) (m USD)',d:'min=1, for at least 2 of the 3 selected periods',n:''},
+  {c:'13. Operating profit (loss) [EBIT] (m USD)',d:'min=0, for at least 2 of the 3 selected periods',n:''},
+  {c:'14. Consolidation code',d:'U1 (unconsolidated accounts with no consolidated companion)',n:''},
+  {c:'15. Shareholders with subsidiaries by profile (excluded)',d:'Corporate/Financial/PE/Funds owning 50.01–100%',n:''},
+  {c:'16. Subsidiaries with shareholders by profile (excluded)',d:'Corporate/Financial/Individuals/Public owning together 50.01–100%',n:''},
+  {c:'17. Activity text search (include)',d:'Industry-relevant keyword set',n:''},
+  {c:'18. Activity text search (exclude)',d:'Non-comparable activity keyword set',n:''},
+  {c:'Boolean search',d:'1 and 2 and (3 or 4 or (5 and 17)) and 6…14 and not 15 and not 16 and not 18',n:''}
+]}
+
+/* ===================== HELPERS ===================== */
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function num(v){if(v===''||v==null)return null;const n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?null:n}
+function fmtN(n,d){if(n==null||isNaN(n))return'—';return Number(n).toLocaleString('en-US',{minimumFractionDigits:d==null?0:d,maximumFractionDigits:d==null?0:d})}
+function fmtP(n,d){if(n==null||isNaN(n))return'N.A.';return Number(n).toFixed(d==null?2:d)+'%'}
+function showErr(m){const e=$('msg-err');e.textContent=m;e.classList.add('show');$('msg-ok').classList.remove('show');e.scrollIntoView({behavior:'smooth',block:'center'})}
+function showOk(m){const e=$('msg-ok');e.textContent=m;e.classList.add('show');$('msg-err').classList.remove('show');setTimeout(function(){e.classList.remove('show')},4000)}
+function clearMsg(){$('msg-err').classList.remove('show')}
+function quartileInc(vals,q){const v=vals.slice().sort(function(a,b){return a-b});const n=v.length;if(n===0)return null;const pos=(n-1)*q;const lo=Math.floor(pos);const fr=pos-lo;return lo+1<n?v[lo]+fr*(v[lo+1]-v[lo]):v[lo]}
+function fyLabels(){const y=parseInt(ST.fin.fyeYear)||new Date().getFullYear();return{y3:'FYE '+y,y2:'FYE '+(y-1),y1:'FYE '+(y-2),w:'FYE '+(y-2)+'-'+String(y).slice(2)}}
+
+/* ===================== AI PROMPTS ===================== */
+const PROMPTS={
+  profile:'You are a transfer pricing documentation specialist drafting a KMP profile for a UAE transfer pricing study report on payment of managerial remuneration.\n\nKMP designation: [DESIGNATION e.g., Chairman / Managing Director / Director]\nQualification: [QUALIFICATION]\nYears of experience: [YEARS]\nIndustries/sectors: [SECTORS e.g., real estate, investment holding, trading]\nRough notes on role: [PASTE YOUR ROUGH NOTES ON WHAT THIS PERSON DOES]\nCompany type: [e.g., SPV/investment holding company / trading company / services company]\n\nProduce three blocks in formal consulting language (do not use the person\u2019s real name \u2014 write "the KMP"; I will substitute the name):\n1. PROFILE PARAGRAPH \u2014 one paragraph (~80-110 words) summarising executive background and how it enables contribution to the Company (strategic direction, governance, oversight).\n2. KEY FUNCTIONS \u2014 10 to 12 bullet points, each starting with a strong verb (Establishes / Oversees / Reviews / Leads / Evaluates / Represents / Monitors...), describing functions performed for the Company.\n3. PROFESSIONAL ATTRIBUTES \u2014 8 to 10 bullet points describing experience, expertise and capabilities.\n\nMatch the tone of a Big-4 style UAE TP report. No headings other than the three block labels. No placeholders in the output.',
+  bizdesc:'You are a transfer pricing documentation specialist. Draft a 2-3 sentence business description for a UAE company for use in a TP study report Background section.\n\nCompany type: [e.g., SPV holding equity and non-equity assets / interior fit-out contractor / trading company]\nKey activities: [LIST]\nAny revenue figure to mention: [AED AMOUNT or skip]\n\nFormal, factual tone. Third person ("the Company"). No marketing language.',
+  needkmp:'You are a transfer pricing documentation specialist. Draft the "Need for KMPs in the Company" section for a UAE TP report on payment of managerial remuneration.\n\nCompany type and activities: [DESCRIBE \u2014 e.g., SPV holding investments / trading in electronics / interior contracting]\nNumber of KMPs: [N]\nTheir broad roles: [e.g., strategy, investment decisions, governance, stakeholder management]\n\nProduce: one opening paragraph (~100 words) explaining why experienced KMPs are essential for this type of company, followed by 6-7 titled bullet blocks (bold title + 2-3 sentence explanation) covering areas such as Strategic Leadership, Investment/Commercial Evaluation, Portfolio/Operations Management, Business Development & Stakeholder Management, Corporate Governance & Regulatory Oversight, Risk Management, and Organisational Stability. Formal UAE TP report tone.'};
+
+/* ===================== SECTION SHELL ===================== */
+const SECDEFS=[
+  {id:'s-firm',t:'01 · Firm & Branding',m:'Consulting firm · cover page · logo · watermark',r:renderFirm},
+  {id:'s-client',t:'02 · Client & Entity',m:'Company details · entity type · industry',r:renderClient},
+  {id:'s-fin',t:'03 · Financials & Parties',m:'FYE · revenue · shareholding · related parties',r:renderFin},
+  {id:'s-kmp',t:'04 · KMP Details',m:'Profiles · remuneration · functions · attributes',r:renderKMP},
+  {id:'s-bench',t:'05 · Benchmarking',m:'Methods · order · tested party data · comparables CSV',r:renderBench},
+  {id:'s-search',t:'06 · Search Process & Annexures',m:'Screening tables · manual review · screenshots',r:renderSearch},
+  {id:'s-risk',t:'07 · Risk Allocation & Notes',m:'Risk table · section notes · MRL details',r:renderRisk}
+];
+const openSecs=new Set(['s-firm']);
+
+function renderAll(){
+  $('sections').innerHTML=SECDEFS.map(function(s){return '<div class="sec '+(openSecs.has(s.id)?'open':'')+'" data-sid="'+s.id+'"><div class="sec-head" data-toggle="'+s.id+'"><div class="sec-tw"><div class="sec-t">'+esc(s.t)+'</div><div class="sec-m">'+esc(s.m)+'</div></div><span class="chev">›</span></div><div class="sec-body" id="body-'+s.id+'"></div></div>'}).join('');
+  SECDEFS.forEach(function(s){$('body-'+s.id).innerHTML=s.r()});
+  wireInputs();
+}
+
+function imgUploader(key,cur,label,hint){
+  if(cur&&cur.dataUrl){
+    return '<div class="img-block"><div class="img-prev"><img src="'+cur.dataUrl+'"><div class="img-ctl"><button class="btn-m" data-img="'+key+'" data-act="up">Replace</button><button class="btn-m" data-img="'+key+'" data-act="rm" style="color:var(--err)">Remove</button><span class="hlp">'+esc(cur.name||'')+'</span></div></div><input type="file" data-img-input="'+key+'" accept="image/png,image/jpeg" style="display:none"></div>';
+  }
+  return '<div class="img-block"><div class="img-empty" data-img="'+key+'" data-act="up"><span class="img-icon">↑</span><div>'+esc(label)+'</div><div class="hlp">'+esc(hint||'')+'</div></div><input type="file" data-img-input="'+key+'" accept="image/png,image/jpeg" style="display:none"></div>';
+}
+
+function promptCard(key,title){
+  const pt=(PROMPTS[key]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\[([^\]]+)\]/g,'<span style="background:rgba(230,185,30,.18);padding:1px 3px;border-radius:2px;color:var(--gdd);font-weight:500">[$1]</span>');
+  return '<div class="pcard" data-pcard="'+key+'"><div class="pcard-h" data-ptoggle="'+key+'"><span class="pcard-b">'+esc(title)+'</span><button class="pcard-t">Show prompt</button></div><div class="pcard-body"><div class="hlp" style="margin-bottom:8px"><strong>How to use:</strong> Copy the prompt, open <strong>Claude</strong> (claude.ai) or ChatGPT, paste it, replace the [PLACEHOLDER] values with rough notes, and paste the AI\u2019s output back into the field above. No client data leaves this tool.</div><div class="ptext">'+pt+'</div><button class="pcopy" data-pcopy="'+key+'">Copy prompt to clipboard</button><div class="pnote">Recommended: Claude (claude.ai) first; also works with ChatGPT.</div></div></div>';
+}
+
+/* ===================== SECTION RENDERERS ===================== */
+function renderFirm(){
+  const f=ST.firm,o=ST.fin;
+  return '<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Consulting Firm Name *</div><input class="inp" data-b="firm.name" value="'+esc(f.name)+'" placeholder="e.g., Brooks Management Consultancies"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Attention (for MRL addressee)</div><input class="inp" data-b="firm.attention" value="'+esc(f.attention)+'" placeholder="e.g., Mr. A &amp; Ms. B"></div></div>'
+    +'</div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Address line 1</div><input class="inp" data-b="firm.addr1" value="'+esc(f.addr1)+'"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Address line 2</div><input class="inp" data-b="firm.addr2" value="'+esc(f.addr2)+'"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Address line 3</div><input class="inp" data-b="firm.addr3" value="'+esc(f.addr3)+'"></div></div>'
+    +'</div><div class="divider"></div><div class="row">'
+    +'<div class="col"><div class="item-l" style="font-size:13.5px">Cover page image (full page)</div><div class="hlp" style="margin-bottom:6px">Upload your designed cover (with firm logo). Used as page 1. If not provided, a clean typographic cover is generated.</div>'+imgUploader('cover',f.cover,'Click to upload cover image (PNG/JPG)','Recommended portrait A4 proportion')+'</div>'
+    +'<div class="col"><div class="item-l" style="font-size:13.5px">Firm logo (optional)</div><div class="hlp" style="margin-bottom:6px">Shown in the report page header (top-right) when provided.</div>'+imgUploader('logo',f.logo,'Click to upload logo (PNG/JPG)','Small, e.g., 300px wide')+'</div>'
+    +'</div><div class="divider"></div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Report Date</div><input class="inp" data-b="fin.reportDate" value="'+esc(o.reportDate)+'" placeholder="e.g., 15 March 2026"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Draft watermark</div><div class="radio-group" data-radio="fin.draft">'
+    +'<label class="radio-pill '+(o.draft?'active':'')+'" data-val="1">DRAFT watermark on</label>'
+    +'<label class="radio-pill '+(!o.draft?'active':'')+'" data-val="0">Off (final)</label>'
+    +'</div></div></div></div>';
+}
+
+function renderClient(){
+  const c=ST.client;
+  const et=[['spv','SPV / Investment holding'],['trading','Trading / Distribution'],['services','Services'],['manufacturing','Manufacturing'],['realestate','Real estate development']];
+  return '<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Client Company Name *</div><input class="inp" data-b="client.name" value="'+esc(c.name)+'" placeholder="e.g., Fajr Interiors LLC"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Preferred short name / abbreviation</div><input class="inp" data-b="client.abbr" value="'+esc(c.abbr)+'" placeholder="e.g., Fajr"></div></div>'
+    +'</div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Country</div><input class="inp" data-b="client.country" value="'+esc(c.country)+'"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Industry</div><input class="inp" data-b="client.industry" value="'+esc(c.industry)+'" placeholder="e.g., Real estate / Interior fit-out"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Entity type (drives templates)</div><select class="sel" data-b="client.entityType">'+et.map(function(e){return '<option value="'+e[0]+'" '+(c.entityType===e[0]?'selected':'')+'>'+e[1]+'</option>'}).join('')+'</select></div></div>'
+    +'</div>'
+    +'<div class="field"><div class="lbl">Business description (used in Background)</div><textarea class="ta" data-b="client.biz" rows="3" placeholder="2-3 sentences on the Company\u2019s activities">'+esc(c.biz)+'</textarea></div>'
+    +promptCard('bizdesc','AI prompt — business description');
+}
+
+function renderFin(){
+  const f=ST.fin;
+  const shRows=f.shareholding.map(function(r,i){return '<tr>'
+    +'<td><input data-t="fin.shareholding" data-r="'+i+'" data-c="name" value="'+esc(r.name)+'" placeholder="Shareholder"></td>'
+    +'<td style="width:110px"><input data-t="fin.shareholding" data-r="'+i+'" data-c="pct" value="'+esc(r.pct)+'" placeholder="40.00%"></td>'
+    +'<td style="width:130px"><input data-t="fin.shareholding" data-r="'+i+'" data-c="amt" value="'+esc(r.amt)+'" placeholder="Amount"></td>'
+    +'<td class="act"><button class="rmb" data-rmrow="fin.shareholding" data-r="'+i+'">×</button></td></tr>'}).join('');
+  const rpRows=f.relatedParties.map(function(r,i){return '<tr>'
+    +'<td><input data-t="fin.relatedParties" data-r="'+i+'" data-c="name" value="'+esc(r.name)+'" placeholder="Related party / connected person"></td>'
+    +'<td style="width:110px"><input data-t="fin.relatedParties" data-r="'+i+'" data-c="cat" value="'+esc(r.cat)+'" placeholder="RP / CP / RP &amp; CP"></td>'
+    +'<td><input data-t="fin.relatedParties" data-r="'+i+'" data-c="basis" value="'+esc(r.basis)+'" placeholder="e.g., Art. 35(1) / 36(2) of the UAE CT Law"></td>'
+    +'<td class="act"><button class="rmb" data-rmrow="fin.relatedParties" data-r="'+i+'">×</button></td></tr>'}).join('');
+  return '<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">FYE label *</div><input class="inp" data-b="fin.fyeLabel" value="'+esc(f.fyeLabel)+'" placeholder="e.g., 31 December 2025"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">FYE year *</div><input class="inp" data-b="fin.fyeYear" value="'+esc(f.fyeYear)+'" placeholder="e.g., 2025"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Reporting currency</div><input class="inp" data-b="fin.currency" value="'+esc(f.currency)+'"></div></div>'
+    +'</div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Gross revenue (FYE, in currency)</div><input class="inp" data-b="fin.revenue" value="'+esc(f.revenue)+'" placeholder="e.g., 17,500,000"></div></div>'
+    +'<div class="col2"><div class="field"><div class="lbl">AED equivalent note (only if currency ≠ AED)</div><input class="inp" data-b="fin.aedNote" value="'+esc(f.aedNote)+'" placeholder="e.g., equivalent to AED 17,500,000 at closing rate"></div></div>'
+    +'</div>'
+    +'<div class="item"><div class="item-l">Shareholding structure (as on FYE)</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Name of shareholder</th><th>% of shareholding</th><th>Amount</th><th>—</th></tr></thead><tbody>'+shRows+'</tbody></table></div><div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="fin.shareholding">+ Add row</button></div></div>'
+    +'<div class="item"><div class="item-l">Identified Related Parties / Connected Persons</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Name</th><th>Categorisation</th><th>Legal basis under CT Law</th><th>—</th></tr></thead><tbody>'+rpRows+'</tbody></table></div><div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="fin.relatedParties">+ Add row</button></div></div>';
+}
+
+function kmpTotal(){return ST.kmps.reduce(function(a,k){return a+(num(k.annual)||0)},0)}
+
+function renderKMP(){
+  const cards=ST.kmps.map(function(k,i){return '<div class="kmp-card">'
+    +'<div class="kmp-head"><span class="kmp-title">KMP '+(i+1)+(k.name?' — '+esc(k.title+' '+k.name):'')+'</span>'
+    +'<span>'+(ST.kmps.length>1?'<button class="rmb" data-rmkmp="'+i+'">Remove</button> ':'')
+    +'<button class="btn-m" data-dupkmp="'+i+'">⧉ Duplicate</button></span></div>'
+    +'<div class="kmp-body"><div class="row">'
+    +'<div class="col" style="max-width:90px"><div class="field"><div class="lbl">Title</div><select class="sel" data-k="'+i+'" data-f="title"><option '+(k.title==='Mr.'?'selected':'')+'>Mr.</option><option '+(k.title==='Ms.'?'selected':'')+'>Ms.</option><option '+(k.title==='Dr.'?'selected':'')+'>Dr.</option></select></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Name *</div><input class="inp" data-k="'+i+'" data-f="name" value="'+esc(k.name)+'"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Designation *</div><input class="inp" data-k="'+i+'" data-f="designation" value="'+esc(k.designation)+'" placeholder="e.g., Chairman / Managing Director / Director"></div></div>'
+    +'</div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Annual remuneration ('+esc(ST.fin.currency||'AED')+') *</div><input class="inp" data-k="'+i+'" data-f="annual" value="'+esc(k.annual)+'" placeholder="e.g., 600,000"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Per month (auto ÷12, editable)</div><input class="inp" data-k="'+i+'" data-f="monthly" value="'+esc(k.monthly)+'" placeholder="auto"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Qualification</div><input class="inp" data-k="'+i+'" data-f="qualification" value="'+esc(k.qualification)+'"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Experience (years/summary)</div><input class="inp" data-k="'+i+'" data-f="experience" value="'+esc(k.experience)+'"></div></div>'
+    +'</div>'
+    +'<div class="field"><div class="lbl">Profile paragraph</div><textarea class="ta" data-k="'+i+'" data-f="profile" rows="3" placeholder="One paragraph on background &amp; how it enables contribution to the Company">'+esc(k.profile)+'</textarea></div>'
+    +'<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Key functions performed (one per line → bullets)</div><textarea class="ta" data-k="'+i+'" data-f="functions" rows="6" placeholder="Establishes the Company\u2019s strategic direction...">'+esc(k.functions)+'</textarea></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Professional attributes (one per line → bullets)</div><textarea class="ta" data-k="'+i+'" data-f="attributes" rows="6" placeholder="More than two decades of executive leadership...">'+esc(k.attributes)+'</textarea></div></div>'
+    +'</div></div></div>'}).join('');
+  return cards
+    +'<div class="actions"><button class="btn btn-s" id="add-kmp">+ Add KMP</button><span class="pill pill-g">'+ST.kmps.length+' KMP(s) · total '+fmtN(kmpTotal())+' '+esc(ST.fin.currency||'AED')+'</span></div>'
+    +promptCard('profile','AI prompt — KMP profile, functions &amp; attributes')
+    +promptCard('needkmp','AI prompt — "Need for KMPs" narrative (optional custom)')
+    +'<div class="field" style="margin-top:12px"><div class="lbl">Custom "Need for KMPs" narrative (optional — leave blank to use the built-in template for the selected entity type)</div><textarea class="ta" data-b="notes.fa" rows="4" placeholder="Bullet lines starting with • or - become bullets. Lines like **Strategic Leadership:** text become titled bullets.">'+esc(ST.notes.fa)+'</textarea></div>';
+}
+
+function oporDerived(){
+  const p=ST.bench.opor.pl;
+  const tor=(num(p.rev)||0)+(num(p.oi)||0);
+  const texp=(num(p.cor)||0)+(num(p.emp)||0)+(num(p.dep)||0)+(num(p.fin)||0)+(num(p.gna)||0)+(num(p.oth)||0);
+  const oc=texp-(num(p.nonop)||0);
+  const op=tor-oc;
+  return{tor:tor,texp:texp,oc:oc,op:op,ratio:tor>0?op/tor*100:null};
+}
+function ecocDerived(){const e=num(ST.bench.ecoc.tpEC),o=num(ST.bench.ecoc.tpOC);return(e!=null&&o&&o!==0)?e/o*100:null}
+function tpRatioFor(mkey){
+  const m=ST.bench[mkey];
+  if(m.mode==='ratio')return num(m.tpRatio);
+  return mkey==='opor'?oporDerived().ratio:ecocDerived();
+}
+function computeQuartiles(mkey){
+  const comps=ST.bench[mkey].comps;
+  const out={y1:{},y2:{},y3:{},w:{}};
+  if(!comps)return out;
+  ['y1','y2','y3','w'].forEach(function(col){
+    const vals=comps.rows.map(function(r){return r[col]}).filter(function(v){return v!=null&&!isNaN(v)});
+    out[col]={lq:quartileInc(vals,.25),med:quartileInc(vals,.5),uq:quartileInc(vals,.75),min:vals.length?Math.min.apply(null,vals):null,max:vals.length?Math.max.apply(null,vals):null,n:vals.length};
+  });
+  return out;
+}
+
+function renderBench(){
+  const b=ST.bench,L=fyLabels();
+  function ordSel(m){
+    const cur=String(b.order.indexOf(m)+1);
+    return '<select class="sel" style="width:60px" data-ord="'+m+'">'+['1','2','3'].map(function(o){return '<option '+(cur===o?'selected':'')+'>'+o+'</option>'}).join('')+'</select>';
+  }
+  function csvPanel(mkey){
+    const m=b[mkey];const comps=m.comps;let preview='';
+    if(comps&&comps.rows.length){
+      const q=computeQuartiles(mkey);
+      preview='<div class="hlp" style="margin-top:6px">Loaded <strong>'+comps.rows.length+'</strong> comparables from '+esc(m.csvName)+' ('+(comps.mode==='amounts'?'amounts':'ratios')+' mode). Weighted quartiles: LQ <strong>'+fmtP(q.w.lq)+'</strong> · Median <strong>'+fmtP(q.w.med)+'</strong> · UQ <strong>'+fmtP(q.w.uq)+'</strong>.</div>';
+    }
+    return '<div class="field" style="margin-top:8px"><div class="lbl">Comparables data mode</div>'
+      +'<div class="radio-group" data-radio="bench.'+mkey+'.mode">'
+      +'<label class="radio-pill '+(m.mode==='ratio'?'active':'')+'" data-val="ratio">Ratios CSV (quick)</label>'
+      +'<label class="radio-pill '+(m.mode==='amounts'?'active':'')+'" data-val="amounts">Amounts CSV (true weighted ΣN/ΣD)</label>'
+      +'</div><div class="hlp">Ratios mode columns: Company, '+L.y1+' %, '+L.y2+' %, '+L.y3+' % — weighted column = simple average of available years. Amounts mode columns: Company, Num/Den per year — weighted = ΣNum/ΣDen. Blanks = N.A.</div></div>'
+      +'<div class="actions"><button class="btn-m" data-csvt="'+mkey+'">↓ CSV template</button><button class="btn-m" data-csvu="'+mkey+'">↑ Upload CSV</button><input type="file" data-csv-input="'+mkey+'" accept=".csv,text/csv" style="display:none"></div>'+preview;
+  }
+  const pl=b.opor.pl;const d=oporDerived();
+  const sgRows=b.sg.roles.map(function(r,i){return '<tr>'
+    +'<td style="width:110px"><input data-t="bench.sg.roles" data-r="'+i+'" data-c="yr" value="'+esc(r.yr)+'" placeholder="MP-2026"></td>'
+    +'<td><input data-t="bench.sg.roles" data-r="'+i+'" data-c="role" value="'+esc(r.role)+'" placeholder="Managing Director"></td>'
+    +'<td style="width:85px"><input data-t="bench.sg.roles" data-r="'+i+'" data-c="from" value="'+esc(r.from)+'" placeholder="90"></td>'
+    +'<td style="width:85px"><input data-t="bench.sg.roles" data-r="'+i+'" data-c="avg" value="'+esc(r.avg)+'" placeholder="110"></td>'
+    +'<td style="width:85px"><input data-t="bench.sg.roles" data-r="'+i+'" data-c="to" value="'+esc(r.to)+'" placeholder="140"></td>'
+    +'<td class="act"><button class="rmb" data-rmrow="bench.sg.roles" data-r="'+i+'">×</button></td></tr>'}).join('');
+
+  let oporBody;
+  if(b.opor.mode==='ratio'){
+    oporBody='<div class="row"><div class="col" style="max-width:240px"><div class="field"><div class="lbl">Tested party OP/OR (%)</div><input class="inp" data-b="bench.opor.tpRatio" value="'+esc(b.opor.tpRatio)+'" placeholder="e.g., 52.32"></div></div></div>';
+  }else{
+    oporBody='<div class="row">'
+      +'<div class="col"><div class="field"><div class="lbl">Revenue</div><input class="inp" data-b="bench.opor.pl.rev" value="'+esc(pl.rev)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Other income</div><input class="inp" data-b="bench.opor.pl.oi" value="'+esc(pl.oi)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Cost of revenue</div><input class="inp" data-b="bench.opor.pl.cor" value="'+esc(pl.cor)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Employee benefits</div><input class="inp" data-b="bench.opor.pl.emp" value="'+esc(pl.emp)+'"></div></div>'
+      +'</div><div class="row">'
+      +'<div class="col"><div class="field"><div class="lbl">Depreciation</div><input class="inp" data-b="bench.opor.pl.dep" value="'+esc(pl.dep)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Financial charges</div><input class="inp" data-b="bench.opor.pl.fin" value="'+esc(pl.fin)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">General &amp; admin</div><input class="inp" data-b="bench.opor.pl.gna" value="'+esc(pl.gna)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Other expenses</div><input class="inp" data-b="bench.opor.pl.oth" value="'+esc(pl.oth)+'"></div></div>'
+      +'</div><div class="row">'
+      +'<div class="col"><div class="field"><div class="lbl">Less: non-operating expenses</div><input class="inp" data-b="bench.opor.pl.nonop" value="'+esc(pl.nonop)+'"></div></div>'
+      +'<div class="col2"><div class="hlp" style="padding-top:18px">Derived: OR <strong>'+fmtN(d.tor)+'</strong> · OC <strong>'+fmtN(d.oc)+'</strong> · OP <strong>'+fmtN(d.op)+'</strong> · <strong>OP/OR '+(d.ratio!=null?fmtP(d.ratio):'—')+'</strong></div></div>'
+      +'</div>';
+  }
+  let ecocBody;
+  if(b.ecoc.mode==='ratio'){
+    ecocBody='<div class="row"><div class="col" style="max-width:240px"><div class="field"><div class="lbl">Tested party EC/OC (%)</div><input class="inp" data-b="bench.ecoc.tpRatio" value="'+esc(b.ecoc.tpRatio)+'" placeholder="e.g., 5.00"></div></div></div>';
+  }else{
+    const ec=ecocDerived();
+    ecocBody='<div class="row">'
+      +'<div class="col"><div class="field"><div class="lbl">Total employee costs (salaries &amp; benefits)</div><input class="inp" data-b="bench.ecoc.tpEC" value="'+esc(b.ecoc.tpEC)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Operating costs</div><input class="inp" data-b="bench.ecoc.tpOC" value="'+esc(b.ecoc.tpOC)+'"></div></div>'
+      +'<div class="col"><div class="hlp" style="padding-top:18px">Derived EC/OC: <strong>'+(ec!=null?fmtP(ec):'—')+'</strong></div></div>'
+      +'</div>';
+  }
+
+  return '<div class="item"><div class="item-l">Select benchmarking method(s) &amp; order</div>'
+    +'<div class="row">'
+    +'<label class="chk '+(b.useOPOR?'on':'')+'"><input type="checkbox" data-chk="bench.useOPOR" '+(b.useOPOR?'checked':'')+'> OP/OR — TNMM '+ordSel('opor')+'</label>'
+    +'<label class="chk '+(b.useSG?'on':'')+'"><input type="checkbox" data-chk="bench.useSG" '+(b.useSG?'checked':'')+'> Salary Guide — Other Method '+ordSel('sg')+'</label>'
+    +'<label class="chk '+(b.useECOC?'on':'')+'"><input type="checkbox" data-chk="bench.useECOC" '+(b.useECOC?'checked':'')+'> EC/OC — Other Method '+ordSel('ecoc')+'</label>'
+    +'</div><div class="hlp">The first-ordered selected method is presented as the MAM; the others appear as corroborative analyses (Article 34(4)).</div></div>'
+    +'<div class="item" '+(b.useOPOR?'':'style="opacity:.45"')+'><div class="item-l">A · OP/OR (TNMM)</div>'
+    +'<div class="field"><div class="lbl">Tested party margin input</div><div class="radio-group" data-radio="bench.opor.mode">'
+    +'<label class="radio-pill '+(b.opor.mode==='ratio'?'active':'')+'" data-val="ratio">Enter margin directly</label>'
+    +'<label class="radio-pill '+(b.opor.mode==='amounts'?'active':'')+'" data-val="amounts">Compute from P&amp;L lines</label>'
+    +'</div></div>'+oporBody+csvPanel('opor')
+    +'<div class="field" style="margin-top:8px"><div class="lbl">Conclusion override (optional — auto-generated if blank)</div><textarea class="ta" data-b="bench.opor.override" rows="2">'+esc(b.opor.override)+'</textarea></div></div>'
+    +'<div class="item" '+(b.useECOC?'':'style="opacity:.45"')+'><div class="item-l">B · EC/OC (Other Method)</div>'
+    +'<div class="field"><div class="lbl">Tested party ratio input</div><div class="radio-group" data-radio="bench.ecoc.mode">'
+    +'<label class="radio-pill '+(b.ecoc.mode==='ratio'?'active':'')+'" data-val="ratio">Enter ratio directly</label>'
+    +'<label class="radio-pill '+(b.ecoc.mode==='amounts'?'active':'')+'" data-val="amounts">Compute from EC &amp; OC</label>'
+    +'</div></div>'+ecocBody+csvPanel('ecoc')
+    +'<div class="field" style="margin-top:8px"><div class="lbl">Conclusion override (optional)</div><textarea class="ta" data-b="bench.ecoc.override" rows="2">'+esc(b.ecoc.override)+'</textarea></div></div>'
+    +'<div class="item" '+(b.useSG?'':'style="opacity:.45"')+'><div class="item-l">C · Salary Guide (Other Method)</div>'
+    +'<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Salary guide name &amp; publisher</div><input class="inp" data-b="bench.sg.guideName" value="'+esc(b.sg.guideName)+'" placeholder="e.g., Michael Page"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Industry selected</div><input class="inp" data-b="bench.sg.industry" value="'+esc(b.sg.industry)+'" placeholder="e.g., Investment &amp; Venture Capital"></div></div>'
+    +'</div>'
+    +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Guide year</th><th>Role</th><th>From (k/month)</th><th>Average</th><th>To</th><th>—</th></tr></thead><tbody>'+sgRows+'</tbody></table></div>'
+    +'<div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="bench.sg.roles">+ Add row</button></div>'
+    +'<div class="row" style="margin-top:8px"><div class="col2"><div class="field"><div class="lbl">Arm\u2019s length range summary *</div><input class="inp" data-b="bench.sg.rangeSummary" value="'+esc(b.sg.rangeSummary)+'" placeholder="e.g., AED 90,000 to AED 140,000 per month"></div></div></div>'
+    +'<div class="field"><div class="lbl">Conclusion override (optional)</div><textarea class="ta" data-b="bench.sg.override" rows="2">'+esc(b.sg.override)+'</textarea></div></div>';
+}
+
+function renderSearch(){
+  const s=ST.search;
+  const regionBlocks=s.regions.map(function(rg,ri){
+    const rows=rg.rows.map(function(r,i){return '<tr>'
+      +'<td style="width:230px"><input data-t="search.regions.'+ri+'.rows" data-r="'+i+'" data-c="c" value="'+esc(r.c)+'"></td>'
+      +'<td><textarea rows="1" data-t="search.regions.'+ri+'.rows" data-r="'+i+'" data-c="d">'+esc(r.d)+'</textarea></td>'
+      +'<td style="width:100px"><input data-t="search.regions.'+ri+'.rows" data-r="'+i+'" data-c="n" value="'+esc(r.n)+'" placeholder="count"></td>'
+      +'<td class="act"><button class="rmb" data-rmrow="search.regions.'+ri+'.rows" data-r="'+i+'">×</button></td></tr>'}).join('');
+    return '<div class="item"><div class="item-l">Region '+(ri+1)+' screening table</div>'
+      +'<div class="row"><div class="col2"><div class="field"><div class="lbl">Region label</div><input class="inp" data-b="search.regions.'+ri+'.label" value="'+esc(rg.label)+'"></div></div>'
+      +'<div class="col"><div class="field"><div class="lbl">Resulting comparables</div><input class="inp" data-b="search.regions.'+ri+'.result" value="'+esc(rg.result)+'" placeholder="e.g., 0 / 666"></div></div></div>'
+      +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Search strategy</th><th>Criteria detail</th><th>Result</th><th>—</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+      +'<div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="search.regions.'+ri+'.rows">+ Add criteria row</button></div></div>'}).join('');
+  const mrRows=s.manual.map(function(r,i){return '<tr>'
+    +'<td><input data-t="search.manual" data-r="'+i+'" data-c="reason" value="'+esc(r.reason)+'"></td>'
+    +'<td style="width:100px"><input data-t="search.manual" data-r="'+i+'" data-c="count" value="'+esc(r.count)+'"></td>'
+    +'<td class="act"><button class="rmb" data-rmrow="search.manual" data-r="'+i+'">×</button></td></tr>'}).join('');
+  const ssItems=s.screenshots.map(function(sc,i){return '<div class="ss-item"><img src="'+sc.dataUrl+'"><div class="ss-meta">'
+    +'<div class="field"><div class="lbl">Caption / annexure label</div><input class="inp" data-t="search.screenshots" data-r="'+i+'" data-c="caption" value="'+esc(sc.caption||'')+'" placeholder="e.g., Annexure A1 — UAE region search"></div></div>'
+    +'<button class="rmb" data-rmss="'+i+'">Remove</button></div></div>'}).join('');
+  return regionBlocks
+    +'<div class="item"><div class="item-l">Manual review rejections</div>'
+    +'<div class="row"><div class="col"><div class="field"><div class="lbl">Total potential comparables (from final region)</div><input class="inp" data-b="search.totalFound" value="'+esc(s.totalFound)+'" placeholder="e.g., 666"></div></div>'
+    +'<div class="col"><div class="hlp" style="padding-top:18px">Accepted (auto) = Total − Σ rejections.</div></div></div>'
+    +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Reject reason</th><th>Count</th><th>—</th></tr></thead><tbody>'+mrRows+'</tbody></table></div>'
+    +'<div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="search.manual">+ Add reason</button></div></div>'
+    +'<div class="item"><div class="item-l">Screenshot annexures (optional)</div>'
+    +'<div class="hlp" style="margin-bottom:8px">Upload TP Catalyst / salary guide screenshots. Each appears on its own annexure page with its caption.</div>'
+    +ssItems
+    +'<div class="img-block"><div class="img-empty" data-addss="1"><span class="img-icon">↑</span><div>Click to add screenshot (PNG/JPG)</div></div><input type="file" id="ss-input" accept="image/png,image/jpeg" style="display:none"></div></div>';
+}
+
+function renderRisk(){
+  const rRows=ST.risks.map(function(r,i){return '<tr>'
+    +'<td><input data-t="risks" data-r="'+i+'" data-c="risk" value="'+esc(r.risk)+'"></td>'
+    +'<td style="width:130px"><input data-t="risks" data-r="'+i+'" data-c="kmp" value="'+esc(r.kmp)+'"></td>'
+    +'<td style="width:130px"><input data-t="risks" data-r="'+i+'" data-c="co" value="'+esc(r.co)+'"></td>'
+    +'<td class="act"><button class="rmb" data-rmrow="risks" data-r="'+i+'">×</button></td></tr>'}).join('');
+  return '<div class="item"><div class="item-l">Risk allocation summary (KMP vs Company)</div>'
+    +'<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Risks assumed</th><th>KMP</th><th>Company</th><th>—</th></tr></thead><tbody>'+rRows+'</tbody></table></div>'
+    +'<div class="actions" style="margin-top:8px"><button class="btn-m" data-addrow="risks">+ Add risk</button></div></div>'
+    +'<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Additional note — Scope section (optional)</div><textarea class="ta" data-b="notes.scope" rows="2">'+esc(ST.notes.scope)+'</textarea></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Additional note — Executive Summary (optional)</div><textarea class="ta" data-b="notes.exec" rows="2">'+esc(ST.notes.exec)+'</textarea></div></div>'
+    +'</div><div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">Additional note — Economic Analysis (optional)</div><textarea class="ta" data-b="notes.ea" rows="2">'+esc(ST.notes.ea)+'</textarea></div></div>'
+    +'</div><div class="divider"></div>'
+    +'<div class="item"><div class="item-l">MRL details</div>'
+    +'<div class="row">'
+    +'<div class="col"><div class="field"><div class="lbl">MRL date</div><input class="inp" data-b="mrl.date" value="'+esc(ST.mrl.date)+'" placeholder="e.g., 20 March 2026 (or leave blank)"></div></div>'
+    +'<div class="col"><div class="field"><div class="lbl">Signatory designation</div><input class="inp" data-b="mrl.signatory" value="'+esc(ST.mrl.signatory)+'"></div></div>'
+    +'</div><div class="hlp">The MRL uses the firm attention line + address from Section 01 and the client + FYE from Sections 02–03.</div></div>';
+}
+
+/* ===================== WIRING ===================== */
+function pathGet(obj,path){return path.split('.').reduce(function(o,k){return o==null?o:o[k]},obj)}
+function pathSet(obj,path,val){const ks=path.split('.');const last=ks.pop();const tgt=ks.reduce(function(o,k){return o[k]},obj);tgt[last]=val}
+function secOfPath(path){
+  if(path.indexOf('fin')===0)return's-fin';
+  if(path.indexOf('bench')===0)return's-bench';
+  if(path.indexOf('search')===0)return's-search';
+  if(path.indexOf('risks')===0)return's-risk';
+  return's-firm';
+}
+function refreshSec(id){const def=SECDEFS.filter(function(s){return s.id===id})[0];if(def){const el=$('body-'+id);if(el)el.innerHTML=def.r()}}
+
+let wired=false;
+function wireInputs(){
+  if(wired)return;wired=true;
+  const root=$('sections');
+
+  root.addEventListener('input',function(e){
+    const t=e.target;
+    if(t.matches('[data-b]')){pathSet(ST,t.getAttribute('data-b'),t.value);return}
+    if(t.matches('[data-t]')){
+      const arr=pathGet(ST,t.getAttribute('data-t'));
+      const r=parseInt(t.getAttribute('data-r')),c=t.getAttribute('data-c');
+      if(arr&&arr[r])arr[r][c]=t.value;
+      return;
+    }
+    if(t.matches('[data-k]')){
+      const i=parseInt(t.getAttribute('data-k')),f=t.getAttribute('data-f');
+      if(ST.kmps[i]){ST.kmps[i][f]=t.value;
+        if(f==='annual'){const a=num(t.value);if(a!=null){ST.kmps[i].monthly=String(Math.round(a/12));const mEl=root.querySelector('[data-k="'+i+'"][data-f="monthly"]');if(mEl)mEl.value=ST.kmps[i].monthly}}}
+      return;
+    }
+  });
+
+  root.addEventListener('change',function(e){
+    const t=e.target;
+    if(t.matches('select[data-b]')){pathSet(ST,t.getAttribute('data-b'),t.value);return}
+    if(t.matches('select[data-k]')){const i=parseInt(t.getAttribute('data-k'));ST.kmps[i][t.getAttribute('data-f')]=t.value;return}
+    if(t.matches('[data-chk]')){pathSet(ST,t.getAttribute('data-chk'),t.checked);refreshSec('s-bench');return}
+    if(t.matches('select[data-ord]')){
+      const m=t.getAttribute('data-ord');const pos=parseInt(t.value)-1;
+      const order=ST.bench.order.filter(function(x){return x!==m});order.splice(pos,0,m);ST.bench.order=order;
+      refreshSec('s-bench');return;
+    }
+    if(t.matches('input[data-img-input]')){handleImg(t);return}
+    if(t.matches('input[data-csv-input]')){handleCSV(t);return}
+    if(t.id==='ss-input'){handleSS(t);return}
+  });
+
+  root.addEventListener('click',function(e){
+    const t=e.target;
+    const tog=t.closest('[data-toggle]');
+    if(tog){const id=tog.getAttribute('data-toggle');const sec=tog.closest('.sec');sec.classList.toggle('open');if(sec.classList.contains('open'))openSecs.add(id);else openSecs.delete(id);return}
+    const rad=t.closest('.radio-pill');
+    if(rad){const grp=rad.closest('[data-radio]');if(!grp)return;const path=grp.getAttribute('data-radio');let val=rad.getAttribute('data-val');
+      if(path==='fin.draft')val=(val==='1');
+      pathSet(ST,path,val);
+      grp.querySelectorAll('.radio-pill').forEach(function(p){p.classList.remove('active')});rad.classList.add('active');
+      if(path.indexOf('bench.')===0)refreshSec('s-bench');
+      return}
+    const add=t.closest('[data-addrow]');
+    if(add){const path=add.getAttribute('data-addrow');const arr=pathGet(ST,path);
+      if(path==='fin.shareholding')arr.push({name:'',pct:'',amt:''});
+      else if(path==='fin.relatedParties')arr.push({name:'',cat:'',basis:''});
+      else if(path==='bench.sg.roles')arr.push({yr:'',role:'',from:'',avg:'',to:''});
+      else if(path==='search.manual')arr.push({reason:'',count:''});
+      else if(path==='risks')arr.push({risk:'',kmp:'',co:''});
+      else arr.push({c:'',d:'',n:''});
+      refreshSec(secOfPath(path));return}
+    const rm=t.closest('[data-rmrow]');
+    if(rm){const path=rm.getAttribute('data-rmrow');const r=parseInt(rm.getAttribute('data-r'));const arr=pathGet(ST,path);
+      arr.splice(r,1);if(arr.length===0){
+        if(path==='fin.shareholding')arr.push({name:'',pct:'',amt:''});
+        else if(path==='fin.relatedParties')arr.push({name:'',cat:'',basis:''});
+        else if(path==='bench.sg.roles')arr.push({yr:'',role:'',from:'',avg:'',to:''});
+        else if(path==='search.manual')arr.push({reason:'',count:''});
+        else if(path==='risks')arr.push({risk:'',kmp:'',co:''});
+        else arr.push({c:'',d:'',n:''});
+      }
+      refreshSec(secOfPath(path));return}
+    const rmk=t.closest('[data-rmkmp]');
+    if(rmk){ST.kmps.splice(parseInt(rmk.getAttribute('data-rmkmp')),1);refreshSec('s-kmp');return}
+    const dup=t.closest('[data-dupkmp]');
+    if(dup){const i=parseInt(dup.getAttribute('data-dupkmp'));ST.kmps.splice(i+1,0,JSON.parse(JSON.stringify(ST.kmps[i])));refreshSec('s-kmp');return}
+    if(t.closest('#add-kmp')){ST.kmps.push(newKMP());refreshSec('s-kmp');return}
+    const imgUp=t.closest('[data-img][data-act="up"]');
+    if(imgUp){const k=imgUp.getAttribute('data-img');const inp=root.querySelector('input[data-img-input="'+k+'"]');if(inp)inp.click();return}
+    const imgRm=t.closest('[data-img][data-act="rm"]');
+    if(imgRm){ST.firm[imgRm.getAttribute('data-img')]=null;refreshSec('s-firm');return}
+    const csvT=t.closest('[data-csvt]');
+    if(csvT){downloadCSVTemplate(csvT.getAttribute('data-csvt'));return}
+    const csvU=t.closest('[data-csvu]');
+    if(csvU){const k=csvU.getAttribute('data-csvu');const inp=root.querySelector('input[data-csv-input="'+k+'"]');if(inp)inp.click();return}
+    if(t.closest('[data-addss]')){$('ss-input').click();return}
+    const rmss=t.closest('[data-rmss]');
+    if(rmss){ST.search.screenshots.splice(parseInt(rmss.getAttribute('data-rmss')),1);refreshSec('s-search');return}
+    const ptog=t.closest('[data-ptoggle]');
+    if(ptog){const card=ptog.closest('.pcard');card.classList.toggle('open');const btn=ptog.querySelector('.pcard-t');btn.textContent=card.classList.contains('open')?'Hide prompt':'Show prompt';return}
+    const pcp=t.closest('[data-pcopy]');
+    if(pcp){const raw=PROMPTS[pcp.getAttribute('data-pcopy')]||'';
+      function done(){pcp.textContent='✓ Copied!';pcp.classList.add('copied');setTimeout(function(){pcp.textContent='Copy prompt to clipboard';pcp.classList.remove('copied')},2000)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fallbackCopy(raw);done()})}
+      else{fallbackCopy(raw);done()}
+      return}
+  });
+}
+function fallbackCopy(text){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta)}
+
+async function compressImg(file,maxDim){
+  return new Promise(function(res,rej){
+    const reader=new FileReader();
+    reader.onload=function(e){const img=new Image();
+      img.onload=function(){let w=img.width,h=img.height;const M=maxDim||1400;
+        if(w>M||h>M){const r=M/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r)}
+        const c=document.createElement('canvas');c.width=w;c.height=h;
+        const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);
+        res({dataUrl:c.toDataURL('image/jpeg',.87),width:w,height:h,name:file.name})};
+      img.onerror=function(){rej(new Error('image load failed'))};img.src=e.target.result};
+    reader.onerror=function(){rej(new Error('read failed'))};reader.readAsDataURL(file)});
+}
+async function handleImg(inp){
+  const file=inp.files&&inp.files[0];if(!file)return;
+  const key=inp.getAttribute('data-img-input');
+  try{ST.firm[key]=await compressImg(file,key==='cover'?1800:600);refreshSec('s-firm');showOk((key==='cover'?'Cover':'Logo')+' uploaded.')}
+  catch(err){showErr('Image error: '+err.message)}
+  inp.value='';
+}
+async function handleSS(inp){
+  const file=inp.files&&inp.files[0];if(!file)return;
+  try{const img=await compressImg(file,1600);img.caption='';ST.search.screenshots.push(img);refreshSec('s-search');showOk('Screenshot added.')}
+  catch(err){showErr('Image error: '+err.message)}
+  inp.value='';
+}
+
+/* ===================== CSV ===================== */
+function parseCSV(text){
+  if(text.charCodeAt(0)===0xFEFF)text=text.slice(1);
+  const lines=[];let cur=[],cell='',q=false;
+  for(let i=0;i<text.length;i++){const ch=text[i];
+    if(q){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++}else if(ch==='"')q=false;else cell+=ch}
+    else{if(ch==='"')q=true;else if(ch===','){cur.push(cell);cell=''}
+      else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;cur.push(cell);if(cur.some(function(x){return String(x).trim()}))lines.push(cur);cur=[];cell=''}
+      else cell+=ch}}
+  if(cell.length||cur.length){cur.push(cell);if(cur.some(function(x){return String(x).trim()}))lines.push(cur)}
+  return lines;
+}
+function downloadCSVTemplate(mkey){
+  const L=fyLabels();const mode=ST.bench[mkey].mode;
+  let hdr;
+  if(mode==='amounts')hdr=['Company Name','Num '+L.y1,'Den '+L.y1,'Num '+L.y2,'Den '+L.y2,'Num '+L.y3,'Den '+L.y3];
+  else hdr=['Company Name',L.y1+' %',L.y2+' %',L.y3+' %'];
+  const csv='\uFEFF'+hdr.join(',')+'\r\n'+hdr.map(function(){return''}).join(',')+'\r\n';
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=mkey+'-comparables-'+mode+'-template.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url)},800);
+}
+function handleCSV(inp){
+  const file=inp.files&&inp.files[0];if(!file)return;
+  const mkey=inp.getAttribute('data-csv-input');
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const rows=parseCSV(ev.target.result);
+      if(rows.length<2)throw new Error('CSV needs a header row plus data rows.');
+      const mode=ST.bench[mkey].mode;
+      const data=[];
+      for(let i=1;i<rows.length;i++){
+        const r=rows[i];const name=(r[0]||'').trim();if(!name)continue;
+        if(mode==='amounts'){
+          const n1=num(r[1]),d1=num(r[2]),n2=num(r[3]),d2=num(r[4]),n3=num(r[5]),d3=num(r[6]);
+          const y1=(n1!=null&&d1)?n1/d1*100:null,y2=(n2!=null&&d2)?n2/d2*100:null,y3=(n3!=null&&d3)?n3/d3*100:null;
+          let sn=0,sd=0;[[n1,d1],[n2,d2],[n3,d3]].forEach(function(p){if(p[0]!=null&&p[1]){sn+=p[0];sd+=p[1]}});
+          data.push({name:name,y1:y1,y2:y2,y3:y3,w:sd?sn/sd*100:null});
+        }else{
+          const y1=num(r[1]),y2=num(r[2]),y3=num(r[3]);
+          const av=[y1,y2,y3].filter(function(v){return v!=null});
+          data.push({name:name,y1:y1,y2:y2,y3:y3,w:av.length?av.reduce(function(a,b){return a+b},0)/av.length:null});
+        }
+      }
+      if(!data.length)throw new Error('No data rows found.');
+      ST.bench[mkey].comps={mode:mode,rows:data};
+      ST.bench[mkey].csvName=file.name;
+      refreshSec('s-bench');
+      showOk('Loaded '+data.length+' comparables for '+mkey.toUpperCase()+'.');
+    }catch(err){showErr('CSV error: '+err.message)}
+  };
+  reader.readAsText(file);inp.value='';
+}
+
+/* ===================== SAVE / LOAD / GATE ===================== */
+function deepAssign(tgt,src){
+  Object.keys(src).forEach(function(k){
+    if(Array.isArray(src[k]))tgt[k]=src[k];
+    else if(src[k]&&typeof src[k]==='object'&&tgt[k]&&typeof tgt[k]==='object')deepAssign(tgt[k],src[k]);
+    else tgt[k]=src[k];
+  });
+}
+$('save-btn').addEventListener('click',function(){
+  const payload={_tool:'KMP TP Report Generator',_v:1,_saved:new Date().toISOString(),state:ST};
+  const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  const s=(ST.client.name||'kmp-report').replace(/[^a-z0-9_-]+/gi,'-').slice(0,50);
+  a.href=url;a.download=s+'-kmp-tp-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url)},800);showOk('Progress saved.');
+});
+$('load-btn').addEventListener('click',function(){$('load-f').click()});
+$('load-f').addEventListener('change',function(e){
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{const p=JSON.parse(ev.target.result);
+      if(!p._tool||!p.state)throw new Error('Not a KMP TP Report progress file.');
+      deepAssign(ST,p.state);renderAll();
+      $('status-pill').textContent=(ST.client.name||'Loaded engagement');
+      showOk('Progress loaded.');
+    }catch(err){showErr('Could not load: '+err.message)}
+  };reader.readAsText(f);e.target.value='';
+});
+$('clear-btn').addEventListener('click',function(){
+  if(!confirm('Clear everything and start a new engagement?'))return;
+  location.reload();
+});
+$('ack-w').addEventListener('click',function(e){
+  if(e.target.tagName!=='INPUT'&&e.target.tagName!=='LABEL'){$('ack-c').checked=!$('ack-c').checked;$('ack-c').dispatchEvent(new Event('change'))}
+});
+$('ack-c').addEventListener('change',function(e){$('ack-btn').disabled=!e.target.checked});
+$('ack-btn').addEventListener('click',function(){$('gate').classList.add('hidden');$('tool').classList.remove('hidden');renderAll()});
+
+/* ===================== FIXED UAE BOILERPLATE ===================== */
+function firmN(){return ST.firm.name||'the Firm'}
+function coN(){return ST.client.abbr||ST.client.name||'the Company'}
+
+const BP={
+  scope:function(){const f=firmN(),c=coN();return[
+    'This report has been prepared by '+f+' ("the Firm") to assess and document the transaction pertaining to payment of managerial remuneration between '+ST.client.name+' ("the Company") and its related parties/connected persons.',
+    'The analysis is conducted using the arm\u2019s length principle, as outlined in the UAE Corporate Tax Law (Federal Decree-Law No. 47 of 2022), the Corporate Tax Guide on Transfer Pricing (CTGTP1) and other relevant official guidance, supplemented by the OECD Transfer Pricing Guidelines where applicable.',
+    'The findings presented are based on data and explanations supplied by the Company\u2019s management, as well as any assumptions made by them.',
+    'The Firm accepts no responsibility for conclusions drawn from inaccurate or incomplete information provided regarding the Company\u2019s operations and dealings with related or connected parties. It is the responsibility of the Company\u2019s management to maintain all documentation and records as required under the UAE transfer pricing regulations.',
+    'In conducting the analysis, the Firm has relied on publicly available sources and databases, including websites and the TP Catalyst database. As not all third-party data has been independently verified, the Firm cannot guarantee the accuracy of such information.',
+    'Should there be any changes to the Company\u2019s business operations after this report\u2019s issuance, an update would be necessary. However, the Firm assumes no obligation to revise the report to reflect such changes or any subsequent developments or events.',
+    'Lastly, this report, or any part of it, may not be shared with third parties by any means unless legally required or unless prior written consent has been obtained from the Firm. Furthermore, neither the Firm nor its representatives are obligated to provide testimony or attend legal proceedings in connection with this report unless specific agreements are made.']},
+  faIntro:[
+    'As per Para 5.1.1.2 of the Corporate Tax Guide on Transfer Pricing - CTGTP1, a Functional Analysis seeks to identify the economically significant activities and responsibilities undertaken, assets used or contributed, and risks assumed by the Related Parties or Connected Persons in a Controlled Transaction.',
+    'The Functional Analysis focuses on the functions performed by the parties and the capabilities they provide to the Controlled Transaction. These functions and capabilities include operational activities such as procurement, marketing and sales, as well as decision-making (for example, business strategy and risks). The analysis also considers the type of assets, as well as the nature of the assets used.',
+    'Further, the Functional Analysis also considers the material risks assumed by each Related Party. Usually, in an open market, the assumption of increased risk would also be compensated by an increase in the expected return. Similarly, the actual assumption and allocation of risks between two Related Parties or Connected Persons would likely affect the pricing of the transaction, so the comparable transactions would also need to reflect the increased risk.',
+    'Para 5.1.1.2 of CTGTP1 also provides a six-step process for analysing the risks in a Controlled Transaction, in order, summarised as follows:'],
+  sixSteps:[
+    'Identify economically significant risks with specificity;',
+    'Determine the contractual assumption of risks by the Related Parties based on the terms of the underlying arrangement(s);',
+    'Undertake a Functional Analysis to determine how the Related Parties in the Controlled Transaction operate in relation to the assumption and management of the economically significant risks;',
+    'Determine whether the contractual assumption of risk is consistent with the conduct of the Related Parties, by assessing whether the Related Parties operate in line with the relevant contractual terms and whether the party assuming the risk exercises control over the risk and has the financial capacity to assume it;',
+    'Where the party assuming the risk does not control the risk or does not have the financial capacity to assume it, apply the guidance on allocating risk;',
+    'Determine the Arm\u2019s Length Price for the Controlled Transaction, taking into account the financial and other consequences of risk assumption, as appropriately allocated, and appropriately compensating risk management functions.'],
+  faClose:'As the functions performed, assets employed and risks assumed by the related parties significantly influence profitability, a functional analysis outlining these elements and their allocation between the parties has been undertaken in the ensuing paragraphs to assess profit contribution and determine appropriate inter-company pricing.',
+  faTxnIntro:function(){return 'During the year under consideration, '+coN()+' has paid managerial remuneration to its Key Management Personnel ("KMP") for the strategic, governance and executive functions performed by them for the Company. The details of the KMP and the remuneration paid are summarised below, followed by the profile and functions of each KMP.'},
+  eaMethodsIntro:[
+    'As per the UAE TP provisions, there are five internationally accepted Transfer Pricing methods detailed in the OECD Transfer Pricing Guidelines and internalised under Article 34(3) of the UAE CT Law, namely:'],
+  eaFiveMethods:[
+    'Comparable Uncontrolled Price ("CUP") Method \u2014 compares the price charged for property or services transferred in a Controlled Transaction to the price charged in a Comparable Uncontrolled Transaction in comparable circumstances.',
+    'Resale Price Method ("RPM") \u2014 based on the price at which a product purchased from a related party is resold to an independent party; generally applied where the reseller adds relatively little value to the property transacted.',
+    'Cost Plus Method ("CPM") \u2014 considers the direct and indirect costs incurred by a supplier in a Controlled Transaction, with an appropriate mark-up; most useful for semi-finished goods or provision of services.',
+    'Transactional Net Margin Method ("TNMM") \u2014 examines the net profit earned from a Controlled Transaction relative to an appropriate base, such as costs, sales or assets.',
+    'Profit Split Method ("PSM") \u2014 seeks to determine the division of profits that independent parties would have expected to realise; applicable mainly where unique intangibles are involved or transactions are so interrelated that they cannot be evaluated separately.'],
+  eaAlt:'It is also pertinent to note that as per Article 34(4) of the UAE CT Law, alternative methods may be used to determine the arm\u2019s length price if the five standard TP methods cannot be reasonably applied, provided the result still aligns with the arm\u2019s length principle.',
+  eaMAMGuide:[
+    'Further, Para 5.2.2 of CTGTP1 states that the selection of the Most Appropriate Method ("MAM") should take into account: the strengths and weaknesses of the five recognised methods; the appropriateness of the method in view of the nature of the Controlled Transaction as determined by the Functional Analysis; the availability of reliable information (in particular on uncontrolled comparables) needed to apply each method; and the degree of comparability between the controlled and independent transactions, including the accuracy of any comparability adjustments required.',
+    'Para 5.2.3 of CTGTP1 permits the use of a combination of methods \u2014 for example, supplementing a primary method with a corroborative analysis to confirm that the result aligns with the arm\u2019s length principle.',
+    'Para 5.3 of CTGTP1 provides detailed guidance on arriving at the arm\u2019s length price, broadly covering the choice of tested party, availability of comparable data, selection of potential comparables, comparability adjustments, determination of the arm\u2019s length range, timing of data collection and the use of multiple year data.',
+    'Considering the above guidance, the economic analysis of the covered transaction is presented in the following paragraphs.'],
+  testedParty:function(){return[
+    'As per Para 5.3.1 of CTGTP1, the tested party is the one where (i) a Transfer Pricing method can be applied in the most reliable manner, and (ii) the most reliable comparables can be found; i.e., the party with the less complex functional profile.',
+    'Considering the above, for the transaction under consideration, '+coN()+' has been chosen as the tested party as its profitability and financial results can be reliably ascertained from its financial statements.']},
+  dataAvail:function(){return[
+    'To determine whether any one of the transfer pricing methods can be applied, the availability, coverage and reliability of the data necessary for the application of the method is important.',
+    'Internal Data \u2014 '+coN()+' does not undertake the same or similar transactions with third parties under comparable circumstances. Accordingly, internal comparable data could not be obtained for the transaction pertaining to payment of managerial remuneration.',
+    'External Data \u2014 external comparable data, i.e., data of independent companies engaged in a similar business as undertaken by the Company, can be identified from commercial databases.',
+    'As per Para 5.3.2.1 of CTGTP1, internal comparables generally have a more direct and closer relationship to the transaction under review than external comparables. However, given the unavailability of internal data, external data sources have been considered for the comparability analysis.']},
+  mamReject:{
+    cup:'The CUP Method has not been selected because reliable comparable uncontrolled transactions for managerial remuneration are not available. The unique nature of the services rendered, coupled with the absence of sufficiently comparable internal or external transaction-level data, makes it impracticable to establish a reliable arm\u2019s length price under the CUP Method.',
+    rpm:'The RPM cannot be applied as the transaction does not pertain to the resale of any product or service procured from a related party.',
+    psm:'The PSM cannot be applied as the transaction does not involve the transfer of unique intangibles, nor is it so interrelated with other transactions that it cannot be evaluated separately.',
+    cpm:'The CPM cannot be applied as reliable gross margin data of comparable companies necessary for the application of the method is not available in the public domain.',
+    tnmmWhy:'TNMM is considered the most appropriate method because reliable comparable uncontrolled transactions are not available for the application of the CUP Method, while comparable financial data of functionally similar independent companies is available in commercial databases. Further, the transaction involves the provision of integrated managerial services, where it is more reliable to evaluate the arm\u2019s length nature of the transaction based on a net profit indicator rather than at the individual transaction level. Accordingly, TNMM provides the most reliable measure for determining whether the transaction has been undertaken at arm\u2019s length.'},
+  database:[
+    'A search for comparable companies was performed using the TP Catalyst database.',
+    'TP Catalyst is a data and process driven tax analysis tool providing global coverage with detailed financials for over 35 million companies worldwide, together with extensive corporate ownership data, detailed company overviews, intellectual property profiles, financial stability indicators, M&A activity summaries and transactional data.',
+    'TP Catalyst is powered by the Orbis database. Orbis is one of the most comprehensive comparable data resources on private companies and is a primary resource for company data. Companies included meet strict standardised criteria compliant with OECD requirements.',
+    'Searches in the public domain were also conducted to corroborate the analysis, considering the functions performed and risks assumed with respect to the controlled transaction.'],
+  pliOPOR:[
+    'As per Para 5.2.1.4 of CTGTP1, the TNMM examines the net profit earned from a Controlled Transaction relative to an appropriate base, such as costs, sales or assets.',
+    'As per Para 5.2.1.5 of CTGTP1, net profit indicators are the ratio of net profit to an appropriate base and are less adversely affected by differences in products and functions compared to price and gross margins.',
+    'As per Para 5.2.1.6 of CTGTP1, the denominator of the net margin indicator should be set on an uncontrolled base and should reflect the relevant driver of value creation as it relates to the functions performed by the tested party, taking into account the assets used and risks assumed.',
+    'Since the payment of managerial remuneration is embedded in the Company\u2019s overall operations and the KMP functions contribute to the Company\u2019s revenue-generating activity as a whole, the Operating Margin \u2014 computed as Operating Profit / Operating Revenue ("OP/OR") \u2014 has been selected as the Profit Level Indicator ("PLI"). A healthy operating margin, benchmarked against functionally comparable independent companies, demonstrates that the remuneration paid to KMP is commensurate with the value generated for the Company.'],
+  pliECOC:[
+    'The Employee Cost to Operating Cost ("EC/OC") ratio measures the proportion of employee-related expenses, including remuneration paid to KMP, in relation to the total operating costs of the entity. It is particularly effective in providing a focused assessment of whether the level of employee compensation is in line with industry norms.',
+    'Since KMP cost forms a significant component of the overall employee expense, analysing this ratio helps ensure that such payments are not excessive when compared with functionally similar independent companies.',
+    'The EC/OC ratio therefore acts as a reliable indicator to validate that the compensation structure, specifically for key personnel, remains within the arm\u2019s length range.'],
+  regions:[
+    'As per Paras 5.3.2.2 to 5.3.2.4 of CTGTP1, as far as possible, Taxable Persons should use domestic comparables in their comparability analysis as these generally have a higher degree of comparability in terms of market and economic circumstances compared to foreign comparables. Where insufficient data is available at the domestic level, Taxable Persons may consider regional and thereafter global comparables.',
+    'The FTA does not have a preference for any particular commercial database as long as it provides a reliable source of information, provided that the prescribed order for applying comparables is followed (local, then regional (Middle East), then other regions).',
+    'The process followed to identify potential comparables is one of the most critical aspects of the comparability analysis; it should be transparent, systematic and verifiable, with appropriate supporting information maintained for review by the FTA.'],
+  years:function(){const L=fyLabels();return[
+    'As per Para 5.3.5.3 of CTGTP1, the examination of multiple-year data is typically done for three years inclusive of the year in which the transaction is undertaken. When using a three-year period, at least two years of data should be available in order to accept a comparable company.',
+    'Hence, the search focused on the latest available information on the database, namely '+L.y1.replace('FYE ','')+', '+L.y2.replace('FYE ','')+' and '+L.y3.replace('FYE ','')+'. Three years of comparable data was utilised to account for a full business cycle.']},
+  searchSteps:[
+    'This section documents the search and evaluation process for the companies selected as comparable to the tested party, based on the financial information of the comparable companies for the three years considered. The yardstick for the selection of companies was primarily functional comparability and not product similarity.',
+    'The search for comparable companies was completed in three key steps: (i) comparable companies were searched in TP Catalyst using numerous filters to narrow the search to a manageable set of potentially comparable companies; (ii) the information associated with each remaining company was reviewed, followed by the rejection of companies with dissimilar functions, assets or risks \u2014 including a thorough website analysis; and (iii) functionally comparable companies were selected, their financial information extracted from the database, and the selected PLI applied to compute the arm\u2019s length range of the identified comparables.'],
+  manualIntro:'The purpose of the detailed manual review is to remove companies that are not functionally comparable to the tested party based on a review of business descriptions, websites and financial information. The table below summarises the outcome of the manual review process:',
+  iqr:'As per Para 5.3.4.1 of CTGTP1, applying the most appropriate Transfer Pricing method may produce a range of results, all of which may be equally reliable. Statistical tools such as the interquartile range can be used to narrow the range and enhance its reliability. The interquartile range represents the middle 50% of the results, being the range between the 25th percentile (lower quartile) and the 75th percentile (upper quartile).',
+  art347:'Further, Article 34(7) of the UAE CT Law provides that where the result of a Controlled Transaction falls outside the arm\u2019s length range, the FTA may adjust the taxable income to achieve the arm\u2019s length result that best reflects the facts and circumstances of the transaction.',
+  mpDesc:'Michael Page is a leading global professional recruitment consultancy and forms part of PageGroup plc, listed on the London Stock Exchange. Michael Page publishes annual salary guides based on data drawn from actual placements, job registrations, interviews and salary surveys conducted across the region. The Michael Page salary guide for the UAE provides monthly salary ranges (minimum, average and maximum) for executive and management roles across industries and is widely used as a reliable market reference for remuneration benchmarking in the UAE.',
+  sgGeneric:function(name){return name+' publishes periodic salary guides based on market data including actual placements, job registrations and salary surveys across the region. The guide provides salary ranges for executive and management roles across industries and serves as a reliable market reference for remuneration benchmarking in the UAE.'},
+  sgFraming:'Since the transaction pertains to payment of remuneration to KMP for managerial services rendered, a direct comparison of the remuneration paid with the salary ranges published by independent recruitment consultancies for similar roles provides a reliable and transparent measure of the arm\u2019s length nature of the transaction. In accordance with Article 34(4) of the UAE CT Law, this analysis has been undertaken using published salary guide data as the benchmark.',
+  adjNote:'Note on Comparability Adjustments \u2014 No comparability adjustments (including working capital or accounting adjustments) have been carried out to the results of the comparable companies, as reliable information necessary for making such adjustments with sufficient accuracy was not available, and the impact thereof is not expected to materially alter the conclusions.',
+  blank:'~ This space has been left blank intentionally ~'
+};
+
+/* ===================== ENTITY-TYPE TEMPLATES ===================== */
+const TPL={
+  bg:{
+    spv:function(){return coN()+' is a special purpose vehicle incorporated in the '+(ST.client.country||'UAE')+', primarily engaged in holding and managing equity and non-equity investments. '+(ST.client.biz||'')},
+    trading:function(){return coN()+' is engaged in the trading and distribution of goods in the '+(ST.client.country||'UAE')+'. '+(ST.client.biz||'')},
+    services:function(){return coN()+' is engaged in the provision of services in the '+(ST.client.country||'UAE')+'. '+(ST.client.biz||'')},
+    manufacturing:function(){return coN()+' is engaged in manufacturing operations in the '+(ST.client.country||'UAE')+'. '+(ST.client.biz||'')},
+    realestate:function(){return coN()+' is engaged in real estate development and related activities in the '+(ST.client.country||'UAE')+'. '+(ST.client.biz||'')}
+  },
+  needKMP:{
+    spv:'The Company, being an investment holding entity, does not carry out routine operational activities; its value creation is driven almost entirely by the quality of strategic, investment and governance decisions taken by its Key Management Personnel. Experienced KMP are therefore indispensable to the Company for the following reasons:\n\u2022 **Strategic Leadership and Decision-Making:** The KMP set the overall strategic direction of the Company, including capital allocation, portfolio composition and long-term value creation objectives. These decisions determine the Company\u2019s performance in the absence of routine operations.\n\u2022 **Investment Evaluation and Portfolio Management:** The KMP identify, evaluate and negotiate investment opportunities, undertake commercial and financial due diligence, and monitor the performance of portfolio holdings on an ongoing basis.\n\u2022 **Business Development and Stakeholder Management:** The KMP maintain relationships with co-investors, bankers, advisors and other stakeholders whose cooperation is critical to sourcing and executing transactions.\n\u2022 **Corporate Governance and Regulatory Oversight:** The KMP ensure that the Company complies with applicable corporate, tax and regulatory requirements in the UAE, and that appropriate governance structures and controls are maintained.\n\u2022 **Risk Management:** The KMP identify and manage the market, financial, compliance and reputational risks to which the Company\u2019s investments are exposed, including decisions on hedging, exit timing and portfolio rebalancing.\n\u2022 **Financial Oversight:** The KMP supervise the preparation of financial statements, funding arrangements and treasury matters, ensuring the financial integrity of the Company.\n\u2022 **Organisational Stability and Continuity:** The presence of experienced KMP provides continuity of institutional knowledge and decision-making capability, which underpins stakeholder confidence in the Company.',
+    trading:'The Company\u2019s trading operations depend on commercial judgement, supplier and customer relationships, and disciplined working-capital management \u2014 all of which are driven by its Key Management Personnel. Experienced KMP are essential to the Company for the following reasons:\n\u2022 **Strategic Leadership and Decision-Making:** The KMP determine product-market strategy, sourcing strategy and expansion plans, which drive the Company\u2019s competitiveness and profitability.\n\u2022 **Commercial Negotiation:** The KMP negotiate pricing, credit and supply terms with key suppliers and customers, directly influencing margins and volumes.\n\u2022 **Supplier and Customer Relationship Management:** Long-standing relationships maintained by the KMP secure reliable supply and repeat business in a competitive trading environment.\n\u2022 **Inventory and Working Capital Oversight:** The KMP oversee procurement planning, inventory levels and receivables management, protecting the Company from obsolescence and credit losses.\n\u2022 **Corporate Governance and Regulatory Oversight:** The KMP ensure compliance with applicable trade, customs, corporate and tax regulations in the UAE.\n\u2022 **Risk Management:** The KMP manage price, currency, credit and logistics risks inherent in trading operations.\n\u2022 **Organisational Stability and Continuity:** Experienced KMP provide the leadership continuity required to maintain banking lines, supplier confidence and customer trust.',
+    services:'The Company\u2019s service operations are people-driven, and the quality of delivery, client relationships and operational discipline are directly attributable to its Key Management Personnel. Experienced KMP are essential to the Company for the following reasons:\n\u2022 **Strategic Leadership and Decision-Making:** The KMP set the service strategy, target markets and growth priorities of the Company.\n\u2022 **Client Relationship Management:** The KMP originate and maintain key client relationships, which drive recurring revenue and referrals.\n\u2022 **Service Delivery Oversight:** The KMP supervise engagement quality, resource deployment and delivery timelines, safeguarding the Company\u2019s reputation.\n\u2022 **Talent Leadership:** The KMP recruit, develop and retain the professional talent on which the Company\u2019s service capability depends.\n\u2022 **Corporate Governance and Regulatory Oversight:** The KMP ensure compliance with applicable corporate, labour and tax regulations in the UAE.\n\u2022 **Risk Management:** The KMP manage delivery, contractual, credit and reputational risks associated with service engagements.\n\u2022 **Organisational Stability and Continuity:** Experienced KMP provide the continuity of leadership necessary for sustained client confidence and business growth.',
+    manufacturing:'The Company\u2019s manufacturing operations require continuous leadership across production, quality, supply chain and commercial functions \u2014 responsibilities discharged by its Key Management Personnel. Experienced KMP are essential to the Company for the following reasons:\n\u2022 **Strategic Leadership and Decision-Making:** The KMP determine product strategy, capacity planning and capital expenditure decisions that shape the Company\u2019s long-term competitiveness.\n\u2022 **Operations and Production Oversight:** The KMP oversee production planning, plant efficiency, quality standards and health & safety compliance.\n\u2022 **Supply Chain Management:** The KMP manage supplier selection, procurement terms and logistics arrangements critical to uninterrupted production.\n\u2022 **Commercial Management:** The KMP lead pricing, key customer negotiations and order-book management.\n\u2022 **Corporate Governance and Regulatory Oversight:** The KMP ensure compliance with applicable industrial, environmental, corporate and tax regulations in the UAE.\n\u2022 **Risk Management:** The KMP manage input-price, operational, quality and market risks inherent in manufacturing.\n\u2022 **Organisational Stability and Continuity:** Experienced KMP provide the leadership continuity required to maintain customer certifications, workforce stability and lender confidence.',
+    realestate:'The Company\u2019s real estate activities involve long development cycles, significant capital commitments and complex regulatory approvals \u2014 all of which demand experienced leadership from its Key Management Personnel. Experienced KMP are essential to the Company for the following reasons:\n\u2022 **Strategic Leadership and Decision-Making:** The KMP determine project selection, land acquisition, development phasing and exit strategy, which drive the Company\u2019s returns.\n\u2022 **Project and Development Oversight:** The KMP supervise design, contractor selection, construction progress, cost control and project quality.\n\u2022 **Financing and Capital Management:** The KMP arrange and manage project financing, investor relationships and cash-flow planning over long development horizons.\n\u2022 **Sales and Stakeholder Management:** The KMP lead sales/leasing strategy and maintain relationships with authorities, master developers, brokers and financiers.\n\u2022 **Corporate Governance and Regulatory Oversight:** The KMP ensure compliance with RERA/DLD and other applicable regulatory, corporate and tax requirements in the UAE.\n\u2022 **Risk Management:** The KMP manage market-cycle, construction, funding and regulatory risks inherent in real estate development.\n\u2022 **Organisational Stability and Continuity:** Experienced KMP provide continuity across multi-year projects, underpinning the confidence of buyers, lenders and authorities.'
+  },
+  risks:[
+    {t:'Market Risks',p:function(){return 'Market risk refers to the risk of adverse movements in demand, prices and competitive conditions in the markets in which the Company operates. The KMP monitor market developments and calibrate the Company\u2019s strategy in response; however, the financial consequences of market movements are borne by '+coN()+'. The KMP receive a fixed remuneration for their services and do not bear the consequences of adverse market outcomes. Accordingly, market risk is assessed as limited for the KMP and significant for the Company.'}},
+    {t:'Operational Risks',p:function(){return 'Operational risk refers to the risk of loss arising from inadequate or failed internal processes, systems or external events. While the KMP are responsible for instituting appropriate processes and controls, any losses arising from operational failures are absorbed by '+coN()+'. Accordingly, operational risk is assessed as limited for the KMP and significant for the Company.'}},
+    {t:'Compliance and Regulatory Risks',p:function(){return 'Compliance and regulatory risk refers to the risk of penalties, sanctions or restrictions arising from non-compliance with applicable laws and regulations. The KMP oversee the Company\u2019s compliance framework; however, any penalties or regulatory consequences are borne by '+coN()+' as the regulated person. Accordingly, compliance risk is assessed as limited for the KMP and significant for the Company.'}},
+    {t:'Reputation Risks',p:function(){return 'Reputation risk refers to the risk of loss of stakeholder confidence arising from adverse events or perceptions. While the conduct of the KMP influences the Company\u2019s reputation, the commercial consequences of reputational damage \u2014 including loss of business and relationships \u2014 are borne by '+coN()+'. Accordingly, reputation risk is assessed as limited for the KMP and significant for the Company.'}},
+    {t:'Financial Risks',p:function(){return 'Financial risk includes credit risk, liquidity risk and funding risk associated with the Company\u2019s operations and investments. The KMP oversee the Company\u2019s financial management; however, the financial consequences of credit losses, liquidity shortfalls or funding cost movements are borne by '+coN()+'. The KMP receive a fixed remuneration and do not participate in such losses. Accordingly, financial risk is assessed as limited for the KMP and significant for the Company.'}}
+  ]
+};
+
+/* ===================== DOCX HELPERS ===================== */
+const CG='22430C',CGL='E8EBE0',CGOLD='B89014',CINK='1A1614',CINK3='7A866A',CW='FFFFFF',CLINE='D6CBA8';
+
+function dxRefs(){return window.docx}
+
+function dxBody(text){
+  const D=dxRefs();
+  const out=[];
+  String(text||'').split(/\n+/).forEach(function(line){
+    const l=line.trim();if(!l)return;
+    const bm=l.match(/^[\u2022\-\*]\s+(.+)$/);
+    if(bm){
+      const inner=bm[1];
+      const tm=inner.match(/^\*\*(.+?)\*\*\s*(.*)$/);
+      const runs=tm?[new D.TextRun({text:tm[1]+' ',bold:true,size:22,color:CINK}),new D.TextRun({text:tm[2],size:22,color:CINK})]:[new D.TextRun({text:inner,size:22,color:CINK})];
+      out.push(new D.Paragraph({children:runs,numbering:{reference:'kmp-b',level:0},spacing:{after:80},alignment:D.AlignmentType.JUSTIFIED}));
+    }else{
+      const tm=l.match(/^\*\*(.+?)\*\*\s*(.*)$/);
+      const runs=tm?[new D.TextRun({text:tm[1]+' ',bold:true,size:22,color:CINK}),new D.TextRun({text:tm[2],size:22,color:CINK})]:[new D.TextRun({text:l,size:22,color:CINK})];
+      out.push(new D.Paragraph({children:runs,spacing:{after:120,line:300},alignment:D.AlignmentType.JUSTIFIED}));
+    }
+  });
+  return out;
+}
+function dxParas(arr){let out=[];arr.forEach(function(p){out=out.concat(dxBody(p))});return out}
+function dxH1(text,pb){const D=dxRefs();return new D.Paragraph({children:[new D.TextRun({text:text,bold:true,color:CG,size:32,font:'Georgia'})],spacing:{before:240,after:160},pageBreakBefore:!!pb})}
+function dxH2(text){const D=dxRefs();return new D.Paragraph({children:[new D.TextRun({text:text,bold:true,color:CG,size:26,font:'Georgia'})],spacing:{before:220,after:110}})}
+function dxH3(text){const D=dxRefs();return new D.Paragraph({children:[new D.TextRun({text:text,bold:true,color:CINK,size:23,font:'Georgia'})],spacing:{before:180,after:90}})}
+function dxNote(text){const D=dxRefs();return new D.Paragraph({children:[new D.TextRun({text:text,italics:true,size:19,color:CINK3})],spacing:{after:120}})}
+function dxCell(text,opts){
+  const D=dxRefs();opts=opts||{};
+  return new D.TableCell({
+    width:opts.w?{size:opts.w,type:D.WidthType.PERCENTAGE}:undefined,
+    shading:opts.fill?{fill:opts.fill}:undefined,
+    margins:{top:60,bottom:60,left:80,right:80},
+    columnSpan:opts.span,
+    children:[new D.Paragraph({alignment:opts.center?D.AlignmentType.CENTER:(opts.right?D.AlignmentType.RIGHT:D.AlignmentType.LEFT),children:[new D.TextRun({text:String(text==null?'':text),bold:!!opts.bold,size:opts.size||19,color:opts.color||CINK,font:'Arial'})]})]
+  });
+}
+function dxTable(headers,rows,widths,opts){
+  const D=dxRefs();opts=opts||{};
+  const hr=new D.TableRow({tableHeader:true,children:headers.map(function(h,i){return dxCell(h,{fill:CG,color:CW,bold:true,w:widths?widths[i]:undefined,center:true})})});
+  const brs=rows.map(function(r){
+    return new D.TableRow({children:r.map(function(c,i){
+      const cellOpts=(typeof c==='object'&&c!==null&&!Array.isArray(c))?c:{text:c};
+      return dxCell(cellOpts.text!==undefined?cellOpts.text:c,{w:widths?widths[i]:undefined,bold:cellOpts.bold,fill:cellOpts.fill,center:cellOpts.center,right:cellOpts.right,span:cellOpts.span});
+    })});
+  });
+  return new D.Table({width:{size:100,type:D.WidthType.PERCENTAGE},rows:[hr].concat(brs),
+    borders:{top:{style:D.BorderStyle.SINGLE,size:6,color:CINK3},bottom:{style:D.BorderStyle.SINGLE,size:6,color:CINK3},left:{style:D.BorderStyle.SINGLE,size:6,color:CINK3},right:{style:D.BorderStyle.SINGLE,size:6,color:CINK3},insideHorizontal:{style:D.BorderStyle.SINGLE,size:4,color:CLINE},insideVertical:{style:D.BorderStyle.SINGLE,size:4,color:CLINE}}});
+}
+function d2b(dataUrl){const b=atob(dataUrl.split(',')[1]);const a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function dxImg(imgObj,maxW){
+  const D=dxRefs();
+  if(!imgObj||!imgObj.dataUrl)return null;
+  try{
+    const bytes=d2b(imgObj.dataUrl);
+    const mw=maxW||600;const ratio=imgObj.height/imgObj.width;
+    const w=Math.min(mw,imgObj.width);const h=Math.round(w*ratio);
+    return new D.Paragraph({children:[new D.ImageRun({data:bytes,transformation:{width:w,height:h}})],alignment:D.AlignmentType.CENTER,spacing:{before:100,after:100}});
+  }catch(e){return dxNote('[Image could not be embedded: '+e.message+']')}
+}
+function gap(){const D=dxRefs();return new D.Paragraph({children:[new D.TextRun({text:''})],spacing:{after:100}})}
+
+/* ===================== CONCLUSION LOGIC ===================== */
+function autoConclusion(mkey){
+  const m=ST.bench[mkey];
+  if(m.override&&m.override.trim())return m.override.trim();
+  const L=fyLabels();
+  if(mkey==='sg'){
+    const range=m.rangeSummary||'the range published in the salary guide';
+    return 'Based on the analysis above, the monthly remuneration paid to each of the KMP falls within '+range+' as per the '+ (m.guideName||'salary guide')+'. Accordingly, the payment of managerial remuneration by '+coN()+' can be considered to be at arm\u2019s length.';
+  }
+  const q=computeQuartiles(mkey);const tp=tpRatioFor(mkey);
+  if(tp==null||q.w.lq==null){
+    return 'Based on the analysis above, the transaction pertaining to payment of managerial remuneration by '+coN()+' can be considered to be at arm\u2019s length.';
+  }
+  const rng='the arm\u2019s length range of '+fmtP(q.w.lq)+' to '+fmtP(q.w.uq)+' (weighted average, '+L.w+')';
+  if(mkey==='opor'){
+    if(tp>=q.w.uq)return 'The OP/OR of the Company for '+L.y3+' is '+fmtP(tp)+', which is above '+rng+' of the comparable companies. Since the Company\u2019s operating profitability, after absorbing the managerial remuneration paid to the KMP, exceeds the profitability of comparable independent companies, the payment of managerial remuneration can be considered to be at arm\u2019s length.';
+    if(tp>=q.w.lq)return 'The OP/OR of the Company for '+L.y3+' is '+fmtP(tp)+', which falls within '+rng+' of the comparable companies. Accordingly, the payment of managerial remuneration by '+coN()+' can be considered to be at arm\u2019s length.';
+    return 'The OP/OR of the Company for '+L.y3+' is '+fmtP(tp)+', which falls below '+rng+' of the comparable companies. The position may warrant further review and documentation of the commercial reasons for the lower profitability of the Company during the year.';
+  }
+  if(tp<=q.w.lq)return 'The EC/OC ratio of the Company for '+L.y3+' is '+fmtP(tp)+', which is below '+rng+' of the comparable companies, indicating that the employee cost (including KMP remuneration) borne by the Company is conservative relative to comparable independent companies. Accordingly, the payment of managerial remuneration can be considered to be at arm\u2019s length.';
+  if(tp<=q.w.uq)return 'The EC/OC ratio of the Company for '+L.y3+' is '+fmtP(tp)+', which falls within '+rng+' of the comparable companies. Accordingly, the payment of managerial remuneration by '+coN()+' can be considered to be at arm\u2019s length.';
+  return 'The EC/OC ratio of the Company for '+L.y3+' is '+fmtP(tp)+', which is above '+rng+' of the comparable companies. The position may warrant further review and documentation of the commercial reasons for the higher employee cost intensity of the Company during the year.';
+}
+function alpStatus(mkey){
+  if(mkey==='sg')return 'Yes';
+  const q=computeQuartiles(mkey);const tp=tpRatioFor(mkey);
+  if(tp==null||q.w.lq==null)return 'Yes';
+  if(mkey==='opor')return tp>=q.w.lq?'Yes':'Refer analysis';
+  return tp<=q.w.uq?'Yes':'Refer analysis';
+}
+function methodLabel(mkey){return mkey==='opor'?'TNMM':(mkey==='ecoc'?'Other Method (EC/OC)':'Other Method (Salary Guide)')}
+function pliLabel(mkey){return mkey==='opor'?'OP/OR':(mkey==='ecoc'?'EC/OC':'Monthly salary range')}
+function resultLabel(mkey){
+  if(mkey==='sg')return ST.bench.sg.rangeSummary||'—';
+  const q=computeQuartiles(mkey);
+  return q.w.lq!=null?fmtP(q.w.lq)+' – '+fmtP(q.w.uq):'—';
+}
+function selectedMethods(){
+  return ST.bench.order.filter(function(m){
+    return (m==='opor'&&ST.bench.useOPOR)||(m==='sg'&&ST.bench.useSG)||(m==='ecoc'&&ST.bench.useECOC);
+  });
+}
+
+/* ===================== RESULTS TABLE BUILDERS ===================== */
+function compsTable(mkey){
+  const L=fyLabels();const comps=ST.bench[mkey].comps;
+  if(!comps||!comps.rows.length)return null;
+  const q=computeQuartiles(mkey);
+  const rows=comps.rows.map(function(r,i){return[
+    {text:String(i+1),center:true},{text:r.name},
+    {text:r.y1!=null?fmtP(r.y1):'N.A.',right:true},{text:r.y2!=null?fmtP(r.y2):'N.A.',right:true},
+    {text:r.y3!=null?fmtP(r.y3):'N.A.',right:true},{text:r.w!=null?fmtP(r.w):'N.A.',right:true,bold:true}]});
+  function statRow(label,key){return[
+    {text:'',fill:CGL},{text:label,bold:true,fill:CGL},
+    {text:fmtP(q.y1[key]),right:true,bold:true,fill:CGL},{text:fmtP(q.y2[key]),right:true,bold:true,fill:CGL},
+    {text:fmtP(q.y3[key]),right:true,bold:true,fill:CGL},{text:fmtP(q.w[key]),right:true,bold:true,fill:CGL}]}
+  rows.push(statRow('Maximum','max'));
+  rows.push(statRow('Upper Quartile','uq'));
+  rows.push(statRow('Median','med'));
+  rows.push(statRow('Lower Quartile','lq'));
+  rows.push(statRow('Minimum','min'));
+  const pli=mkey==='opor'?'OP/OR':'EC/OC';
+  return dxTable(['Sr.','Company Name',L.y1+' ('+pli+')',L.y2+' ('+pli+')',L.y3+' ('+pli+')','Weighted ('+L.w+')'],rows,[6,34,15,15,15,15]);
+}
+function tpComputationTable(mkey){
+  const D=dxRefs();const L=fyLabels();const cur=ST.fin.currency||'AED';
+  if(mkey==='opor'){
+    const m=ST.bench.opor;
+    if(m.mode==='ratio'){
+      const tp=num(m.tpRatio);
+      return dxTable(['Particulars','Amount / %'],[[{text:'Operating Margin (OP/OR) of the Company for '+L.y3+' (as per management accounts)'},{text:tp!=null?fmtP(tp):'—',right:true,bold:true}]],[70,30]);
+    }
+    const d=oporDerived();const p=m.pl;
+    const rows=[
+      [{text:'Revenue'},{text:fmtN(num(p.rev)),right:true}],
+      [{text:'Other income'},{text:fmtN(num(p.oi)),right:true}],
+      [{text:'Total Operating Revenue (A)',bold:true,fill:CGL},{text:fmtN(d.tor),right:true,bold:true,fill:CGL}],
+      [{text:'Cost of revenue'},{text:fmtN(num(p.cor)),right:true}],
+      [{text:'Employee benefits (including KMP remuneration)'},{text:fmtN(num(p.emp)),right:true}],
+      [{text:'Depreciation'},{text:fmtN(num(p.dep)),right:true}],
+      [{text:'Financial charges'},{text:fmtN(num(p.fin)),right:true}],
+      [{text:'General & administrative expenses'},{text:fmtN(num(p.gna)),right:true}],
+      [{text:'Other expenses'},{text:fmtN(num(p.oth)),right:true}],
+      [{text:'Total expenses',bold:true,fill:CGL},{text:fmtN(d.texp),right:true,bold:true,fill:CGL}],
+      [{text:'Less: non-operating expenses'},{text:fmtN(num(p.nonop)),right:true}],
+      [{text:'Operating Cost (B)',bold:true,fill:CGL},{text:fmtN(d.oc),right:true,bold:true,fill:CGL}],
+      [{text:'Operating Profit (A − B)',bold:true,fill:CGL},{text:fmtN(d.op),right:true,bold:true,fill:CGL}],
+      [{text:'Operating Margin (OP/OR)',bold:true,fill:CGL},{text:d.ratio!=null?fmtP(d.ratio):'—',right:true,bold:true,fill:CGL}]
+    ];
+    return dxTable(['Particulars ('+cur+', '+L.y3+')','Amount'],rows,[70,30]);
+  }
+  const m=ST.bench.ecoc;
+  if(m.mode==='ratio'){
+    const tp=num(m.tpRatio);
+    return dxTable(['Particulars','Amount / %'],[[{text:'Employee Cost / Operating Cost (EC/OC) of the Company for '+L.y3+' (as per management accounts)'},{text:tp!=null?fmtP(tp):'—',right:true,bold:true}]],[70,30]);
+  }
+  const ec=num(m.tpEC),oc=num(m.tpOC),r=ecocDerived();
+  return dxTable(['Particulars ('+cur+', '+L.y3+')','Amount'],[
+    [{text:'Total employee costs, including KMP remuneration (A)'},{text:fmtN(ec),right:true}],
+    [{text:'Operating costs (B)'},{text:fmtN(oc),right:true}],
+    [{text:'EC/OC (A / B)',bold:true,fill:CGL},{text:r!=null?fmtP(r):'—',right:true,bold:true,fill:CGL}]],[70,30]);
+}
+
+/* ===================== ECONOMIC ANALYSIS COMPOSERS ===================== */
+function composeMethodMAMText(mkey){
+  if(mkey==='opor'){
+    return[
+      'Selection of the Most Appropriate Method \u2014 each of the five prescribed methods has been evaluated for the transaction as follows:',
+      '\u2022 '+BP.mamReject.cup,
+      '\u2022 '+BP.mamReject.rpm,
+      '\u2022 '+BP.mamReject.psm,
+      '\u2022 '+BP.mamReject.cpm,
+      'In view of the above, '+BP.mamReject.tnmmWhy];
+  }
+  if(mkey==='ecoc'){
+    return[BP.eaAlt,
+      'Since none of the five prescribed methods can be applied in a reliable manner to the transaction pertaining to payment of managerial remuneration (for the reasons discussed above in respect of each method), an alternative method under Article 34(4) of the UAE CT Law \u2014 benchmarking the Employee Cost to Operating Cost ratio of the Company against functionally comparable independent companies \u2014 has been applied.'];
+  }
+  return[BP.eaAlt,BP.sgFraming];
+}
+function composeSearchProcess(){
+  const D=dxRefs();const out=[];
+  out.push(dxH3('Search process'));
+  BP.searchSteps.forEach(function(p){dxBody(p).forEach(function(x){out.push(x)})});
+  dxParas(BP.regions).forEach(function(x){out.push(x)});
+  dxParas(BP.years()).forEach(function(x){out.push(x)});
+  ST.search.regions.forEach(function(rg,i){
+    if(!rg.rows.some(function(r){return String(r.n||'').trim()||String(r.d||'').trim()}))return;
+    out.push(dxH3('Step 1'+String.fromCharCode(97+i)+' \u2014 Quantitative screening: '+rg.label));
+    const rows=rg.rows.filter(function(r){return String(r.c||'').trim()}).map(function(r){return[{text:r.c},{text:r.d},{text:r.n,center:true}]});
+    out.push(dxTable(['Search strategy','Criteria detail','Result'],rows,[32,52,16]));
+    if(String(rg.result||'').trim())out.push(dxNote('Resulting potential comparables for '+rg.label+': '+rg.result));
+    out.push(gap());
+  });
+  const total=num(ST.search.totalFound);
+  const rej=ST.search.manual.filter(function(r){return String(r.reason||'').trim()});
+  if(total!=null||rej.some(function(r){return num(r.count)!=null})){
+    out.push(dxH3('Step 2 \u2014 Manual review'));
+    dxBody(BP.manualIntro).forEach(function(x){out.push(x)});
+    let sumRej=0;const rows=[];
+    rows.push([{text:'Total potential comparables identified',bold:true},{text:total!=null?fmtN(total):'—',center:true,bold:true}]);
+    rej.forEach(function(r){const c=num(r.count);if(c!=null)sumRej+=c;rows.push([{text:'Less: '+r.reason},{text:c!=null?fmtN(c):'—',center:true}])});
+    if(total!=null)rows.push([{text:'Companies accepted as comparable',bold:true,fill:CGL},{text:fmtN(total-sumRej),center:true,bold:true,fill:CGL}]);
+    out.push(dxTable(['Manual review','Count'],rows,[70,30]));
+    out.push(gap());
+  }
+  return out;
+}
+function composeMethodSection(mkey,idx,isMAM){
+  const D=dxRefs();const out=[];const L=fyLabels();
+  const label=String.fromCharCode(97+idx)+') ';
+  if(mkey==='opor'){
+    out.push(dxH2(label+'Comparability Analysis \u2014 TNMM (OP/OR)'+(isMAM?' \u2014 Most Appropriate Method':' \u2014 Corroborative Analysis')));
+    dxParas(BP.testedParty()).forEach(function(x){out.push(x)});
+    dxParas(BP.dataAvail()).forEach(function(x){out.push(x)});
+    dxParas(composeMethodMAMText('opor')).forEach(function(x){out.push(x)});
+    out.push(dxH3('Database used'));
+    dxParas(BP.database).forEach(function(x){out.push(x)});
+    out.push(dxH3('Profit Level Indicator'));
+    dxParas(BP.pliOPOR).forEach(function(x){out.push(x)});
+    composeSearchProcess().forEach(function(x){out.push(x)});
+    const ct=compsTable('opor');
+    if(ct){out.push(dxH3('Step 3 \u2014 Summary of results of comparable companies'));out.push(ct);out.push(gap())}
+    out.push(dxH3('Computation of the tested party margin'));
+    out.push(tpComputationTable('opor'));out.push(gap());
+    dxBody(BP.iqr).forEach(function(x){out.push(x)});
+    dxBody(BP.art347).forEach(function(x){out.push(x)});
+    out.push(dxH3('Conclusion'));
+    dxBody(autoConclusion('opor')).forEach(function(x){out.push(x)});
+  }else if(mkey==='ecoc'){
+    out.push(dxH2(label+'Comparability Analysis \u2014 EC/OC Ratio (Other Method)'+(isMAM?' \u2014 Most Appropriate Method':' \u2014 Corroborative Analysis')));
+    dxParas(composeMethodMAMText('ecoc')).forEach(function(x){out.push(x)});
+    out.push(dxH3('Rationale for the EC/OC ratio'));
+    dxParas(BP.pliECOC).forEach(function(x){out.push(x)});
+    if(isMAM){dxParas(BP.database).forEach(function(x){out.push(x)});composeSearchProcess().forEach(function(x){out.push(x)})}
+    const ct=compsTable('ecoc');
+    if(ct){out.push(dxH3('Summary of results of comparable companies'));out.push(ct);out.push(gap())}
+    out.push(dxH3('Computation of the tested party ratio'));
+    out.push(tpComputationTable('ecoc'));out.push(gap());
+    dxBody(BP.iqr).forEach(function(x){out.push(x)});
+    out.push(dxH3('Conclusion'));
+    dxBody(autoConclusion('ecoc')).forEach(function(x){out.push(x)});
+  }else{
+    const g=ST.bench.sg;
+    out.push(dxH2(label+'Comparability Analysis \u2014 Salary Guide (Other Method)'+(isMAM?' \u2014 Most Appropriate Method':' \u2014 Corroborative Analysis')));
+    dxParas(composeMethodMAMText('sg')).forEach(function(x){out.push(x)});
+    out.push(dxH3('About the salary guide'));
+    const isMP=(g.guideName||'').toLowerCase().indexOf('michael page')>=0;
+    dxBody(isMP?BP.mpDesc:BP.sgGeneric(g.guideName||'The salary guide publisher')).forEach(function(x){out.push(x)});
+    if(g.industry)dxBody('For the purpose of this analysis, salary ranges for the industry segment "'+g.industry+'" have been considered, being the segment most closely aligned to the operations of '+coN()+'.').forEach(function(x){out.push(x)});
+    const roles=g.roles.filter(function(r){return String(r.role||'').trim()});
+    if(roles.length){
+      out.push(dxH3('Published salary ranges'));
+      const rows=roles.map(function(r){return[{text:r.yr},{text:r.role},{text:r.from,right:true},{text:r.avg,right:true},{text:r.to,right:true}]});
+      out.push(dxTable(['Guide year','Role','From (per month, \u2019000s)','Average','To'],rows,[14,38,16,16,16]));
+      out.push(gap());
+    }
+    const kmpRows=ST.kmps.filter(function(k){return k.name}).map(function(k,i){return[{text:String(i+1),center:true},{text:k.title+' '+k.name},{text:k.designation},{text:fmtN(num(k.monthly)),right:true}]});
+    if(kmpRows.length){
+      out.push(dxH3('Monthly remuneration of the KMP vis-\u00e0-vis the published range'));
+      out.push(dxTable(['Sr.','Name of KMP','Designation','Remuneration per month ('+(ST.fin.currency||'AED')+')'],kmpRows,[8,34,32,26]));
+      out.push(gap());
+    }
+    out.push(dxH3('Conclusion'));
+    dxBody(autoConclusion('sg')).forEach(function(x){out.push(x)});
+  }
+  return out;
+}
+
+/* ===================== TP REPORT GENERATION ===================== */
+async function generateReport(){
+  clearMsg();
+  if(typeof docx==='undefined'){showErr('Word library not loaded. Please connect to the internet and refresh the page.');return}
+  if(!ST.firm.name){showErr('Please enter the Consulting Firm Name (Section 01).');return}
+  if(!ST.client.name){showErr('Please enter the Client Company Name (Section 02).');return}
+  if(!ST.fin.fyeLabel||!ST.fin.fyeYear){showErr('Please enter the FYE label and FYE year (Section 03).');return}
+  const kmps=ST.kmps.filter(function(k){return k.name&&k.designation});
+  if(!kmps.length){showErr('Please add at least one KMP with name and designation (Section 04).');return}
+  const methods=selectedMethods();
+  if(!methods.length){showErr('Please select at least one benchmarking method (Section 05).');return}
+
+  const D=dxRefs();const L=fyLabels();const cur=ST.fin.currency||'AED';
+  const sections=[];
+
+  /* ---- Cover section ---- */
+  if(ST.firm.cover&&ST.firm.cover.dataUrl){
+    try{
+      const bytes=d2b(ST.firm.cover.dataUrl);
+      sections.push({properties:{page:{margin:{top:0,bottom:0,left:0,right:0}}},children:[
+        new D.Paragraph({children:[new D.ImageRun({data:bytes,transformation:{width:794,height:1123}})],alignment:D.AlignmentType.CENTER})
+      ]});
+    }catch(e){/* fall through to typographic cover below */}
+  }
+  const ch=[];
+  if(!(ST.firm.cover&&ST.firm.cover.dataUrl)){
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:''})],spacing:{before:2200}}));
+    if(ST.fin.draft)ch.push(new D.Paragraph({children:[new D.TextRun({text:'DRAFT \u2014 FOR DISCUSSION PURPOSES ONLY',bold:true,size:22,color:'BBBBBB'})],alignment:D.AlignmentType.CENTER,spacing:{after:300}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:'TRANSFER PRICING STUDY REPORT',bold:true,size:48,color:CG,font:'Georgia'})],alignment:D.AlignmentType.CENTER,spacing:{after:240}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:'Payment of Managerial Remuneration to Key Management Personnel',italics:true,size:26,color:CGOLD,font:'Georgia'})],alignment:D.AlignmentType.CENTER,spacing:{after:500}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:ST.client.name,bold:true,size:34,color:CINK,font:'Georgia'})],alignment:D.AlignmentType.CENTER,spacing:{after:160}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:'For the financial year ended '+ST.fin.fyeLabel,size:24,color:CINK3,font:'Georgia',italics:true})],alignment:D.AlignmentType.CENTER,spacing:{after:700}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:'Prepared by',size:20,color:CINK3})],alignment:D.AlignmentType.CENTER,spacing:{after:60}}));
+    ch.push(new D.Paragraph({children:[new D.TextRun({text:ST.firm.name,bold:true,size:28,color:CG,font:'Georgia'})],alignment:D.AlignmentType.CENTER,spacing:{after:60}}));
+    if(ST.fin.reportDate)ch.push(new D.Paragraph({children:[new D.TextRun({text:ST.fin.reportDate,size:20,color:CINK3,italics:true})],alignment:D.AlignmentType.CENTER}));
+  }
+
+  /* ---- TOC ---- */
+  const tocEntries=['Abbreviations and Acronyms','1. Scope of Report','2. Executive Summary','3. Shareholding Structure','4. Business Overview','5. Inter-company Transaction','6. Functional Analysis','7. Risk Analysis','8. Economic Analysis','9. Conclusion'];
+  if(ST.search.screenshots.length)tocEntries.push('Annexures');
+  ch.push(new D.Paragraph({children:[new D.TextRun({text:'Table of Contents',bold:true,size:36,color:CG,font:'Georgia'})],pageBreakBefore:true,spacing:{after:240}}));
+  tocEntries.forEach(function(t,i){ch.push(new D.Paragraph({children:[new D.TextRun({text:t,size:23,color:CINK,font:'Georgia'})],spacing:{after:110}}))});
+
+  /* ---- Abbreviations ---- */
+  ch.push(dxH1('Abbreviations and Acronyms',true));
+  const abbr=[['ALP','Arm\u2019s Length Price'],['CP','Connected Person'],['CT','Corporate Tax'],['CTGTP1','Corporate Tax Guide on Transfer Pricing'],['CUP','Comparable Uncontrolled Price Method'],['CPM','Cost Plus Method'],['EC/OC','Employee Cost to Operating Cost'],['FTA','Federal Tax Authority'],['FYE','Financial Year Ended'],['IQR','Inter-Quartile Range'],['KMP','Key Management Personnel'],['MAM','Most Appropriate Method'],['OECD','Organisation for Economic Co-operation and Development'],['OP/OR','Operating Profit to Operating Revenue'],['PLI','Profit Level Indicator'],['PSM','Profit Split Method'],['RP','Related Party'],['RPM','Resale Price Method'],['TNMM','Transactional Net Margin Method'],['TP','Transfer Pricing'],['UAE','United Arab Emirates'],['UAE CT Law','Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses']];
+  if(ST.client.abbr)abbr.unshift([ST.client.abbr,ST.client.name]);
+  ch.push(dxTable(['Abbreviation','Full form'],abbr.map(function(a){return[{text:a[0],bold:true},{text:a[1]}]}),[28,72]));
+
+  /* ---- 1. Scope ---- */
+  ch.push(dxH1('1. Scope of Report',true));
+  dxParas(BP.scope()).forEach(function(x){ch.push(x)});
+  if(ST.notes.scope)dxBody(ST.notes.scope).forEach(function(x){ch.push(x)});
+
+  /* ---- 2. Executive Summary ---- */
+  ch.push(dxH1('2. Executive Summary',true));
+  ch.push(dxH2('2.1 Background'));
+  const bgFn=TPL.bg[ST.client.entityType]||TPL.bg.spv;
+  let bg=bgFn();
+  if(ST.fin.revenue)bg+=' During the financial year ended '+ST.fin.fyeLabel+', the Company earned gross revenue of '+cur+' '+ST.fin.revenue+(ST.fin.aedNote?' ('+ST.fin.aedNote+')':'')+'.';
+  dxBody(bg).forEach(function(x){ch.push(x)});
+  const sh=ST.fin.shareholding.filter(function(r){return String(r.name||'').trim()});
+  if(sh.length){
+    ch.push(dxH3('Shareholding as on '+ST.fin.fyeLabel));
+    ch.push(dxTable(['Name of shareholder','% of shareholding','Amount ('+cur+')'],sh.map(function(r){return[{text:r.name},{text:r.pct,center:true},{text:r.amt,right:true}]}),[50,22,28]));
+    ch.push(gap());
+  }
+  const rp=ST.fin.relatedParties.filter(function(r){return String(r.name||'').trim()});
+  if(rp.length){
+    ch.push(dxH2('2.2 Identified Related Parties and Connected Persons'));
+    ch.push(dxTable(['Name','Categorisation','Legal basis under the UAE CT Law'],rp.map(function(r){return[{text:r.name},{text:r.cat,center:true},{text:r.basis}]}),[38,20,42]));
+    ch.push(gap());
+  }
+  ch.push(dxH2('2.3 Report Overview'));
+  dxBody('This report analyses the transaction pertaining to payment of managerial remuneration by '+coN()+' to its KMP for the financial year ended '+ST.fin.fyeLabel+'. The report covers the functional analysis of the transaction, the selection of the most appropriate transfer pricing method, the benchmarking analysis undertaken and the conclusion on the arm\u2019s length nature of the transaction.').forEach(function(x){ch.push(x)});
+  ch.push(dxH2('2.4 Summary of the Transaction Analysed'));
+  const txnRows=methods.map(function(m,i){
+    const tp=(m==='sg')?'Monthly remuneration per KMP':fmtP(tpRatioFor(m));
+    return[{text:String(i+1),center:true},{text:'Payment of managerial remuneration'},{text:fmtN(kmpTotal())+' '+cur,right:true},{text:methodLabel(m)+(i===0?' (MAM)':' (Corroborative)'),center:true},{text:pliLabel(m),center:true},{text:tp,center:true},{text:resultLabel(m),center:true},{text:alpStatus(m),center:true,bold:true}];
+  });
+  ch.push(dxTable(['Sr.','Nature of transaction','Value','Method','PLI / Benchmark','Tested party result','ALP range','At ALP?'],txnRows,[5,19,12,15,13,13,14,9]));
+  ch.push(gap());
+  dxBody(BP.adjNote).forEach(function(x){ch.push(x)});
+  if(ST.notes.exec)dxBody(ST.notes.exec).forEach(function(x){ch.push(x)});
+
+  /* ---- 3. Shareholding Structure ---- */
+  ch.push(dxH1('3. Shareholding Structure',true));
+  dxBody('The shareholding structure of '+coN()+' as on '+ST.fin.fyeLabel+' is summarised below. The shareholders and their related entities constitute the related parties and connected persons of the Company for the purposes of the UAE CT Law.').forEach(function(x){ch.push(x)});
+  if(sh.length){
+    ch.push(dxTable(['Name of shareholder','% of shareholding','Amount ('+cur+')'],sh.map(function(r){return[{text:r.name},{text:r.pct,center:true},{text:r.amt,right:true}]}),[50,22,28]));
+    ch.push(gap());
+  }
+  if(rp.length){
+    dxBody('Based on the definitions of "Related Parties" under Article 35 and "Connected Persons" under Article 36 of the UAE CT Law, the following persons have been identified as related parties and/or connected persons of the Company:').forEach(function(x){ch.push(x)});
+    ch.push(dxTable(['Name','Categorisation','Legal basis under the UAE CT Law'],rp.map(function(r){return[{text:r.name},{text:r.cat,center:true},{text:r.basis}]}),[38,20,42]));
+    ch.push(gap());
+  }
+
+  /* ---- 4. Business Overview ---- */
+  ch.push(dxH1('4. Business Overview',true));
+  dxBody(bgFn()).forEach(function(x){ch.push(x)});
+  if(ST.client.industry)dxBody('The Company operates in the '+ST.client.industry+' industry in the '+(ST.client.country||'UAE')+'.').forEach(function(x){ch.push(x)});
+
+  /* ---- 5. Inter-company Transaction ---- */
+  ch.push(dxH1('5. Inter-company Transaction \u2014 Payment of Managerial Remuneration',true));
+  dxBody(BP.faTxnIntro()).forEach(function(x){ch.push(x)});
+  const remRows=kmps.map(function(k,i){return[{text:String(i+1),center:true},{text:k.title+' '+k.name},{text:k.designation},{text:fmtN(num(k.annual)),right:true},{text:fmtN(num(k.monthly)),right:true}]});
+  remRows.push([{text:'',fill:CGL},{text:'Total',bold:true,fill:CGL},{text:'',fill:CGL},{text:fmtN(kmpTotal()),right:true,bold:true,fill:CGL},{text:'',fill:CGL}]);
+  ch.push(dxTable(['Sr.','Name of KMP','Designation','Remuneration \u2014 Annual ('+cur+')','Per month ('+cur+')'],remRows,[6,30,26,20,18]));
+  ch.push(gap());
+  dxBody('The KMP qualify as Connected Persons of the Company under Article 36 of the UAE CT Law. Accordingly, as per Article 36(1), payments made to the KMP are deductible only to the extent they correspond with the Market Value of the services rendered by them. The analysis in the following sections evaluates whether the remuneration paid corresponds with market value.').forEach(function(x){ch.push(x)});
+
+  /* ---- 6. Functional Analysis ---- */
+  ch.push(dxH1('6. Functional Analysis',true));
+  dxParas(BP.faIntro).forEach(function(x){ch.push(x)});
+  BP.sixSteps.forEach(function(s){dxBody('\u2022 '+s).forEach(function(x){ch.push(x)})});
+  dxBody(BP.faClose).forEach(function(x){ch.push(x)});
+  ch.push(dxH2('6.1 Profile and Functions of the KMP'));
+  kmps.forEach(function(k,i){
+    ch.push(dxH3('6.1.'+(i+1)+' '+k.title+' '+k.name+' \u2014 '+k.designation));
+    let intro=k.profile||'';
+    if(!intro){
+      intro=k.title+' '+k.name+' serves as '+k.designation+' of '+coN()+'.';
+      if(k.qualification)intro+=' He/She holds the qualification of '+k.qualification+'.';
+      if(k.experience)intro+=' He/She brings '+k.experience+' of experience to the role.';
+    }
+    dxBody(intro).forEach(function(x){ch.push(x)});
+    if(k.functions&&k.functions.trim()){
+      ch.push(dxH3('Key Functions Performed'));
+      k.functions.split(/\n+/).forEach(function(l){const t=l.trim();if(t)dxBody('\u2022 '+t.replace(/^[\u2022\-\*]\s*/,'')).forEach(function(x){ch.push(x)})});
+    }
+    if(k.attributes&&k.attributes.trim()){
+      ch.push(dxH3('Professional Attributes'));
+      k.attributes.split(/\n+/).forEach(function(l){const t=l.trim();if(t)dxBody('\u2022 '+t.replace(/^[\u2022\-\*]\s*/,'')).forEach(function(x){ch.push(x)})});
+    }
+  });
+  ch.push(dxH2('6.2 Need for KMPs in the Company'));
+  const needTxt=(ST.notes.fa&&ST.notes.fa.trim())?ST.notes.fa:(TPL.needKMP[ST.client.entityType]||TPL.needKMP.spv);
+  dxBody(needTxt).forEach(function(x){ch.push(x)});
+
+  /* ---- 7. Risk Analysis ---- */
+  ch.push(dxH1('7. Risk Analysis',true));
+  dxBody('An analysis of the economically significant risks associated with the transaction, and their allocation between the KMP and the Company, is set out below.').forEach(function(x){ch.push(x)});
+  TPL.risks.forEach(function(r,i){
+    ch.push(dxH3('7.'+(i+1)+' '+r.t));
+    dxBody(r.p()).forEach(function(x){ch.push(x)});
+  });
+  const riskRows=ST.risks.filter(function(r){return String(r.risk||'').trim()}).map(function(r){return[{text:r.risk},{text:r.kmp,center:true},{text:r.co,center:true}]});
+  if(riskRows.length){
+    ch.push(dxH3('Summary of risk allocation'));
+    ch.push(dxTable(['Risks assumed','KMP','Company'],riskRows,[50,25,25]));
+    ch.push(gap());
+  }
+  dxBody('As evident from the above, the KMP perform their functions against a fixed remuneration and bear limited risks, while '+coN()+' bears the significant business risks and is entitled to the residual returns of the business.').forEach(function(x){ch.push(x)});
+
+  /* ---- 8. Economic Analysis ---- */
+  ch.push(dxH1('8. Economic Analysis',true));
+  dxParas(BP.eaMethodsIntro).forEach(function(x){ch.push(x)});
+  BP.eaFiveMethods.forEach(function(m){dxBody('\u2022 '+m).forEach(function(x){ch.push(x)})});
+  dxBody(BP.eaAlt).forEach(function(x){ch.push(x)});
+  dxParas(BP.eaMAMGuide).forEach(function(x){ch.push(x)});
+  if(ST.notes.ea)dxBody(ST.notes.ea).forEach(function(x){ch.push(x)});
+  methods.forEach(function(m,i){
+    composeMethodSection(m,i,i===0).forEach(function(x){ch.push(x)});
+  });
+
+  /* ---- 9. Conclusion ---- */
+  ch.push(dxH1('9. Conclusion',true));
+  dxBody('Based on the functional analysis and the economic analysis documented in this report:').forEach(function(x){ch.push(x)});
+  methods.forEach(function(m){
+    dxBody('\u2022 **'+methodLabel(m)+':** '+autoConclusion(m)).forEach(function(x){ch.push(x)});
+  });
+  dxBody('Accordingly, the transaction pertaining to payment of managerial remuneration by '+coN()+' to its KMP for the financial year ended '+ST.fin.fyeLabel+' can be considered to be in accordance with the arm\u2019s length standard prescribed under Article 34 of the UAE CT Law.').forEach(function(x){ch.push(x)});
+  ch.push(gap());
+  ch.push(new D.Paragraph({children:[new D.TextRun({text:BP.blank,italics:true,size:19,color:CINK3})],alignment:D.AlignmentType.CENTER,spacing:{before:300}}));
+
+  /* ---- Annexures ---- */
+  if(ST.search.screenshots.length){
+    ch.push(dxH1('Annexures',true));
+    ST.search.screenshots.forEach(function(sc,i){
+      ch.push(dxH2(sc.caption||('Annexure '+(i+1))));
+      const img=dxImg(sc,620);
+      if(img)ch.push(img);
+      if(i<ST.search.screenshots.length-1)ch.push(new D.Paragraph({children:[new D.TextRun({text:''})],pageBreakBefore:false,spacing:{after:200}}));
+    });
+  }
+
+  /* ---- Assemble main section with header/footer ---- */
+  const headerKids=[];
+  if(ST.fin.draft){
+    headerKids.push(new D.Paragraph({children:[new D.TextRun({text:'D R A F T',bold:true,size:40,color:'DDDDDD',font:'Georgia'})],alignment:D.AlignmentType.CENTER,spacing:{after:40}}));
+  }
+  if(ST.firm.logo&&ST.firm.logo.dataUrl){
+    try{
+      const lb=d2b(ST.firm.logo.dataUrl);
+      const lw=Math.min(110,ST.firm.logo.width);
+      const lh=Math.round(lw*ST.firm.logo.height/ST.firm.logo.width);
+      headerKids.push(new D.Paragraph({children:[new D.ImageRun({data:lb,transformation:{width:lw,height:lh}})],alignment:D.AlignmentType.RIGHT}));
+    }catch(e){}
+  }
+  if(!headerKids.length)headerKids.push(new D.Paragraph({children:[new D.TextRun({text:''})]}));
+
+  const footerP=new D.Paragraph({
+    alignment:D.AlignmentType.CENTER,
+    children:[
+      new D.TextRun({text:ST.client.name+'  ·  TP Study Report \u2014 FYE '+ST.fin.fyeLabel+'  ·  Page ',size:16,color:CINK3}),
+      new D.TextRun({children:[D.PageNumber.CURRENT],size:16,color:CINK3})
+    ]
+  });
+
+  sections.push({
+    properties:{page:{margin:{top:D.convertInchesToTwip(1),bottom:D.convertInchesToTwip(1),left:D.convertInchesToTwip(1),right:D.convertInchesToTwip(1)}}},
+    headers:{default:new D.Header({children:headerKids})},
+    footers:{default:new D.Footer({children:[footerP]})},
+    children:ch
+  });
+
+  const doc=new D.Document({
+    creator:ST.firm.name,
+    title:ST.client.name+' - TP Study Report FYE '+ST.fin.fyeYear,
+    styles:{default:{document:{run:{font:'Georgia',size:22,color:CINK}}}},
+    numbering:{config:[
+      {reference:'kmp-b',levels:[{level:0,format:D.LevelFormat.BULLET,text:'\u2022',alignment:D.AlignmentType.LEFT,style:{paragraph:{indent:{left:480,hanging:240}}}}]},
+      {reference:'mrl-num',levels:[{level:0,format:D.LevelFormat.DECIMAL,text:'%1.',alignment:D.AlignmentType.LEFT,style:{paragraph:{indent:{left:480,hanging:360}}}}]}
+    ]},
+    sections:sections
+  });
+
+  try{
+    const blob=await D.Packer.toBlob(doc);
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    const s=(ST.client.name||'client').replace(/[^a-z0-9_-]+/gi,'-').slice(0,40);
+    a.href=url;a.download=s+'-KMP-TP-Report-FYE'+ST.fin.fyeYear+(ST.fin.draft?'-DRAFT':'')+'.docx';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url)},1500);
+    showOk('TP Report generated \u2014 check your downloads.');
+    $('status-pill').textContent=ST.client.name+' · report generated';
+  }catch(err){showErr('Word generation failed: '+err.message)}
+}
+
+/* ===================== MRL GENERATION ===================== */
+async function generateMRL(){
+  clearMsg();
+  if(typeof docx==='undefined'){showErr('Word library not loaded. Please connect to the internet and refresh the page.');return}
+  if(!ST.firm.name){showErr('Please enter the Consulting Firm Name (Section 01).');return}
+  if(!ST.client.name){showErr('Please enter the Client Company Name (Section 02).');return}
+  if(!ST.fin.fyeLabel){showErr('Please enter the FYE label (Section 03).');return}
+
+  const D=dxRefs();
+  const c=ST.client.name;const fye=ST.fin.fyeLabel;
+  function p(text,opts){opts=opts||{};return new D.Paragraph({alignment:D.AlignmentType.JUSTIFIED,children:[new D.TextRun({text:text,bold:!!opts.bold,size:22,color:CINK})],spacing:{after:opts.after==null?120:opts.after,line:300}})}
+  function np(text){return new D.Paragraph({alignment:D.AlignmentType.JUSTIFIED,numbering:{reference:'mrl-num',level:0},children:[new D.TextRun({text:text,size:22,color:CINK})],spacing:{after:140,line:300}})}
+
+  const kids=[];
+  kids.push(p('Date: '+(ST.mrl.date||ST.fin.reportDate||'____________'),{after:240}));
+  kids.push(p('To,',{after:60}));
+  if(ST.firm.attention)kids.push(p(ST.firm.attention,{bold:true,after:40}));
+  kids.push(p(ST.firm.name,{bold:true,after:40}));
+  [ST.firm.addr1,ST.firm.addr2,ST.firm.addr3].forEach(function(l){if(l)kids.push(p(l,{after:40}))});
+  kids.push(p('',{after:120}));
+  kids.push(p('Dear Sir/Madam,',{after:160}));
+  kids.push(p('Subject: Review of draft transfer pricing analysis report prepared for our Company \u2014 '+c+' ("the Company") for the financial year ended ("FYE") '+fye,{bold:true,after:200}));
+  kids.push(p('In connection with the draft transfer pricing analysis report ("TP report") for the transactions undertaken by the Company with its related parties and connected persons for the FYE '+fye+', we confirm, to the best of our knowledge and belief, the following representations made to you during the study:',{after:180}));
+
+  const reps=[
+    'We have provided you with all the relevant information, records and documents pertaining to the Company and its transactions with related parties and connected persons for the FYE '+fye+', and such information is true, correct and complete in all material respects.',
+    'The description of the business activities of the Company, the functional profile of the Company and its Key Management Personnel, and the details of the inter-company transactions documented in the TP report are accurate and reflect the actual conduct of the parties.',
+    'The financial data and figures provided to you, including the remuneration paid to the Key Management Personnel, have been extracted from the books of account and management accounts of the Company and are accurate and complete.',
+    'We are responsible for the maintenance of the books of account and other records of the Company, and for maintaining the transfer pricing documentation as required under the applicable UAE regulations.',
+    'There are no other transactions with related parties or connected persons during the FYE '+fye+' that have not been disclosed to you for the purposes of the TP report.',
+    'We understand that the TP report has been prepared based on the arm\u2019s length principle prescribed under Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses and the related guidance, based on the information and representations provided by us.',
+    'We acknowledge that your firm\u2019s responsibility is limited to the preparation of the TP report based on the information provided by us, and that the ultimate responsibility for the accuracy and completeness of the underlying information, and for compliance with the applicable tax and transfer pricing regulations, rests with the Company.'
+  ];
+  reps.forEach(function(r){kids.push(np(r))});
+
+  kids.push(p('',{after:200}));
+  kids.push(p('On behalf of '+c+', UAE',{bold:true,after:400}));
+  kids.push(p('_______________________',{after:60}));
+  kids.push(p(ST.mrl.signatory||'Authorised Signatory',{after:0}));
+
+  const doc=new D.Document({
+    creator:c,
+    title:c+' - Management Representation Letter FYE '+ST.fin.fyeYear,
+    styles:{default:{document:{run:{font:'Georgia',size:22,color:CINK}}}},
+    numbering:{config:[{reference:'mrl-num',levels:[{level:0,format:D.LevelFormat.DECIMAL,text:'%1.',alignment:D.AlignmentType.LEFT,style:{paragraph:{indent:{left:480,hanging:360}}}}]}]},
+    sections:[{properties:{page:{margin:{top:D.convertInchesToTwip(1),bottom:D.convertInchesToTwip(1),left:D.convertInchesToTwip(1),right:D.convertInchesToTwip(1)}}},children:kids}]
+  });
+
+  try{
+    const blob=await D.Packer.toBlob(doc);
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    const s=(c||'client').replace(/[^a-z0-9_-]+/gi,'-').slice(0,40);
+    a.href=url;a.download=s+'-MRL-FYE'+(ST.fin.fyeYear||'')+'.docx';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url)},1500);
+    showOk('MRL generated \u2014 check your downloads.');
+  }catch(err){showErr('Word generation failed: '+err.message)}
+}
+
+$('gen-report').addEventListener('click',generateReport);
+$('gen-mrl').addEventListener('click',generateMRL);
+
+})();
+</script>
+</body>
+</html>

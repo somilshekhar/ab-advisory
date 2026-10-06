@@ -1,0 +1,1715 @@
+<!-- ============================================================ -->
+<!--  ABAdvisory Group LLP — Benchmarking Range Calculator        -->
+<!--  Single-file embed for systeme.io HTML block                 -->
+<!--  v2.0  (full P&L build-up workpaper format)                  -->
+<!-- ============================================================ -->
+<div class="abtp-root">
+
+<style>
+/* ============= ABTP — SCOPED STYLES ============= */
+.abtp-root, .abtp-root *, .abtp-root *::before, .abtp-root *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.abtp-root {
+  --abtp-green: #22430c;
+  --abtp-green-deep: #162d06;
+  --abtp-green-mid: #2e5510;
+  --abtp-gold: #e6b91e;
+  --abtp-gold-deep: #b89014;
+  --abtp-gold-soft: #f0d168;
+  --abtp-bg: #f7f1e0;
+  --abtp-bg-2: #ede4cc;
+  --abtp-paper: #fcf7e9;
+  --abtp-ink: #22430c;
+  --abtp-ink-2: #4a5e35;
+  --abtp-ink-3: #7a866a;
+  --abtp-line: #d6cba8;
+  --abtp-line-strong: #b3a684;
+  --abtp-error: #8a2a1f;
+  --abtp-success: #4a6b2a;
+
+  /* Workpaper-style highlight tints (mimicking screenshot's blue/orange shading) */
+  --abtp-major-bg: rgba(34, 67, 12, 0.06);
+  --abtp-major-border: rgba(34, 67, 12, 0.18);
+  --abtp-gold-bg: rgba(230, 185, 30, 0.13);
+  --abtp-gold-border: rgba(184, 144, 20, 0.35);
+  --abtp-weighted-bg: var(--abtp-green);
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--abtp-ink);
+  background: var(--abtp-bg);
+  padding: 24px 14px;
+  border-radius: 4px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% 0%, rgba(230, 185, 30, 0.08) 0%, transparent 60%);
+}
+@media (min-width: 700px) {
+  .abtp-root { padding: 32px 28px; }
+}
+
+/* === Header === */
+.abtp-header {
+  background: var(--abtp-green);
+  color: var(--abtp-paper);
+  padding: 18px 22px;
+  border-radius: 3px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.abtp-header::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--abtp-gold) 50%, transparent);
+}
+.abtp-header-eyebrow {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--abtp-gold); margin-bottom: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+.abtp-header-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px; font-weight: 500; letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+.abtp-header-title em { font-style: italic; color: var(--abtp-gold-soft); font-weight: 300; }
+.abtp-header-sub {
+  font-size: 12.5px; color: rgba(252, 247, 233, 0.75);
+  margin-top: 6px;
+}
+
+/* === Card === */
+.abtp-card {
+  background: var(--abtp-paper);
+  border: 1px solid var(--abtp-line);
+  border-radius: 3px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 0 rgba(34, 67, 12, 0.02), 0 6px 18px -12px rgba(34, 67, 12, 0.1);
+}
+
+.abtp-section-label {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--abtp-ink-3);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.abtp-section-label .num { color: var(--abtp-gold-deep); font-weight: 500; }
+
+.abtp-h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; font-weight: 400;
+  color: var(--abtp-green);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+.abtp-h3 em { font-style: italic; color: var(--abtp-gold-deep); }
+
+.abtp-prose {
+  font-size: 13.5px;
+  color: var(--abtp-ink-2);
+  line-height: 1.6;
+}
+.abtp-prose p { margin-bottom: 8px; }
+.abtp-prose strong { color: var(--abtp-green); font-weight: 600; }
+
+/* === Disclaimer === */
+.abtp-disclaimer-card { border-left: 3px solid var(--abtp-gold); }
+.abtp-checklist {
+  background: var(--abtp-bg-2);
+  border: 1px solid var(--abtp-line);
+  padding: 14px 16px;
+  margin: 14px 0;
+  border-radius: 2px;
+}
+.abtp-checklist-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 5px 0; font-size: 13.5px; color: var(--abtp-ink-2);
+}
+.abtp-checklist-item::before {
+  content: "▸"; color: var(--abtp-gold-deep); font-weight: bold; flex-shrink: 0;
+}
+.abtp-ack {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  background: var(--abtp-bg-2);
+  border: 1px solid var(--abtp-gold);
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 14px;
+}
+.abtp-ack input { margin-top: 3px; cursor: pointer; }
+.abtp-ack label {
+  font-size: 13px; color: var(--abtp-green); font-weight: 500;
+  cursor: pointer; flex: 1;
+}
+
+/* === Forms === */
+.abtp-row {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 12px;
+}
+.abtp-field {
+  display: flex; flex-direction: column; gap: 4px;
+  flex: 1; min-width: 140px;
+}
+.abtp-label {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--abtp-ink-3);
+}
+.abtp-input, .abtp-select {
+  font-family: inherit; font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--abtp-line);
+  background: white;
+  border-radius: 2px;
+  color: var(--abtp-ink);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.abtp-input:focus, .abtp-select:focus {
+  border-color: var(--abtp-green);
+  box-shadow: inset 0 0 0 1px var(--abtp-green);
+}
+.abtp-input[type="number"] { text-align: right; font-variant-numeric: tabular-nums; }
+
+.abtp-radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.abtp-radio-pill {
+  border: 1px solid var(--abtp-line);
+  padding: 8px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 13px;
+  background: white;
+  transition: all 0.15s;
+  user-select: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.abtp-radio-pill input { display: none; }
+.abtp-radio-pill:hover { border-color: var(--abtp-line-strong); }
+.abtp-radio-pill.abtp-active {
+  border-color: var(--abtp-green);
+  background: var(--abtp-bg-2);
+  box-shadow: inset 0 0 0 1px var(--abtp-green);
+  color: var(--abtp-green);
+  font-weight: 500;
+}
+.abtp-radio-pill.abtp-active::before {
+  content: "";
+  width: 7px; height: 7px;
+  background: var(--abtp-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(230, 185, 30, 0.25);
+}
+
+/* === Entity (workpaper-style P&L table) === */
+.abtp-entity {
+  border: 1px solid var(--abtp-line);
+  background: white;
+  border-radius: 3px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.abtp-entity-header {
+  background: var(--abtp-bg-2);
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--abtp-line);
+  gap: 10px;
+}
+.abtp-entity-name {
+  flex: 1; min-width: 0;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: Georgia, serif; font-size: 15px; font-weight: 500;
+  color: var(--abtp-green);
+  border-radius: 2px;
+}
+.abtp-entity-name:focus {
+  background: white; border-color: var(--abtp-gold);
+  outline: none;
+}
+
+.abtp-entity-body { overflow-x: auto; padding: 0; }
+
+/* The workpaper table */
+.abtp-pl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  min-width: 620px;
+}
+.abtp-pl-table th, .abtp-pl-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--abtp-line);
+  vertical-align: middle;
+}
+.abtp-pl-table thead th {
+  background: var(--abtp-bg-2);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--abtp-ink-3);
+  font-weight: 500;
+  text-align: right;
+  border-bottom: 1px solid var(--abtp-line-strong);
+}
+.abtp-pl-table thead th:first-child { text-align: left; }
+.abtp-pl-table thead th.abtp-h-entity-name {
+  text-align: center; color: var(--abtp-green); font-weight: 600;
+  font-size: 11.5px; letter-spacing: 0.03em;
+  text-transform: none;
+  font-family: Georgia, serif;
+  background: var(--abtp-bg-2);
+}
+
+.abtp-pl-table .abtp-particulars {
+  text-align: left;
+  color: var(--abtp-ink-2);
+  font-weight: 400;
+  padding-left: 14px;
+  min-width: 260px;
+  width: 38%;
+}
+.abtp-pl-table .abtp-particulars.abtp-indent { padding-left: 30px; font-style: italic; color: var(--abtp-ink-3); font-size: 12px; }
+.abtp-pl-table .abtp-particulars.abtp-section-row {
+  font-weight: 600;
+  color: var(--abtp-green);
+  background: var(--abtp-bg-2);
+  padding-top: 8px; padding-bottom: 8px;
+  border-top: 1px solid var(--abtp-line);
+}
+.abtp-pl-table td.abtp-num-cell { text-align: right; }
+
+.abtp-pl-table .abtp-derived-major td.abtp-particulars {
+  font-weight: 600;
+  color: var(--abtp-green);
+}
+.abtp-pl-table .abtp-derived-major {
+  background: var(--abtp-major-bg);
+  border-top: 1px solid var(--abtp-major-border);
+  border-bottom: 1px solid var(--abtp-major-border) !important;
+}
+.abtp-pl-table .abtp-derived-major td.abtp-num-cell {
+  font-weight: 600; color: var(--abtp-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.abtp-pl-table .abtp-derived-gold {
+  background: var(--abtp-gold-bg);
+  border-top: 1px solid var(--abtp-gold-border);
+  border-bottom: 1px solid var(--abtp-gold-border) !important;
+}
+.abtp-pl-table .abtp-derived-gold td.abtp-particulars {
+  font-weight: 600; color: var(--abtp-gold-deep);
+}
+.abtp-pl-table .abtp-derived-gold td.abtp-num-cell {
+  font-weight: 600; color: var(--abtp-gold-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.abtp-pl-table .abtp-weighted-row {
+  background: var(--abtp-weighted-bg);
+  color: var(--abtp-paper);
+}
+.abtp-pl-table .abtp-weighted-row td {
+  border-color: transparent;
+  padding-top: 10px; padding-bottom: 10px;
+}
+.abtp-pl-table .abtp-weighted-row td.abtp-particulars {
+  color: var(--abtp-gold); font-weight: 600;
+  font-family: ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.abtp-pl-table .abtp-weighted-row td.abtp-weighted-cell {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 20px; font-weight: 400;
+  color: var(--abtp-gold);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.abtp-pl-table .abtp-spacer-row td {
+  background: transparent;
+  border-bottom: none;
+  padding: 4px 0;
+  height: 4px;
+}
+
+.abtp-pl-table input[type="number"] {
+  width: 100%;
+  border: 1px solid var(--abtp-line);
+  background: white;
+  padding: 5px 7px;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 12.5px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  color: var(--abtp-ink);
+  min-width: 90px;
+}
+.abtp-pl-table input[type="number"]:focus {
+  border-color: var(--abtp-green);
+  box-shadow: inset 0 0 0 1px var(--abtp-green);
+}
+
+.abtp-bs-section-title {
+  background: var(--abtp-green-mid);
+  color: var(--abtp-paper);
+  padding: 9px 14px;
+  font-family: ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  border-top: 1px solid var(--abtp-line);
+}
+
+/* === Buttons === */
+.abtp-btn {
+  padding: 11px 18px;
+  background: var(--abtp-green);
+  color: var(--abtp-paper);
+  border: none;
+  font-family: inherit;
+  font-size: 13.5px; font-weight: 500;
+  cursor: pointer;
+  border-radius: 2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  transition: background 0.15s;
+}
+.abtp-btn:hover:not(:disabled) { background: var(--abtp-green-deep); }
+.abtp-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.abtp-btn .abtp-arrow {
+  font-family: Georgia, serif; font-style: italic;
+  font-size: 16px; color: var(--abtp-gold);
+}
+.abtp-btn-secondary {
+  background: transparent;
+  color: var(--abtp-green);
+  border: 1px solid var(--abtp-line-strong);
+}
+.abtp-btn-secondary:hover:not(:disabled) {
+  background: var(--abtp-bg-2);
+  border-color: var(--abtp-green);
+}
+.abtp-btn-danger {
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--abtp-error);
+  border: 1px solid var(--abtp-line);
+  font-family: ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.abtp-btn-danger:hover {
+  border-color: var(--abtp-error);
+  background: rgba(138, 42, 31, 0.05);
+}
+
+.abtp-actions-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+/* === Results === */
+.abtp-results-card {
+  border-color: var(--abtp-green);
+  border-left: 3px solid var(--abtp-gold);
+}
+.abtp-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.abtp-stat {
+  background: var(--abtp-bg-2);
+  padding: 12px 14px;
+  border-radius: 2px;
+  border-left: 2px solid var(--abtp-gold);
+}
+.abtp-stat-label {
+  font-family: ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--abtp-ink-3);
+  margin-bottom: 4px;
+}
+.abtp-stat-value {
+  font-family: Georgia, serif;
+  font-size: 22px; font-weight: 400;
+  color: var(--abtp-green);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+.abtp-results-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px;
+  margin: 12px 0 18px;
+  background: white;
+  border: 1px solid var(--abtp-line);
+}
+.abtp-results-table th, .abtp-results-table td {
+  padding: 8px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--abtp-line);
+  font-variant-numeric: tabular-nums;
+}
+.abtp-results-table th:first-child, .abtp-results-table td:first-child { text-align: left; }
+.abtp-results-table th {
+  font-family: ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--abtp-ink-3);
+  font-weight: 500;
+  background: var(--abtp-bg-2);
+}
+.abtp-verdict {
+  padding: 16px 18px;
+  border-radius: 2px;
+  margin: 14px 0;
+  border-left: 3px solid var(--abtp-gold);
+  background: var(--abtp-bg-2);
+}
+.abtp-verdict-title {
+  font-family: Georgia, serif;
+  font-size: 18px; font-weight: 500;
+  color: var(--abtp-green);
+  margin-bottom: 6px;
+}
+.abtp-verdict-title em { font-style: italic; color: var(--abtp-gold-deep); font-weight: 400; }
+.abtp-verdict-body { font-size: 13.5px; color: var(--abtp-ink-2); line-height: 1.6; }
+.abtp-verdict.abtp-ok { border-left-color: var(--abtp-success); }
+.abtp-verdict.abtp-not-ok { border-left-color: var(--abtp-error); }
+.abtp-verdict.abtp-not-ok .abtp-verdict-title em { color: var(--abtp-error); }
+
+/* === Footer === */
+.abtp-footer {
+  margin-top: 28px;
+  padding: 22px 20px;
+  background: var(--abtp-green);
+  color: var(--abtp-paper);
+  border-radius: 3px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.abtp-footer::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--abtp-gold), transparent);
+  opacity: 0.7;
+}
+.abtp-footer-eyebrow {
+  font-family: ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--abtp-gold);
+  margin-bottom: 6px;
+}
+.abtp-footer-name {
+  font-family: Georgia, serif;
+  font-size: 19px; font-weight: 500;
+  color: var(--abtp-paper);
+  margin-bottom: 4px;
+}
+.abtp-footer-name em { font-style: italic; color: var(--abtp-gold); font-weight: 300; }
+.abtp-footer-tag {
+  font-size: 12.5px; color: rgba(252, 247, 233, 0.75);
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+.abtp-error-msg {
+  background: rgba(138, 42, 31, 0.06);
+  border-left: 3px solid var(--abtp-error);
+  padding: 12px 16px;
+  font-size: 13px; color: var(--abtp-error);
+  margin: 12px 0;
+  border-radius: 2px;
+  display: none;
+}
+.abtp-error-msg.abtp-show { display: block; }
+.abtp-conditional-section { display: none; }
+.abtp-conditional-section.abtp-show { display: block; }
+.abtp-hidden { display: none !important; }
+.abtp-divider { height: 1px; background: var(--abtp-line); margin: 18px 0; }
+
+.abtp-pill-row {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-bottom: 12px;
+}
+.abtp-info-pill {
+  font-family: ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.08em;
+  color: var(--abtp-green);
+  background: var(--abtp-bg-2);
+  border: 1px solid var(--abtp-line);
+  padding: 4px 9px;
+  border-radius: 2px;
+}
+.abtp-info-pill.abtp-gold {
+  background: rgba(230, 185, 30, 0.12);
+  border-color: var(--abtp-gold);
+  color: var(--abtp-gold-deep);
+}
+</style>
+
+<!-- ============== HEADER ============== -->
+<div class="abtp-header">
+  <div class="abtp-header-eyebrow">ABAdvisory Group LLP · Free Utility</div>
+  <div class="abtp-header-title">Benchmarking Range <em>Calculator.</em></div>
+  <div class="abtp-header-sub">Full P&amp;L build-up · Three-year weighted average · Rule 10CA percentile range · Working capital adjustment</div>
+</div>
+
+<!-- ============== DISCLAIMER / INDEPENDENCE ============== -->
+<div class="abtp-card abtp-disclaimer-card" id="abtp-disclaimer">
+  <div class="abtp-section-label"><span class="num">00</span> Independence &amp; disclaimer</div>
+  <div class="abtp-h3">Before you begin.</div>
+  <div class="abtp-prose">
+    <p>This tool performs arithmetic computations on data <strong>you provide</strong>. It does not verify comparability, filter the data set, or assess the appropriateness of the PLI for your transaction. Results may be unreliable if the underlying inputs or methodology are incorrect.</p>
+  </div>
+
+  <div class="abtp-checklist">
+    <div style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--abtp-ink-3);font-family:ui-monospace,monospace;margin-bottom:8px">Confirm before proceeding</div>
+    <div class="abtp-checklist-item">FAR (functions, assets, risks) analysis has been completed</div>
+    <div class="abtp-checklist-item">Related-party transaction filter has been applied to comparables</div>
+    <div class="abtp-checklist-item">Persistent loss-makers and start-ups have been excluded as appropriate</div>
+    <div class="abtp-checklist-item">Functional and industry similarity with tested party has been verified</div>
+    <div class="abtp-checklist-item">Audited financial data (not unaudited or interim) has been used</div>
+    <div class="abtp-checklist-item">The selected PLI is most appropriate for the tested transaction</div>
+  </div>
+
+  <div class="abtp-prose" style="font-size:12.5px;color:var(--abtp-ink-3);padding:10px 0">
+    <p><strong style="color:var(--abtp-ink-2)">Disclaimer:</strong> This tool is provided by ABAdvisory Group LLP as a free computational utility for informational and educational purposes only. It does not constitute tax, legal, transfer pricing, or any other professional advice. ABAdvisory Group LLP makes no warranty as to the accuracy, completeness, or fitness of the results for any particular purpose, and shall not be responsible or liable for any loss, claim, penalty, or damage arising from reliance on the output of this tool. Users are strongly advised to consult qualified transfer pricing professionals before relying on these computations for tax filings, audit, litigation, or any other purpose. By using this tool, you agree to these terms.</p>
+  </div>
+
+  <div class="abtp-ack" id="abtp-ack-wrap">
+    <input type="checkbox" id="abtp-ack-check">
+    <label for="abtp-ack-check">I have read and accept the above. I will use the output only as a computational reference, not as professional advice.</label>
+  </div>
+
+  <div class="abtp-actions-row">
+    <button class="abtp-btn" id="abtp-ack-btn" disabled>
+      Continue to calculator
+      <span class="abtp-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============== MAIN TOOL ============== -->
+<div id="abtp-tool" class="abtp-hidden">
+
+  <div class="abtp-card">
+    <div class="abtp-section-label"><span class="num">01</span> Setup</div>
+    <div class="abtp-h3">Choose your <em>parameters.</em></div>
+
+    <div style="margin: 14px 0 6px"><div class="abtp-label">Profit Level Indicator (PLI)</div></div>
+    <div class="abtp-radio-group" id="abtp-pli-group">
+      <label class="abtp-radio-pill abtp-active"><input type="radio" name="pli" value="opor" checked>OP / Operating Revenue</label>
+      <label class="abtp-radio-pill"><input type="radio" name="pli" value="opoc">OP / Operating Cost</label>
+      <label class="abtp-radio-pill"><input type="radio" name="pli" value="berry">Berry Ratio (GP / OE)</label>
+    </div>
+
+    <div style="margin: 18px 0 6px"><div class="abtp-label">Working capital adjustment</div></div>
+    <div class="abtp-radio-group" id="abtp-wc-group">
+      <label class="abtp-radio-pill abtp-active"><input type="radio" name="wc" value="off" checked>Off</label>
+      <label class="abtp-radio-pill"><input type="radio" name="wc" value="on">On</label>
+    </div>
+
+    <div id="abtp-wc-config" class="abtp-conditional-section" style="margin-top:14px">
+      <div class="abtp-row">
+        <div class="abtp-field" style="max-width:200px">
+          <div class="abtp-label">Interest rate (% p.a.)</div>
+          <input type="number" class="abtp-input" id="abtp-interest" value="9.50" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="abtp-prose" style="font-size:12px;color:var(--abtp-ink-3)">
+        <p>Adjustment formula: (Comparable WC/Sales − Tested Party WC/Sales) × Interest rate, applied as a reduction to comparable's reported margin.</p>
+      </div>
+    </div>
+
+    <div style="margin: 18px 0 6px"><div class="abtp-label">Transaction type (for sub-6 comparable tolerance)</div></div>
+    <div class="abtp-radio-group" id="abtp-trade-group">
+      <label class="abtp-radio-pill abtp-active"><input type="radio" name="trade" value="std" checked>Standard (±3% tolerance)</label>
+      <label class="abtp-radio-pill"><input type="radio" name="trade" value="wholesale">Wholesale trading (±1%)</label>
+    </div>
+
+    <div class="abtp-divider"></div>
+
+    <div class="abtp-row">
+      <div class="abtp-field">
+        <div class="abtp-label">Year 1 (oldest) label</div>
+        <input type="text" class="abtp-input abtp-year-label" id="abtp-year1" value="FY 22-23">
+      </div>
+      <div class="abtp-field">
+        <div class="abtp-label">Year 2 label</div>
+        <input type="text" class="abtp-input abtp-year-label" id="abtp-year2" value="FY 23-24">
+      </div>
+      <div class="abtp-field">
+        <div class="abtp-label">Year 3 (most recent)</div>
+        <input type="text" class="abtp-input abtp-year-label" id="abtp-year3" value="FY 24-25">
+      </div>
+    </div>
+  </div>
+
+  <div class="abtp-card">
+    <div class="abtp-section-label"><span class="num">02</span> Tested party</div>
+    <div class="abtp-h3">Enter your tested <em>entity's</em> P&amp;L.</div>
+    <div class="abtp-prose" style="font-size:12.5px;margin-bottom:14px">
+      <p>Enter the white-row line items below. Blue-shaded rows (Total Revenue, Net Operating Revenue, Net Operating Costs) and gold-shaded rows (Operating Profit, PLI) are auto-computed.</p>
+      <p style="margin-top:8px;padding:10px 12px;background:rgba(230,185,30,0.08);border-left:2px solid var(--abtp-gold);font-size:12px;color:var(--abtp-ink-2)"><strong style="color:var(--abtp-gold-deep)">Methodology note:</strong> Per Rule 10B(4), the tested party's PLI is taken for the <strong>analysis year (Year 3 — most recent)</strong> only and is compared against the comparables' 3-year weighted average. If Working Capital adjustment is enabled, the WC/Sales ratio is still computed on a 3-year weighted basis for both the tested party and the comparables, for stability.</p>
+    </div>
+    <div id="abtp-tp-container"></div>
+  </div>
+
+  <div class="abtp-card">
+    <div class="abtp-section-label"><span class="num">03</span> Comparables</div>
+    <div class="abtp-h3">Enter <em>comparable</em> companies.</div>
+    <div class="abtp-prose" style="font-size:12.5px;margin-bottom:14px">
+      <p>Add 1–20 comparable companies. Range methodology auto-detects based on count: 6 or more → 35th–65th percentile range; fewer than 6 → arithmetic mean with tolerance band.</p>
+    </div>
+
+    <div id="abtp-comp-list"></div>
+
+    <div class="abtp-actions-row">
+      <button class="abtp-btn abtp-btn-secondary" id="abtp-add-comp">+ Add Comparable</button>
+      <span class="abtp-info-pill abtp-gold" id="abtp-comp-count">4 comparables</span>
+    </div>
+  </div>
+
+  <div class="abtp-error-msg" id="abtp-err"></div>
+
+  <div class="abtp-actions-row" style="margin-bottom:16px">
+    <button class="abtp-btn" id="abtp-compute" style="font-size:14px;padding:14px 22px">
+      Compute Range
+      <span class="abtp-arrow">→</span>
+    </button>
+    <button class="abtp-btn abtp-btn-secondary" id="abtp-reset">Reset All</button>
+  </div>
+
+  <div class="abtp-card abtp-results-card abtp-hidden" id="abtp-results">
+    <div class="abtp-section-label"><span class="num">04</span> Result</div>
+    <div id="abtp-results-body"></div>
+
+    <div class="abtp-actions-row">
+      <button class="abtp-btn" id="abtp-export-xlsx">Export to Excel <span class="abtp-arrow">↓</span></button>
+      <button class="abtp-btn abtp-btn-secondary" id="abtp-export-csv">Export to CSV <span class="abtp-arrow">↓</span></button>
+    </div>
+  </div>
+
+</div>
+
+<div class="abtp-footer">
+  <div class="abtp-footer-eyebrow">DEVELOPED BY</div>
+  <div class="abtp-footer-name">ABAdvisory Group <em>LLP</em></div>
+  <div class="abtp-footer-tag">Your Global Transfer Pricing Partner</div>
+</div>
+
+</div> <!-- /.abtp-root -->
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script>
+(function(){
+'use strict';
+
+// =============== SCHEMA ===============
+// Defines the P&L workpaper structure. Each row is rendered once with 3 year columns.
+// `type`:    'input' | 'derived' | 'section' | 'spacer'
+// `key`:     identifier for input/derived rows
+// `highlight`: 'major' (blue tint) | 'gold' (gold tint) for derived rows
+// `format`:  'num' (default) | 'pli' | 'pct'  — how to display computed values
+// `berryOnly`: row appears only when PLI = Berry
+// `indent`: visual indentation for sub-items
+const PL_SCHEMA = [
+  { type: 'input',   key: 'rev_ops',         label: 'Revenue from operations / Segmental Revenue' },
+  { type: 'input',   key: 'other_inc',       label: 'Other Income / Allocated to Segment' },
+  { type: 'derived', key: 'total_rev',       label: 'Total Revenue', highlight: 'major' },
+  { type: 'spacer' },
+  { type: 'section', label: 'Less Non-operating Income:' },
+  { type: 'input',   key: 'non_op_inc',      label: 'Other Non-operating Income (interest, rents, dividends, profit on sale of assets etc.)', indent: true },
+  { type: 'spacer' },
+  { type: 'derived', key: 'net_op_rev',      label: 'Net Operating Revenue', highlight: 'major' },
+  { type: 'spacer' },
+  { type: 'input',   key: 'total_exp',       label: 'Total Expenses Including Depreciation' },
+  { type: 'input',   key: 'cogs',            label: 'Cost of Materials Consumed', berryOnly: true },
+  { type: 'spacer' },
+  { type: 'section', label: 'Less Non-operating Expenses:' },
+  { type: 'input',   key: 'non_op_interest', label: '- Interest', indent: true },
+  { type: 'input',   key: 'non_op_loss',     label: '- Loss on sale / disposal of asset', indent: true },
+  { type: 'input',   key: 'non_op_donation', label: '- Donation', indent: true },
+  { type: 'input',   key: 'non_op_exchange', label: '- Exchange difference', indent: true },
+  { type: 'input',   key: 'non_op_other',    label: '- Other Non-operating Expenses', indent: true },
+  { type: 'spacer' },
+  { type: 'derived', key: 'net_op_cost',     label: 'Net Operating Costs', highlight: 'major' },
+  { type: 'spacer' },
+  { type: 'derived', key: 'op_profit',       label: 'Operating Profit', highlight: 'gold' },
+  { type: 'derived', key: 'pli_year',        label: 'PLI', highlight: 'gold', format: 'pli' }
+];
+
+const BS_SCHEMA = [
+  { type: 'input',   key: 'recv',            label: 'Trade Receivables' },
+  { type: 'input',   key: 'inv',             label: 'Inventory' },
+  { type: 'input',   key: 'pay',             label: 'Trade Payables' },
+  { type: 'derived', key: 'wc',              label: 'Net Working Capital', highlight: 'major' },
+  { type: 'derived', key: 'wc_pct',          label: 'WC / Net Operating Revenue', highlight: 'gold', format: 'pct' }
+];
+
+const PL_INPUT_KEYS = PL_SCHEMA.filter(r => r.type === 'input').map(r => r.key);
+const BS_INPUT_KEYS = BS_SCHEMA.filter(r => r.type === 'input').map(r => r.key);
+
+// =============== STATE ===============
+const ABTP = {
+  pli: 'opor',
+  wc: 'off',
+  interest: 9.5,
+  trade: 'std',
+  years: ['FY 22-23', 'FY 23-24', 'FY 24-25'],
+  tp: null,
+  comparables: [],
+  lastResult: null
+};
+
+// =============== HELPERS ===============
+function $(id) { return document.getElementById(id); }
+function $$(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
+
+function num(v) {
+  if (v === '' || v === null || v === undefined) return 0;
+  const n = parseFloat(String(v).replace(/,/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+
+function fmtNum(n, dec) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  dec = dec === undefined ? 2 : dec;
+  return Number(n).toLocaleString('en-IN', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function fmtPct(n, dec) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return fmtNum(n, dec === undefined ? 2 : dec) + '%';
+}
+function fmtRatio(n, dec) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return fmtNum(n, dec === undefined ? 4 : dec);
+}
+function fmtPLI(n) {
+  return ABTP.pli === 'berry' ? fmtRatio(n) : fmtPct(n);
+}
+function pliLabel() {
+  return ABTP.pli === 'opor' ? 'OP / Operating Revenue' :
+         ABTP.pli === 'opoc' ? 'OP / Operating Cost' :
+         'Berry Ratio (GP / OE)';
+}
+function fmtForSchema(value, format) {
+  if (format === 'pli') return fmtPLI(value);
+  if (format === 'pct') return fmtPct(value);
+  return fmtNum(value);
+}
+
+function showError(msg) {
+  const el = $('abtp-err');
+  el.textContent = msg;
+  el.classList.add('abtp-show');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function clearError() {
+  $('abtp-err').classList.remove('abtp-show');
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+// =============== DERIVED COMPUTATIONS ===============
+
+function entityDerivedYear(entity, y) {
+  const p = entity.pl;
+  const total_rev = num(p.rev_ops[y]) + num(p.other_inc[y]);
+  const net_op_rev = total_rev - num(p.non_op_inc[y]);
+  const total_non_op_exp =
+    num(p.non_op_interest[y]) + num(p.non_op_loss[y]) +
+    num(p.non_op_donation[y]) + num(p.non_op_exchange[y]) +
+    num(p.non_op_other[y]);
+  const net_op_cost = num(p.total_exp[y]) - total_non_op_exp;
+  const op_profit = net_op_rev - net_op_cost;
+
+  let pli_year = null;
+  if (ABTP.pli === 'opor') {
+    if (net_op_rev !== 0) pli_year = (op_profit / net_op_rev) * 100;
+  } else if (ABTP.pli === 'opoc') {
+    if (net_op_cost !== 0) pli_year = (op_profit / net_op_cost) * 100;
+  } else if (ABTP.pli === 'berry') {
+    const cogs = num(p.cogs[y]);
+    const gp = net_op_rev - cogs;
+    const oe = net_op_cost - cogs;
+    if (oe !== 0) pli_year = gp / oe;
+  }
+  return { total_rev, net_op_rev, net_op_cost, op_profit, pli_year };
+}
+
+function entityWeightedPLI(entity) {
+  let sumOP = 0, sumNetRev = 0, sumNetCost = 0, sumGP = 0, sumOE = 0;
+  for (let y = 0; y < 3; y++) {
+    const d = entityDerivedYear(entity, y);
+    sumOP += d.op_profit;
+    sumNetRev += d.net_op_rev;
+    sumNetCost += d.net_op_cost;
+    if (ABTP.pli === 'berry') {
+      const cogs = num(entity.pl.cogs[y]);
+      sumGP += d.net_op_rev - cogs;
+      sumOE += d.net_op_cost - cogs;
+    }
+  }
+  if (ABTP.pli === 'opor') return sumNetRev !== 0 ? (sumOP / sumNetRev) * 100 : null;
+  if (ABTP.pli === 'opoc') return sumNetCost !== 0 ? (sumOP / sumNetCost) * 100 : null;
+  if (ABTP.pli === 'berry') return sumOE !== 0 ? sumGP / sumOE : null;
+  return null;
+}
+
+// For the tested party, only the analysis year (Year 3 — most recent) is used per Rule 10B(4)
+function entityAnalysisYearPLI(entity) {
+  return entityDerivedYear(entity, 2).pli_year;
+}
+
+function bsDerivedYear(entity, y) {
+  const b = entity.bs;
+  const wc = num(b.recv[y]) + num(b.inv[y]) - num(b.pay[y]);
+  const d = entityDerivedYear(entity, y);
+  const wc_pct = d.net_op_rev !== 0 ? (wc / d.net_op_rev) * 100 : null;
+  return { wc, wc_pct };
+}
+
+function entityWeightedWCPct(entity) {
+  let sumWC = 0, sumRev = 0;
+  for (let y = 0; y < 3; y++) {
+    const b = entity.bs;
+    sumWC += num(b.recv[y]) + num(b.inv[y]) - num(b.pay[y]);
+    sumRev += entityDerivedYear(entity, y).net_op_rev;
+  }
+  return sumRev !== 0 ? sumWC / sumRev : null;
+}
+
+// =============== ENTITY HTML BUILDER ===============
+
+function emptyEntity() {
+  const pl = {}; PL_INPUT_KEYS.forEach(k => pl[k] = ['', '', '']);
+  const bs = {}; BS_INPUT_KEYS.forEach(k => bs[k] = ['', '', '']);
+  return { name: '', pl, bs };
+}
+
+function renderSchemaRow(row, entity, isTP, idx, isBS) {
+  if (row.berryOnly && ABTP.pli !== 'berry') return '';
+  if (row.type === 'spacer') {
+    return `<tr class="abtp-spacer-row"><td colspan="4"></td></tr>`;
+  }
+  if (row.type === 'section') {
+    return `<tr><td class="abtp-particulars abtp-section-row" colspan="4">${escapeHtml(row.label)}</td></tr>`;
+  }
+  if (row.type === 'input') {
+    const v = (isBS ? entity.bs : entity.pl)[row.key] || ['', '', ''];
+    const indentClass = row.indent ? ' abtp-indent' : '';
+    return `<tr>
+      <td class="abtp-particulars${indentClass}">${escapeHtml(row.label)}</td>
+      <td class="abtp-num-cell"><input type="number" step="any" data-section="${isBS ? 'bs' : 'pl'}" data-key="${row.key}" data-y="0" value="${v[0] || ''}"></td>
+      <td class="abtp-num-cell"><input type="number" step="any" data-section="${isBS ? 'bs' : 'pl'}" data-key="${row.key}" data-y="1" value="${v[1] || ''}"></td>
+      <td class="abtp-num-cell"><input type="number" step="any" data-section="${isBS ? 'bs' : 'pl'}" data-key="${row.key}" data-y="2" value="${v[2] || ''}"></td>
+    </tr>`;
+  }
+  if (row.type === 'derived') {
+    const cls = row.highlight === 'gold' ? 'abtp-derived-gold' : 'abtp-derived-major';
+    return `<tr class="${cls}">
+      <td class="abtp-particulars">${escapeHtml(row.label)}</td>
+      <td class="abtp-num-cell" data-derived="${row.key}" data-section="${isBS ? 'bs' : 'pl'}" data-y="0" data-format="${row.format || 'num'}">—</td>
+      <td class="abtp-num-cell" data-derived="${row.key}" data-section="${isBS ? 'bs' : 'pl'}" data-y="1" data-format="${row.format || 'num'}">—</td>
+      <td class="abtp-num-cell" data-derived="${row.key}" data-section="${isBS ? 'bs' : 'pl'}" data-y="2" data-format="${row.format || 'num'}">—</td>
+    </tr>`;
+  }
+  return '';
+}
+
+function entityHTML(entity, idx, isTP) {
+  const id = isTP ? 'tp' : ('c' + idx);
+  const namePlaceholder = isTP ? 'Tested party name' : 'Comparable company name';
+  const removeBtn = isTP ? '' : `<button class="abtp-btn-danger" data-remove="${idx}">Remove</button>`;
+
+  let plRows = PL_SCHEMA.map(r => renderSchemaRow(r, entity, isTP, idx, false)).join('');
+
+  // Bottom row differs for tested party vs comparables:
+  //   - Tested party uses analysis year (Year 3) PLI only — per Rule 10B(4)
+  //   - Comparables use 3-year weighted PLI
+  if (isTP) {
+    plRows += `<tr class="abtp-weighted-row">
+      <td class="abtp-particulars">Analysis Year ${pliLabel()} — used for comparison</td>
+      <td class="abtp-weighted-cell" colspan="3" data-derived="analysis_year_pli">—</td>
+    </tr>`;
+  } else {
+    plRows += `<tr class="abtp-weighted-row">
+      <td class="abtp-particulars">3-Year Weighted ${pliLabel()}</td>
+      <td class="abtp-weighted-cell" colspan="3" data-derived="weighted_pli">—</td>
+    </tr>`;
+  }
+
+  let bsBlock = '';
+  if (ABTP.wc === 'on') {
+    let bsRows = BS_SCHEMA.map(r => renderSchemaRow(r, entity, isTP, idx, true)).join('');
+    // Also add a weighted WC% row
+    bsRows += `<tr class="abtp-weighted-row">
+      <td class="abtp-particulars">3-Year Weighted WC / Sales</td>
+      <td class="abtp-weighted-cell" colspan="3" data-derived="weighted_wc_pct">—</td>
+    </tr>`;
+    bsBlock = `
+      <div class="abtp-bs-section-title">Balance Sheet Items (for Working Capital adjustment)</div>
+      <div style="overflow-x:auto">
+      <table class="abtp-pl-table">
+        <thead>
+          <tr>
+            <th class="abtp-particulars">Particulars</th>
+            <th>${escapeHtml(ABTP.years[0])}</th>
+            <th>${escapeHtml(ABTP.years[1])}</th>
+            <th>${escapeHtml(ABTP.years[2])}</th>
+          </tr>
+        </thead>
+        <tbody>${bsRows}</tbody>
+      </table>
+      </div>`;
+  }
+
+  return `
+    <div class="abtp-entity" data-id="${id}">
+      <div class="abtp-entity-header">
+        <input class="abtp-entity-name" data-key="name" placeholder="${namePlaceholder}" value="${escapeHtml(entity.name || '')}">
+        ${removeBtn}
+      </div>
+      <div class="abtp-entity-body">
+        <table class="abtp-pl-table">
+          <thead>
+            <tr>
+              <th class="abtp-particulars">Particulars</th>
+              <th class="abtp-h-entity-name" colspan="3">${escapeHtml(entity.name || namePlaceholder)} — Amount</th>
+            </tr>
+            <tr>
+              <th class="abtp-particulars"></th>
+              <th>${escapeHtml(ABTP.years[0])}</th>
+              <th>${escapeHtml(ABTP.years[1])}</th>
+              <th>${escapeHtml(ABTP.years[2])}</th>
+            </tr>
+          </thead>
+          <tbody>${plRows}</tbody>
+        </table>
+        ${bsBlock}
+      </div>
+    </div>
+  `;
+}
+
+// =============== DOM <-> STATE SYNC ===============
+
+function snapshotFromDOM() {
+  function readEntity(rootEl) {
+    const e = emptyEntity();
+    if (!rootEl) return e;
+    const nameInput = rootEl.querySelector('input.abtp-entity-name');
+    if (nameInput) e.name = nameInput.value;
+    rootEl.querySelectorAll('input[data-section][data-key][data-y]').forEach(inp => {
+      const section = inp.getAttribute('data-section');
+      const key = inp.getAttribute('data-key');
+      const y = parseInt(inp.getAttribute('data-y'));
+      const bucket = section === 'bs' ? e.bs : e.pl;
+      if (bucket[key]) bucket[key][y] = inp.value;
+    });
+    return e;
+  }
+  const tpEl = $('abtp-tp-container').querySelector('.abtp-entity');
+  if (tpEl) ABTP.tp = readEntity(tpEl);
+  const compEls = $$('#abtp-comp-list .abtp-entity');
+  ABTP.comparables = compEls.map(el => readEntity(el));
+}
+
+function renderEntities() {
+  // Preserve any user-typed values first
+  snapshotFromDOM();
+  if (!ABTP.tp) ABTP.tp = emptyEntity();
+  if (ABTP.comparables.length === 0) {
+    ABTP.comparables = [emptyEntity(), emptyEntity(), emptyEntity(), emptyEntity()];
+  }
+  $('abtp-tp-container').innerHTML = entityHTML(ABTP.tp, -1, true);
+  $('abtp-comp-list').innerHTML = ABTP.comparables.map((c, i) => entityHTML(c, i, false)).join('');
+  $('abtp-comp-count').textContent = ABTP.comparables.length + (ABTP.comparables.length === 1 ? ' comparable' : ' comparables');
+  attachEntityListeners();
+  recomputeAllDerived();
+}
+
+function attachEntityListeners() {
+  // Live derived calculations + entity name reflection
+  $$('.abtp-entity input[type="number"]').forEach(inp => {
+    inp.addEventListener('input', recomputeAllDerived);
+  });
+  $$('.abtp-entity input.abtp-entity-name').forEach(inp => {
+    inp.addEventListener('input', () => {
+      // Update the entity-name header cell (the colspan=3 header) without re-rendering everything
+      const entEl = inp.closest('.abtp-entity');
+      const headerCell = entEl.querySelector('th.abtp-h-entity-name');
+      if (headerCell) headerCell.textContent = (inp.value || (entEl === $('abtp-tp-container').firstElementChild ? 'Tested party' : 'Comparable')) + ' — Amount';
+    });
+  });
+  // Remove buttons (data-attribute, not inline onclick)
+  $$('.abtp-entity .abtp-btn-danger[data-remove]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-remove'));
+      if (ABTP.comparables.length <= 1) {
+        showError('At least one comparable is required.');
+        return;
+      }
+      snapshotFromDOM();
+      ABTP.comparables.splice(idx, 1);
+      renderEntities();
+    });
+  });
+}
+
+function recomputeAllDerived() {
+  // Sync first so derived computations use latest data
+  snapshotFromDOM();
+
+  // Helper to update a derived cell within an entity element
+  function updateEntity(entEl, entity) {
+    // P&L derived cells
+    for (let y = 0; y < 3; y++) {
+      const d = entityDerivedYear(entity, y);
+      const map = {
+        total_rev: d.total_rev,
+        net_op_rev: d.net_op_rev,
+        net_op_cost: d.net_op_cost,
+        op_profit: d.op_profit,
+        pli_year: d.pli_year
+      };
+      Object.keys(map).forEach(key => {
+        const cell = entEl.querySelector(`[data-derived="${key}"][data-section="pl"][data-y="${y}"]`);
+        if (cell) {
+          const fmt = cell.getAttribute('data-format');
+          cell.textContent = fmtForSchema(map[key], fmt);
+        }
+      });
+      // BS derived cells
+      if (ABTP.wc === 'on') {
+        const bd = bsDerivedYear(entity, y);
+        const bsMap = { wc: bd.wc, wc_pct: bd.wc_pct };
+        Object.keys(bsMap).forEach(key => {
+          const cell = entEl.querySelector(`[data-derived="${key}"][data-section="bs"][data-y="${y}"]`);
+          if (cell) {
+            const fmt = cell.getAttribute('data-format');
+            cell.textContent = fmtForSchema(bsMap[key], fmt);
+          }
+        });
+      }
+    }
+    // Bottom PLI row — tested party uses Analysis Year, comparables use 3-year weighted
+    const apliCell = entEl.querySelector('[data-derived="analysis_year_pli"]');
+    if (apliCell) {
+      apliCell.textContent = fmtPLI(entityAnalysisYearPLI(entity));
+    }
+    const wcell = entEl.querySelector('[data-derived="weighted_pli"]');
+    if (wcell) {
+      wcell.textContent = fmtPLI(entityWeightedPLI(entity));
+    }
+    // Weighted WC%
+    if (ABTP.wc === 'on') {
+      const wwc = entityWeightedWCPct(entity);
+      const wwcell = entEl.querySelector('[data-derived="weighted_wc_pct"]');
+      if (wwcell) wwcell.textContent = (wwc === null || isNaN(wwc)) ? '—' : fmtPct(wwc * 100);
+    }
+  }
+
+  const tpEl = $('abtp-tp-container').querySelector('.abtp-entity');
+  if (tpEl && ABTP.tp) updateEntity(tpEl, ABTP.tp);
+
+  const compEls = $$('#abtp-comp-list .abtp-entity');
+  compEls.forEach((el, i) => {
+    if (ABTP.comparables[i]) updateEntity(el, ABTP.comparables[i]);
+  });
+}
+
+// =============== RANGE COMPUTATION ===============
+
+function rule10ca(sortedAsc, pct) {
+  const n = sortedAsc.length;
+  const raw = pct * n;
+  let idx;
+  if (Math.abs(raw - Math.round(raw)) < 1e-9) {
+    idx = Math.round(raw) - 1;
+  } else {
+    idx = Math.ceil(raw) - 1;
+  }
+  return sortedAsc[idx];
+}
+function arithMean(arr) { return arr.reduce((a,b)=>a+b, 0) / arr.length; }
+
+function compute() {
+  clearError();
+  snapshotFromDOM();
+
+  // Validate TP has some data
+  const tpHasData = ABTP.tp && (ABTP.tp.name || PL_INPUT_KEYS.some(k => (ABTP.tp.pl[k]||[]).some(v => v !== '')));
+  if (!tpHasData) {
+    showError('Please fill in the tested party section.');
+    return null;
+  }
+  if (ABTP.comparables.length === 0) {
+    showError('Please add at least one comparable.');
+    return null;
+  }
+
+  // Tested party PLI: analysis year only (Year 3) — per Rule 10B(4)
+  const tpPLI = entityAnalysisYearPLI(ABTP.tp);
+  if (tpPLI === null) {
+    showError('Tested party data is incomplete for the analysis year (Year 3) or denominators are zero. Please check the inputs.');
+    return null;
+  }
+  // WC adjustment still uses 3-year weighted figures for stability
+  const tpWCPct = ABTP.wc === 'on' ? entityWeightedWCPct(ABTP.tp) : null;
+
+  const compResults = [];
+  for (let i = 0; i < ABTP.comparables.length; i++) {
+    const c = ABTP.comparables[i];
+    const pli = entityWeightedPLI(c);
+    if (pli === null) {
+      showError(`Comparable ${i+1} (${c.name || 'unnamed'}) has incomplete data or zero denominators.`);
+      return null;
+    }
+    let adjustedPLI = pli;
+    let wcPct = null;
+    let wcAdjValue = null;
+    if (ABTP.wc === 'on') {
+      wcPct = entityWeightedWCPct(c);
+      if (wcPct !== null && tpWCPct !== null) {
+        const adjFraction = (wcPct - tpWCPct) * (ABTP.interest / 100);
+        // For percentage-based PLIs, scale to percentage; for Berry (ratio), keep as fraction
+        wcAdjValue = ABTP.pli === 'berry' ? adjFraction : adjFraction * 100;
+        adjustedPLI = pli - wcAdjValue;
+      }
+    }
+    compResults.push({
+      idx: i,
+      name: c.name || ('Comparable ' + (i+1)),
+      raw: c,
+      reportedPLI: pli,
+      wcPct,
+      wcAdjValue,
+      finalPLI: adjustedPLI
+    });
+  }
+
+  const sorted = compResults.map(c => c.finalPLI).slice().sort((a,b) => a-b);
+  const n = sorted.length;
+
+  let p35 = null, p50 = null, p65 = null, mean = null;
+  let methodology = '';
+  let armsLow = null, armsHigh = null;
+
+  if (n >= 6) {
+    p35 = rule10ca(sorted, 0.35);
+    p50 = rule10ca(sorted, 0.50);
+    p65 = rule10ca(sorted, 0.65);
+    armsLow = p35; armsHigh = p65;
+    methodology = 'Rule 10CA — Inter-quartile (35th to 65th percentile) range';
+  } else {
+    mean = arithMean(sorted);
+    const tolerance = ABTP.trade === 'wholesale' ? 1.0 : 3.0;
+    if (ABTP.pli === 'berry') {
+      const tolFrac = tolerance / 100;
+      armsLow = mean * (1 - tolFrac);
+      armsHigh = mean * (1 + tolFrac);
+    } else {
+      armsLow = mean - tolerance;
+      armsHigh = mean + tolerance;
+    }
+    methodology = `Arithmetic mean with ±${tolerance}% tolerance (fewer than 6 comparables)`;
+  }
+
+  let position, adjustmentTarget = null;
+  if (tpPLI >= armsLow && tpPLI <= armsHigh) position = 'within';
+  else if (tpPLI < armsLow) { position = 'below'; adjustmentTarget = p50 !== null ? p50 : mean; }
+  else { position = 'above'; adjustmentTarget = p50 !== null ? p50 : mean; }
+
+  const result = {
+    config: {
+      pli: ABTP.pli, pliLabel: pliLabel(),
+      wc: ABTP.wc, interest: ABTP.interest,
+      trade: ABTP.trade, years: ABTP.years.slice()
+    },
+    tp: { name: ABTP.tp.name || 'Tested Party', raw: ABTP.tp, pli: tpPLI, wcPct: tpWCPct },
+    comparables: compResults,
+    stats: { n, p35, p50, p65, mean, min: sorted[0], max: sorted[sorted.length-1] },
+    range: { low: armsLow, high: armsHigh, methodology },
+    verdict: { position, adjustmentTarget, adjustmentAmount: null }
+  };
+
+  // Adjustment amount (in absolute terms) — uses Year 3 (analysis year) denominators
+  // since the TP's PLI is computed on a single-year basis per Rule 10B(4)
+  if (adjustmentTarget !== null) {
+    const d3 = entityDerivedYear(ABTP.tp, 2);
+    let denom = null;
+    if (ABTP.pli === 'opor') denom = d3.net_op_rev;
+    else if (ABTP.pli === 'opoc') denom = d3.net_op_cost;
+    else if (ABTP.pli === 'berry') denom = d3.net_op_cost - num(ABTP.tp.pl.cogs[2]);
+    if (denom && denom > 0) {
+      const diff = adjustmentTarget - tpPLI;
+      result.verdict.adjustmentAmount = ABTP.pli === 'berry'
+        ? diff * denom
+        : (diff / 100) * denom;
+    }
+  }
+
+  ABTP.lastResult = result;
+  return result;
+}
+
+// =============== RENDER RESULTS ===============
+function renderResults(r) {
+  if (!r) return;
+  const card = $('abtp-results');
+  const body = $('abtp-results-body');
+  const isPctPLI = r.config.pli !== 'berry';
+  const fmt = isPctPLI ? (v => fmtPct(v)) : (v => fmtRatio(v));
+
+  let html = '';
+  html += `<div class="abtp-pill-row">
+    <span class="abtp-info-pill">PLI: ${escapeHtml(r.config.pliLabel)}</span>
+    <span class="abtp-info-pill">TP: analysis year (${escapeHtml(r.config.years[2])})</span>
+    <span class="abtp-info-pill">Comparables: 3-yr weighted</span>
+    <span class="abtp-info-pill">${r.stats.n} comparable${r.stats.n===1?'':'s'}</span>
+    ${r.config.wc === 'on' ? `<span class="abtp-info-pill abtp-gold">WC adj @ ${r.config.interest}% (3-yr basis)</span>` : ''}
+  </div>`;
+
+  html += `<div class="abtp-h3" style="margin-top:14px">Comparable <em>set.</em></div>`;
+  html += `<table class="abtp-results-table"><thead><tr>
+    <th>Company</th>
+    <th>Reported PLI</th>
+    ${r.config.wc === 'on' ? '<th>WC%</th><th>WC Adj</th><th>Adjusted PLI</th>' : ''}
+  </tr></thead><tbody>`;
+  r.comparables.forEach(c => {
+    html += `<tr>
+      <td>${escapeHtml(c.name)}</td>
+      <td>${fmt(c.reportedPLI)}</td>
+      ${r.config.wc === 'on' ? `
+        <td>${c.wcPct !== null ? fmtPct(c.wcPct * 100) : '—'}</td>
+        <td>${c.wcAdjValue !== null ? fmt(c.wcAdjValue) : '—'}</td>
+        <td><strong>${fmt(c.finalPLI)}</strong></td>` : ''}
+    </tr>`;
+  });
+  html += '</tbody></table>';
+
+  html += `<div class="abtp-h3" style="margin-top:18px">Range <em>statistics.</em></div>`;
+  html += '<div class="abtp-stat-grid">';
+  html += `<div class="abtp-stat"><div class="abtp-stat-label">Minimum</div><div class="abtp-stat-value">${fmt(r.stats.min)}</div></div>`;
+  if (r.stats.p35 !== null) {
+    html += `<div class="abtp-stat"><div class="abtp-stat-label">35th %ile</div><div class="abtp-stat-value">${fmt(r.stats.p35)}</div></div>`;
+    html += `<div class="abtp-stat"><div class="abtp-stat-label">Median (50th)</div><div class="abtp-stat-value">${fmt(r.stats.p50)}</div></div>`;
+    html += `<div class="abtp-stat"><div class="abtp-stat-label">65th %ile</div><div class="abtp-stat-value">${fmt(r.stats.p65)}</div></div>`;
+  } else {
+    html += `<div class="abtp-stat"><div class="abtp-stat-label">Arithmetic Mean</div><div class="abtp-stat-value">${fmt(r.stats.mean)}</div></div>`;
+  }
+  html += `<div class="abtp-stat"><div class="abtp-stat-label">Maximum</div><div class="abtp-stat-value">${fmt(r.stats.max)}</div></div>`;
+  html += '</div>';
+
+  html += `<div class="abtp-prose" style="font-size:12px;color:var(--abtp-ink-3);margin-bottom:6px">
+    <p><strong>Methodology:</strong> ${escapeHtml(r.range.methodology)}.</p>
+  </div>`;
+
+  const tpName = escapeHtml(r.tp.name);
+  const analysisYear = escapeHtml(r.config.years[2]);
+  let verdictClass = 'abtp-verdict ' + (r.verdict.position === 'within' ? 'abtp-ok' :
+                                         r.verdict.position === 'above' ? 'abtp-ok' : 'abtp-not-ok');
+  let verdictTitle, verdictBody;
+  if (r.verdict.position === 'within') {
+    verdictTitle = `Within <em>arm's length range.</em>`;
+    verdictBody = `${tpName}'s analysis year PLI (${analysisYear}) of <strong>${fmt(r.tp.pli)}</strong> lies inside the arm's length range of ${fmt(r.range.low)} to ${fmt(r.range.high)} (based on the comparables' 3-year weighted average margins). No transfer pricing adjustment indicated.`;
+  } else if (r.verdict.position === 'above') {
+    verdictTitle = `Above <em>arm's length range.</em>`;
+    verdictBody = `${tpName}'s analysis year PLI (${analysisYear}) of <strong>${fmt(r.tp.pli)}</strong> exceeds the upper bound of ${fmt(r.range.high)}. No downward adjustment is required (taxpayer earns above the range). However, this may attract scrutiny on the appropriateness of the comparable set.`;
+  } else {
+    verdictTitle = `Below <em>arm's length range.</em>`;
+    let adjLine = '';
+    if (r.verdict.adjustmentAmount !== null && r.verdict.adjustmentTarget !== null) {
+      adjLine = ` Indicative adjustment to bring to ${r.stats.p50 !== null ? 'median' : 'mean'} (${fmt(r.verdict.adjustmentTarget)}): <strong>${fmtNum(r.verdict.adjustmentAmount)}</strong> (in the same units as the analysis year operating data entered).`;
+    }
+    verdictBody = `${tpName}'s analysis year PLI (${analysisYear}) of <strong>${fmt(r.tp.pli)}</strong> falls below the lower bound of ${fmt(r.range.low)}.${adjLine}`;
+  }
+  html += `<div class="${verdictClass}">
+    <div class="abtp-verdict-title">${verdictTitle}</div>
+    <div class="abtp-verdict-body">${verdictBody}</div>
+  </div>`;
+
+  body.innerHTML = html;
+  card.classList.remove('abtp-hidden');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// =============== EXPORTS ===============
+
+// Build a full workpaper-style P&L table for one entity (returns array of rows)
+function entityWorkpaperRows(entity, r, isTP) {
+  const yrs = r.config.years;
+  const rows = [];
+  rows.push([entity.name || 'Unnamed entity']);
+  rows.push(['Particulars', yrs[0], yrs[1], yrs[2]]);
+
+  const isBerry = ABTP.pli === 'berry';
+  PL_SCHEMA.forEach(row => {
+    if (row.type === 'spacer') { rows.push([]); return; }
+    if (row.type === 'section') { rows.push([row.label]); return; }
+    if (row.berryOnly && !isBerry) return;
+    if (row.type === 'input') {
+      const v = entity.pl[row.key] || ['', '', ''];
+      rows.push([row.label,
+        v[0] === '' ? '' : num(v[0]).toFixed(2),
+        v[1] === '' ? '' : num(v[1]).toFixed(2),
+        v[2] === '' ? '' : num(v[2]).toFixed(2)
+      ]);
+    } else if (row.type === 'derived') {
+      const cells = [0,1,2].map(y => {
+        const d = entityDerivedYear(entity, y);
+        const valMap = { total_rev:d.total_rev, net_op_rev:d.net_op_rev, net_op_cost:d.net_op_cost, op_profit:d.op_profit, pli_year:d.pli_year };
+        const v = valMap[row.key];
+        if (v === null || isNaN(v)) return '';
+        if (row.format === 'pli') {
+          return (ABTP.pli === 'berry') ? v.toFixed(4) : v.toFixed(4) + '%';
+        }
+        return v.toFixed(2);
+      });
+      rows.push([row.label, ...cells]);
+    }
+  });
+
+  // Bottom row: Analysis Year PLI (TP) or 3-Year Weighted PLI (comparable)
+  if (isTP) {
+    const apli = entityAnalysisYearPLI(entity);
+    rows.push([
+      `Analysis Year ${pliLabel()} (${yrs[2]}) — used for comparison`,
+      apli === null || isNaN(apli) ? '' : (isBerry ? apli.toFixed(4) : apli.toFixed(4) + '%')
+    ]);
+  } else {
+    const wpli = entityWeightedPLI(entity);
+    rows.push([
+      '3-Year Weighted ' + pliLabel(),
+      wpli === null || isNaN(wpli) ? '' : (isBerry ? wpli.toFixed(4) : wpli.toFixed(4) + '%')
+    ]);
+  }
+
+  // Balance Sheet
+  if (ABTP.wc === 'on') {
+    rows.push([]);
+    rows.push(['Balance Sheet Items (for WC adjustment)']);
+    rows.push(['Particulars', yrs[0], yrs[1], yrs[2]]);
+    BS_SCHEMA.forEach(row => {
+      if (row.type === 'input') {
+        const v = entity.bs[row.key] || ['', '', ''];
+        rows.push([row.label,
+          v[0] === '' ? '' : num(v[0]).toFixed(2),
+          v[1] === '' ? '' : num(v[1]).toFixed(2),
+          v[2] === '' ? '' : num(v[2]).toFixed(2)
+        ]);
+      } else if (row.type === 'derived') {
+        const cells = [0,1,2].map(y => {
+          const bd = bsDerivedYear(entity, y);
+          const v = (row.key === 'wc') ? bd.wc : bd.wc_pct;
+          if (v === null || isNaN(v)) return '';
+          return row.format === 'pct' ? v.toFixed(4) + '%' : v.toFixed(2);
+        });
+        rows.push([row.label, ...cells]);
+      }
+    });
+    const wwc = entityWeightedWCPct(entity);
+    rows.push(['3-Year Weighted WC / Sales', wwc === null || isNaN(wwc) ? '' : (wwc * 100).toFixed(4) + '%']);
+  }
+
+  return rows;
+}
+
+function buildSummaryRows(r) {
+  const rows = [];
+  const isBerry = r.config.pli === 'berry';
+  const pliFormat = (v) => v === null || v === undefined || isNaN(v) ? '' :
+    (isBerry ? Number(v).toFixed(6) : Number(v).toFixed(4) + '%');
+  const numFormat = (v) => v === null || v === undefined || isNaN(v) ? '' : Number(v).toFixed(2);
+
+  rows.push(['ABAdvisory Group LLP — Benchmarking Range Calculator']);
+  rows.push(['Generated', new Date().toLocaleString('en-IN')]);
+  rows.push([]);
+  rows.push(['Configuration']);
+  rows.push(['PLI', r.config.pliLabel]);
+  rows.push(['Working capital adjustment', r.config.wc === 'on' ? 'Yes — interest rate ' + r.config.interest + '% p.a.' : 'No']);
+  rows.push(['Tolerance type', r.config.trade === 'wholesale' ? 'Wholesale trading (±1%)' : 'Standard / all other transactions (±3%)']);
+  rows.push(['Year labels', r.config.years.join(' / ')]);
+  rows.push([]);
+
+  rows.push(['Comparables — Computed PLIs']);
+  const head = ['#', 'Company', 'Reported PLI'];
+  if (r.config.wc === 'on') head.push('WC / Sales', 'WC Adjustment', 'Adjusted PLI');
+  rows.push(head);
+  r.comparables.forEach((c, i) => {
+    const row = [i+1, c.name, pliFormat(c.reportedPLI)];
+    if (r.config.wc === 'on') {
+      row.push(c.wcPct !== null ? (c.wcPct * 100).toFixed(4) + '%' : '');
+      row.push(pliFormat(c.wcAdjValue));
+      row.push(pliFormat(c.finalPLI));
+    }
+    rows.push(row);
+  });
+  rows.push([]);
+
+  rows.push(['Range Statistics']);
+  rows.push(['Number of comparables', r.stats.n]);
+  rows.push(['Minimum', pliFormat(r.stats.min)]);
+  if (r.stats.p35 !== null) {
+    rows.push(['35th percentile', pliFormat(r.stats.p35)]);
+    rows.push(['Median (50th)', pliFormat(r.stats.p50)]);
+    rows.push(['65th percentile', pliFormat(r.stats.p65)]);
+  } else {
+    rows.push(['Arithmetic Mean', pliFormat(r.stats.mean)]);
+  }
+  rows.push(['Maximum', pliFormat(r.stats.max)]);
+  rows.push(['Methodology', r.range.methodology]);
+  rows.push(['Arm\'s length range (low)', pliFormat(r.range.low)]);
+  rows.push(['Arm\'s length range (high)', pliFormat(r.range.high)]);
+  rows.push([]);
+
+  rows.push(['Tested Party Position']);
+  rows.push(['Tested party name', r.tp.name]);
+  rows.push(['Tested party PLI (Analysis Year — ' + r.config.years[2] + ')', pliFormat(r.tp.pli)]);
+  if (r.config.wc === 'on' && r.tp.wcPct !== null) {
+    rows.push(['Tested party WC / Sales (3-year weighted)', (r.tp.wcPct * 100).toFixed(4) + '%']);
+  }
+  rows.push(['Position', r.verdict.position === 'within' ? 'Within range' :
+                          r.verdict.position === 'above' ? 'Above range' : 'Below range']);
+  if (r.verdict.adjustmentTarget !== null) {
+    rows.push(['Indicative adjustment target', pliFormat(r.verdict.adjustmentTarget)]);
+  }
+  if (r.verdict.adjustmentAmount !== null) {
+    rows.push(['Indicative adjustment amount (in analysis year units)', numFormat(r.verdict.adjustmentAmount)]);
+  }
+  return rows;
+}
+
+function exportCSV() {
+  if (!ABTP.lastResult) { showError('No results yet — compute the range first.'); return; }
+  const r = ABTP.lastResult;
+  let allRows = [];
+
+  // Summary section
+  allRows = allRows.concat(buildSummaryRows(r));
+  allRows.push([]);
+  allRows.push(['========================================']);
+  allRows.push(['TESTED PARTY — DETAILED WORKINGS']);
+  allRows.push(['========================================']);
+  allRows.push([]);
+  allRows = allRows.concat(entityWorkpaperRows(r.tp.raw, r, true));
+
+  r.comparables.forEach((c, i) => {
+    allRows.push([]);
+    allRows.push(['========================================']);
+    allRows.push([`COMPARABLE ${i+1} — DETAILED WORKINGS`]);
+    allRows.push(['========================================']);
+    allRows.push([]);
+    allRows = allRows.concat(entityWorkpaperRows(c.raw, r, false));
+  });
+
+  allRows.push([]);
+  allRows.push(['Disclaimer']);
+  allRows.push(['This computation is generated by the ABAdvisory Group LLP Benchmarking Range Calculator — a free utility tool. It does not constitute professional advice. Results are based solely on user-supplied inputs and assumed methodologies. ABAdvisory Group LLP shall not be responsible or liable for any decisions, filings, or actions taken based on this output. Users are advised to consult qualified transfer pricing professionals before reliance.']);
+
+  const csv = allRows.map(row => row.map(cell => {
+    const s = (cell === null || cell === undefined) ? '' : String(cell);
+    return (s.indexOf(',') >= 0 || s.indexOf('"') >= 0 || s.indexOf('\n') >= 0)
+      ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(',')).join('\r\n');
+
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ABAdvisory-Benchmarking-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function exportXLSX() {
+  if (!ABTP.lastResult) { showError('No results yet — compute the range first.'); return; }
+  if (typeof XLSX === 'undefined') {
+    showError('Excel library failed to load. Please check your internet connection and try again, or use CSV export.');
+    return;
+  }
+  const r = ABTP.lastResult;
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Summary
+  const summary = buildSummaryRows(r);
+  const ws1 = XLSX.utils.aoa_to_sheet(summary);
+  ws1['!cols'] = [{wch:32},{wch:34},{wch:22},{wch:22},{wch:22},{wch:22}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Summary');
+
+  // Sheet 2: Tested Party detailed workings
+  const tpRows = entityWorkpaperRows(r.tp.raw, r, true);
+  const ws2 = XLSX.utils.aoa_to_sheet(tpRows);
+  ws2['!cols'] = [{wch:60},{wch:18},{wch:18},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Tested Party');
+
+  // Sheet 3: All comparables stacked
+  let compAll = [];
+  r.comparables.forEach((c, i) => {
+    if (i > 0) {
+      compAll.push([]);
+      compAll.push(['---']);
+      compAll.push([]);
+    }
+    compAll.push([`Comparable ${i+1}`]);
+    compAll = compAll.concat(entityWorkpaperRows(c.raw, r, false));
+  });
+  const ws3 = XLSX.utils.aoa_to_sheet(compAll);
+  ws3['!cols'] = [{wch:60},{wch:18},{wch:18},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Comparables');
+
+  // Sheet 4: Disclaimer
+  const disclaimerRows = [
+    ['ABAdvisory Group LLP'],
+    ['Benchmarking Range Calculator — Disclaimer'],
+    [],
+    ['This tool is provided as a free computational utility for informational and educational purposes only. It does not constitute tax, legal, transfer pricing, or any other professional advice.'],
+    [],
+    ['ABAdvisory Group LLP makes no warranty as to the accuracy, completeness, reliability, or fitness of the results produced by this tool, and shall not be responsible or liable for any loss, claim, penalty, damage, or consequence arising from reliance on its output.'],
+    [],
+    ['Users are strongly advised to:'],
+    ['  • Apply appropriate filters (related-party transactions, persistent loss-makers, functional comparability) before relying on results.'],
+    ['  • Conduct a proper FAR analysis to validate the comparable set.'],
+    ['  • Verify the appropriateness of the selected PLI for the transaction.'],
+    ['  • Consult qualified transfer pricing professionals before using this output for tax filings, audit defence, litigation, or any other purpose.'],
+    [],
+    ['By using this tool, you accept the above terms.'],
+    [],
+    ['—'],
+    ['Developed by ABAdvisory Group LLP — Your Global Transfer Pricing Partner']
+  ];
+  const ws4 = XLSX.utils.aoa_to_sheet(disclaimerRows);
+  ws4['!cols'] = [{wch:120}];
+  XLSX.utils.book_append_sheet(wb, ws4, 'Disclaimer');
+
+  XLSX.writeFile(wb, 'ABAdvisory-Benchmarking-' + new Date().toISOString().slice(0,10) + '.xlsx');
+}
+
+// =============== EVENT WIRING ===============
+
+function wireRadioGroup(containerId, stateKey, onChange) {
+  const root = $(containerId);
+  root.querySelectorAll('.abtp-radio-pill').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      const input = pill.querySelector('input');
+      if (e.target !== input) input.checked = true;
+      root.querySelectorAll('.abtp-radio-pill').forEach(p => p.classList.remove('abtp-active'));
+      pill.classList.add('abtp-active');
+      ABTP[stateKey] = input.value;
+      if (onChange) onChange(input.value);
+    });
+  });
+}
+
+$('abtp-ack-wrap').addEventListener('click', (e) => {
+  if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
+    $('abtp-ack-check').checked = !$('abtp-ack-check').checked;
+    $('abtp-ack-check').dispatchEvent(new Event('change'));
+  }
+});
+$('abtp-ack-check').addEventListener('change', (e) => {
+  $('abtp-ack-btn').disabled = !e.target.checked;
+});
+$('abtp-ack-btn').addEventListener('click', () => {
+  $('abtp-disclaimer').classList.add('abtp-hidden');
+  $('abtp-tool').classList.remove('abtp-hidden');
+  ABTP.tp = emptyEntity();
+  ABTP.comparables = [emptyEntity(), emptyEntity(), emptyEntity(), emptyEntity()];
+  renderEntities();
+});
+
+wireRadioGroup('abtp-pli-group', 'pli', () => renderEntities());
+wireRadioGroup('abtp-wc-group', 'wc', (val) => {
+  $('abtp-wc-config').classList.toggle('abtp-show', val === 'on');
+  renderEntities();
+});
+wireRadioGroup('abtp-trade-group', 'trade');
+
+$('abtp-interest').addEventListener('input', (e) => {
+  ABTP.interest = parseFloat(e.target.value) || 0;
+});
+
+['abtp-year1','abtp-year2','abtp-year3'].forEach((id, i) => {
+  $(id).addEventListener('input', (e) => {
+    ABTP.years[i] = e.target.value || ('Year ' + (i+1));
+    snapshotFromDOM();
+    renderEntities();
+  });
+});
+
+$('abtp-add-comp').addEventListener('click', () => {
+  if (ABTP.comparables.length >= 20) {
+    showError('Maximum 20 comparables supported.');
+    return;
+  }
+  snapshotFromDOM();
+  ABTP.comparables.push(emptyEntity());
+  renderEntities();
+});
+
+$('abtp-compute').addEventListener('click', () => {
+  const r = compute();
+  if (r) renderResults(r);
+});
+
+$('abtp-reset').addEventListener('click', () => {
+  if (!confirm('Clear all inputs and start over?')) return;
+  ABTP.tp = emptyEntity();
+  ABTP.comparables = [emptyEntity(), emptyEntity(), emptyEntity(), emptyEntity()];
+  ABTP.lastResult = null;
+  $('abtp-results').classList.add('abtp-hidden');
+  clearError();
+  renderEntities();
+});
+
+$('abtp-export-xlsx').addEventListener('click', exportXLSX);
+$('abtp-export-csv').addEventListener('click', exportCSV);
+
+// Auto-resize logic for parent iframe
+function sendHeight() {
+  const rootElement = document.querySelector('.abtp-root') || document.body;
+  const height = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    rootElement.scrollHeight,
+    rootElement.offsetHeight
+  );
+  window.parent.postMessage({ type: 'resize', height: height + 40 }, '*');
+}
+window.addEventListener('load', sendHeight);
+window.addEventListener('resize', sendHeight);
+document.addEventListener('input', sendHeight);
+document.addEventListener('click', () => setTimeout(sendHeight, 50));
+if (window.ResizeObserver) {
+  const ro = new ResizeObserver(sendHeight);
+  ro.observe(document.body);
+  const root = document.querySelector('.abtp-root');
+  if (root) ro.observe(root);
+}
+
+})();
+</script>

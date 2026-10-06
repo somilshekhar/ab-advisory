@@ -1,0 +1,607 @@
+<!-- ============================================================ -->
+<!--  ABAdvisory Group LLP — TP PositionBook v2                   -->
+<!--  Transaction-level TP clearance — transposed grid format     -->
+<!--  v2.0                                                        -->
+<!-- ============================================================ -->
+<div class="tpb-root">
+
+<style>
+.tpb-root,.tpb-root *,.tpb-root *::before,.tpb-root *::after{box-sizing:border-box;margin:0;padding:0}
+.tpb-root{
+  --g:#22430c;--gd:#162d06;--gm:#2e5510;
+  --gold:#e6b91e;--gdd:#b89014;--gs:#f0d168;--gol:rgba(230,185,30,0.12);
+  --bg:#f7f1e0;--bg2:#ede4cc;--paper:#fcf7e9;
+  --ink:#22430c;--ink2:#4a5e35;--ink3:#7a866a;
+  --line:#d6cba8;--ls:#b3a684;--err:#8a2a1f;--ok:#4a6b2a;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink);background:var(--bg);padding:24px 14px;border-radius:4px;
+  max-width:100%;margin:0 auto;font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse 80% 50% at 15% 0%,rgba(230,185,30,0.08) 0%,transparent 60%);
+}
+@media(min-width:700px){.tpb-root{padding:32px 28px}}
+
+/* Header */
+.tpb-header{background:var(--g);color:var(--paper);padding:18px 22px;border-radius:3px;margin-bottom:22px;position:relative;overflow:hidden}
+.tpb-header::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent)}
+.tpb-header-ey{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-family:ui-monospace,monospace}
+.tpb-header-t{font-family:Georgia,serif;font-size:26px;font-weight:500;letter-spacing:-.5px;line-height:1.15}
+.tpb-header-t em{font-style:italic;color:var(--gs);font-weight:300}
+.tpb-header-sub{font-size:12.5px;color:rgba(252,247,233,.75);margin-top:6px}
+
+/* Card */
+.tpb-card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px;margin-bottom:14px;box-shadow:0 1px 0 rgba(34,67,12,.02),0 6px 18px -12px rgba(34,67,12,.1)}
+.tpb-sl{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.tpb-sl .n{color:var(--gdd);font-weight:500}
+.tpb-h3{font-family:Georgia,serif;font-size:18px;font-weight:400;color:var(--g);margin-bottom:8px;letter-spacing:-.2px}
+.tpb-h3 em{font-style:italic;color:var(--gdd)}
+.tpb-prose{font-size:13.5px;color:var(--ink2);line-height:1.6}
+.tpb-prose p{margin-bottom:8px}
+.tpb-prose strong{color:var(--g);font-weight:600}
+
+/* Disclaimer */
+.tpb-disc{border-left:3px solid var(--gold)}
+.tpb-ack{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--gold);border-radius:2px;cursor:pointer;margin-top:14px}
+.tpb-ack input{margin-top:3px;cursor:pointer}
+.tpb-ack label{font-size:13px;color:var(--g);font-weight:500;cursor:pointer;flex:1}
+
+/* Forms */
+.tpb-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.tpb-col{flex:1;min-width:180px}
+.tpb-field{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+.tpb-lbl{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.tpb-inp{font-family:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);background:white;border-radius:2px;color:var(--ink);outline:none;transition:border-color .15s;width:100%}
+.tpb-inp:focus{border-color:var(--g);box-shadow:inset 0 0 0 1px var(--g)}
+
+/* THE GRID — transposed layout */
+.tpb-grid-wrap{overflow-x:auto;margin-top:12px;border:1px solid var(--ls);border-radius:3px;background:white}
+.tpb-grid{border-collapse:collapse;width:auto;min-width:100%;table-layout:fixed}
+
+/* Row labels column (frozen feel) */
+.tpb-grid .tpb-rl{
+  position:sticky;left:0;z-index:2;
+  background:var(--g);color:var(--paper);
+  font-family:Georgia,serif;font-size:12.5px;font-weight:500;
+  padding:10px 14px;
+  text-align:left;vertical-align:top;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  min-width:220px;width:220px;max-width:220px;
+  letter-spacing:-.1px;
+}
+.tpb-grid .tpb-rl-sub{
+  display:block;font-family:ui-monospace,monospace;font-size:9px;
+  color:rgba(252,247,233,.55);font-weight:400;letter-spacing:.08em;
+  margin-top:3px;text-transform:uppercase;
+}
+
+/* Sr. row */
+.tpb-grid .tpb-sr{
+  background:var(--g);color:var(--gold);
+  font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:500;
+  padding:8px 14px;text-align:center;vertical-align:middle;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  min-width:200px;width:200px;
+}
+
+/* Transaction column header (editable) */
+.tpb-grid .tpb-th{
+  background:var(--bg2);
+  padding:0;
+  border-bottom:1px solid var(--line);
+  border-left:1px solid var(--line);
+  min-width:200px;width:200px;
+  vertical-align:middle;
+}
+.tpb-grid .tpb-th input{
+  width:100%;border:none;background:transparent;
+  font-family:Georgia,serif;font-size:13px;font-weight:500;color:var(--g);
+  padding:10px 12px;outline:none;text-align:center;
+}
+.tpb-grid .tpb-th input:focus{background:white;box-shadow:inset 0 0 0 2px var(--gold)}
+.tpb-grid .tpb-th input::placeholder{color:var(--ink3);font-weight:400}
+
+/* Data cells */
+.tpb-grid .tpb-cell{
+  padding:0;
+  border-bottom:1px solid var(--line);
+  border-left:1px solid var(--line);
+  vertical-align:top;
+  min-width:200px;width:200px;
+}
+.tpb-grid .tpb-cell textarea{
+  width:100%;border:none;background:transparent;
+  font-family:inherit;font-size:12.5px;color:var(--ink);
+  padding:8px 10px;outline:none;resize:none;
+  min-height:40px;line-height:1.45;
+  overflow:hidden;
+}
+.tpb-grid .tpb-cell textarea:focus{background:rgba(230,185,30,.06);box-shadow:inset 0 0 0 1px var(--gold)}
+.tpb-grid .tpb-cell textarea::placeholder{color:var(--ink3);font-size:11.5px}
+
+/* Special row tints */
+.tpb-grid tr.tpb-row-gold .tpb-cell{background:rgba(230,185,30,.05)}
+.tpb-grid tr.tpb-row-gold .tpb-cell textarea:focus{background:rgba(230,185,30,.12)}
+.tpb-grid tr.tpb-row-notes .tpb-cell{background:rgba(230,185,30,.08)}
+.tpb-grid tr.tpb-row-notes .tpb-cell textarea{min-height:80px;font-size:12px}
+
+/* Add/remove column header buttons */
+.tpb-grid .tpb-th-actions{
+  display:flex;gap:4px;justify-content:center;padding:4px 0 6px;
+}
+.tpb-th-rm{
+  background:none;border:1px solid var(--line);color:var(--err);
+  padding:2px 8px;font-size:10px;cursor:pointer;border-radius:2px;
+  font-family:ui-monospace,monospace;
+}
+.tpb-th-rm:hover{border-color:var(--err);background:rgba(138,42,31,.06)}
+
+/* Corner cell */
+.tpb-grid .tpb-corner{
+  position:sticky;left:0;z-index:3;
+  background:var(--gd);color:var(--gold);
+  font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:500;
+  padding:10px 14px;text-align:left;vertical-align:middle;
+  min-width:220px;width:220px;max-width:220px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+/* Buttons */
+.tpb-btn{padding:10px 18px;background:var(--g);color:var(--paper);border:none;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:background .15s}
+.tpb-btn:hover:not(:disabled){background:var(--gd)}
+.tpb-btn:disabled{opacity:.4;cursor:not-allowed}
+.tpb-btn .tpb-arr{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--gold)}
+.tpb-btn-s{background:transparent;color:var(--g);border:1px solid var(--ls)}
+.tpb-btn-s:hover:not(:disabled){background:var(--bg2);border-color:var(--g)}
+.tpb-btn-m{padding:6px 10px;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;background:var(--bg2);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
+.tpb-btn-m:hover{border-color:var(--g);color:var(--g);background:white}
+
+.tpb-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Toolbar */
+.tpb-toolbar{position:sticky;top:0;z-index:10;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;padding:12px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 6px 18px -14px rgba(34,67,12,.18)}
+.tpb-toolbar-left{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tpb-toolbar-st{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.tpb-toolbar-st strong{color:var(--gdd);font-weight:600}
+
+.tpb-pill{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--g);background:var(--bg2);border:1px solid var(--line);padding:4px 9px;border-radius:2px}
+.tpb-pill-g{background:var(--gol);border-color:var(--gold);color:var(--gdd)}
+
+/* Footer */
+.tpb-footer{margin-top:28px;padding:22px 20px;background:var(--g);color:var(--paper);border-radius:3px;text-align:center;position:relative;overflow:hidden}
+.tpb-footer::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.7}
+.tpb-footer-ey{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.tpb-footer-n{font-family:Georgia,serif;font-size:19px;font-weight:500;margin-bottom:4px}
+.tpb-footer-n em{font-style:italic;color:var(--gold);font-weight:300}
+.tpb-footer-tag{font-size:12.5px;color:rgba(252,247,233,.75);font-style:italic;font-family:Georgia,serif}
+
+.tpb-msg{padding:12px 16px;font-size:13px;margin:12px 0;border-radius:2px;display:none}
+.tpb-msg.tpb-show{display:block}
+.tpb-err-msg{background:rgba(138,42,31,.06);border-left:3px solid var(--err);color:var(--err)}
+.tpb-ok-msg{background:rgba(74,107,42,.08);border-left:3px solid var(--ok);color:var(--ok)}
+.tpb-hidden{display:none!important}
+</style>
+
+<!-- HEADER -->
+<div class="tpb-header">
+  <div class="tpb-header-ey">ABAdvisory Group LLP · TP PositionBook</div>
+  <div class="tpb-header-t">TP <em>PositionBook.</em></div>
+  <div class="tpb-header-sub">Document · Defend · Deliver — Quick-entry TP clearance &amp; position documentation</div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="tpb-card tpb-disc" id="tpb-disc">
+  <div class="tpb-sl"><span class="n">00</span> Disclaimer</div>
+  <div class="tpb-prose">
+    <p>TP PositionBook is a documentation tool provided by <strong>ABAdvisory Group LLP</strong> as a free utility. It captures and organises TP positions — it does not validate or assess the appropriateness of any position taken.</p>
+    <p>ABAdvisory Group LLP makes no warranty as to the accuracy or fitness of the output, and shall not be liable for any loss arising from reliance on this tool. The user is solely responsible for the substance of each position. All data remains on your device — nothing is transmitted to any server.</p>
+  </div>
+  <div class="tpb-ack" id="tpb-ack-w">
+    <input type="checkbox" id="tpb-ack-c">
+    <label for="tpb-ack-c">I accept the above. I will use this tool only as a documentation aid.</label>
+  </div>
+  <div class="tpb-actions" style="margin-top:14px">
+    <button class="tpb-btn" id="tpb-ack-btn" disabled>Continue <span class="tpb-arr">→</span></button>
+  </div>
+</div>
+
+<!-- MAIN TOOL -->
+<div id="tpb-tool" class="tpb-hidden">
+
+  <div class="tpb-toolbar">
+    <div class="tpb-toolbar-left">
+      <button class="tpb-btn-m" id="tpb-save">↓ Save (.json)</button>
+      <button class="tpb-btn-m" id="tpb-load">↑ Load (.json)</button>
+      <input type="file" id="tpb-load-f" accept=".json" style="display:none">
+      <button class="tpb-btn-m" id="tpb-clear">⟲ Clear</button>
+    </div>
+    <div class="tpb-toolbar-st"><strong id="tpb-cnt">1</strong> transaction(s)</div>
+  </div>
+
+  <!-- Engagement -->
+  <div class="tpb-card">
+    <div class="tpb-sl"><span class="n">01</span> Engagement</div>
+    <div class="tpb-row">
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Client Name *</div><input class="tpb-inp" id="m-client"></div></div>
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Client Business</div><input class="tpb-inp" id="m-biz"></div></div>
+    </div>
+    <div class="tpb-row">
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Jurisdiction *</div><input class="tpb-inp" id="m-juris"></div></div>
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">FYE *</div><input class="tpb-inp" id="m-fye"></div></div>
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Currency</div><input class="tpb-inp" id="m-ccy"></div></div>
+    </div>
+    <div class="tpb-row">
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Preparer</div><input class="tpb-inp" id="m-prep"></div></div>
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Reviewer</div><input class="tpb-inp" id="m-rev"></div></div>
+      <div class="tpb-col"><div class="tpb-field"><div class="tpb-lbl">Firm</div><input class="tpb-inp" id="m-firm" value="ABAdvisory Group LLP"></div></div>
+    </div>
+  </div>
+
+  <!-- Position Grid -->
+  <div class="tpb-card" style="padding:14px;overflow:visible">
+    <div class="tpb-sl"><span class="n">02</span> Position Grid</div>
+    <div class="tpb-h3">Enter positions <em>directly.</em></div>
+    <div class="tpb-prose" style="font-size:12px;margin-bottom:10px">
+      <p>Each column is a transaction. Tab between cells. Type freely — each cell is a note field. Add columns for more transactions.</p>
+    </div>
+
+    <div class="tpb-actions" style="margin-bottom:12px">
+      <button class="tpb-btn-s" id="tpb-add-col">+ Add Transaction</button>
+      <span class="tpb-pill tpb-pill-g" id="tpb-cnt2">1 transaction</span>
+    </div>
+
+    <div class="tpb-grid-wrap" id="tpb-grid-wrap">
+      <!-- Grid rendered by JS -->
+    </div>
+  </div>
+
+  <div class="tpb-msg tpb-err-msg" id="tpb-err"></div>
+  <div class="tpb-msg tpb-ok-msg" id="tpb-ok"></div>
+
+  <div class="tpb-actions" style="margin:18px 0">
+    <button class="tpb-btn" id="tpb-export" style="font-size:14px;padding:14px 24px">
+      Export to Excel (.xlsx)
+      <span class="tpb-arr">↓</span>
+    </button>
+    <span class="tpb-pill tpb-pill-g">Branded · formatted · print-ready</span>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="tpb-footer">
+  <div class="tpb-footer-ey">DEVELOPED BY</div>
+  <div class="tpb-footer-n">ABAdvisory Group <em>LLP</em></div>
+  <div class="tpb-footer-tag">Your Global Transfer Pricing Partner</div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+
+<script>
+(function(){
+'use strict';
+
+// ===================== SCHEMA =====================
+const ROWS=[
+  {key:'nature',    label:'Nature of Transaction',                 sub:'What is the transaction?',          placeholder:'e.g., Purchase of goods from RP'},
+  {key:'rp',        label:'Name of Related Party',                 sub:'Counterparty details',              placeholder:'e.g., XYZ Corp, Singapore'},
+  {key:'value',     label:'Transaction Value',                     sub:'Amount & terms',                    placeholder:'e.g., 10,363,619 or AED 100,317/month'},
+  {key:'tested',    label:'Tested Party & Characterisation',       sub:'Who is tested & how characterised', placeholder:'e.g., Company (distributor with routine risks)'},
+  {key:'comp',      label:'Comparable Data & Availability',        sub:'Sources & type of comparable data', placeholder:'e.g., External — TP Catalyst; companies in trading of similar products'},
+  {key:'mam',       label:'Most Appropriate Method (MAM)',          sub:'Method & specific remarks',         placeholder:'e.g., RPM — considering goods resold to 3rd parties; Berry as secondary'},
+  {key:'margin',    label:'Tested Party Margin / Ratio',           sub:'Actual result of tested party',     placeholder:'e.g., 7.89% (Gross Margin on Revenue)'},
+  {key:'range',     label:'ALP Range / Most Appropriate Point',    sub:'Benchmark result',                  placeholder:'e.g., 7.21% to 10.53% (IQR)'},
+  {key:'alp',       label:'Whether at ALP / Adjustments',          sub:'Conclusion on arm\'s length',       placeholder:'e.g., Yes — within IQR, no adjustment required',gold:true},
+  {key:'notes',     label:'Additional Notes / Technical Narrative', sub:'Key remarks & risk notes',          placeholder:'Detailed position, rationale, references...',notes:true}
+];
+
+// ===================== STATE =====================
+const ST={
+  meta:{client:'',biz:'',juris:'',fye:'',ccy:'',prep:'',rev:'',firm:'ABAdvisory Group LLP'},
+  txns:[{label:'',data:{}}]  // array of {label, data:{key:value}}
+};
+
+function $(id){return document.getElementById(id)}
+function showErr(m){const e=$('tpb-err');e.textContent=m;e.classList.add('tpb-show');$('tpb-ok').classList.remove('tpb-show');e.scrollIntoView({behavior:'smooth',block:'center'})}
+function clearMsg(){$('tpb-err').classList.remove('tpb-show')}
+function showOk(m){const e=$('tpb-ok');e.textContent=m;e.classList.add('tpb-show');$('tpb-err').classList.remove('tpb-show');setTimeout(()=>e.classList.remove('tpb-show'),4000)}
+function escH(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+function syncMeta(){
+  ST.meta.client=$('m-client').value;ST.meta.biz=$('m-biz').value;
+  ST.meta.juris=$('m-juris').value;ST.meta.fye=$('m-fye').value;
+  ST.meta.ccy=$('m-ccy').value;ST.meta.prep=$('m-prep').value;
+  ST.meta.rev=$('m-rev').value;ST.meta.firm=$('m-firm').value||'ABAdvisory Group LLP';
+}
+function applyMeta(){
+  $('m-client').value=ST.meta.client||'';$('m-biz').value=ST.meta.biz||'';
+  $('m-juris').value=ST.meta.juris||'';$('m-fye').value=ST.meta.fye||'';
+  $('m-ccy').value=ST.meta.ccy||'';$('m-prep').value=ST.meta.prep||'';
+  $('m-rev').value=ST.meta.rev||'';$('m-firm').value=ST.meta.firm||'ABAdvisory Group LLP';
+}
+
+// ===================== SNAPSHOT GRID -> STATE =====================
+function snapshotGrid(){
+  // Read column headers
+  document.querySelectorAll('[data-col-label]').forEach(inp=>{
+    const ci=parseInt(inp.getAttribute('data-col-label'));
+    if(ci<ST.txns.length)ST.txns[ci].label=inp.value;
+  });
+  // Read cells
+  document.querySelectorAll('[data-cell]').forEach(ta=>{
+    const [ri,ci]=ta.getAttribute('data-cell').split(',').map(Number);
+    if(ci<ST.txns.length){
+      const key=ROWS[ri].key;
+      ST.txns[ci].data[key]=ta.value;
+    }
+  });
+}
+
+// ===================== RENDER GRID =====================
+function renderGrid(){
+  const n=ST.txns.length;
+  let html='<table class="tpb-grid">';
+
+  // Header row: corner + transaction column headers
+  html+='<tr>';
+  html+='<td class="tpb-corner">Particulars</td>';
+  for(let ci=0;ci<n;ci++){
+    const lbl=ST.txns[ci].label||'';
+    const ph='Transaction '+(ci+1);
+    html+=`<td class="tpb-th">
+      <input type="text" data-col-label="${ci}" value="${escH(lbl)}" placeholder="${ph}">
+      <div class="tpb-th-actions">
+        ${n>1?`<button class="tpb-th-rm" data-rm-col="${ci}">× remove</button>`:''}
+      </div>
+    </td>`;
+  }
+  html+='</tr>';
+
+  // Data rows
+  ROWS.forEach((row,ri)=>{
+    const trClass=row.notes?'tpb-row-notes':row.gold?'tpb-row-gold':'';
+    html+=`<tr class="${trClass}">`;
+    html+=`<td class="tpb-rl">${escH(row.label)}<span class="tpb-rl-sub">${escH(row.sub)}</span></td>`;
+    for(let ci=0;ci<n;ci++){
+      const val=ST.txns[ci].data[row.key]||'';
+      html+=`<td class="tpb-cell"><textarea data-cell="${ri},${ci}" placeholder="${escH(row.placeholder)}">${escH(val)}</textarea></td>`;
+    }
+    html+='</tr>';
+  });
+
+  html+='</table>';
+  $('tpb-grid-wrap').innerHTML=html;
+
+  // Auto-resize textareas
+  document.querySelectorAll('.tpb-grid textarea').forEach(autoResize);
+
+  updateCount();
+}
+
+function autoResize(ta){
+  ta.style.height='auto';
+  ta.style.height=Math.max(40,ta.scrollHeight)+'px';
+}
+
+function updateCount(){
+  const n=ST.txns.length;
+  $('tpb-cnt').textContent=n;
+  $('tpb-cnt2').textContent=n+(n===1?' transaction':' transactions');
+}
+
+// ===================== EVENTS =====================
+function setupEvents(){
+  const wrap=$('tpb-grid-wrap');
+  if(wrap._w)return;
+  wrap._w=true;
+
+  // Textarea auto-resize on input
+  wrap.addEventListener('input',e=>{
+    if(e.target.matches('textarea'))autoResize(e.target);
+  });
+
+  // Remove column
+  wrap.addEventListener('click',e=>{
+    const rm=e.target.closest&&e.target.closest('[data-rm-col]');
+    if(rm){
+      const ci=parseInt(rm.getAttribute('data-rm-col'));
+      if(ST.txns.length<=1){showErr('At least one transaction is required.');return}
+      snapshotGrid();
+      ST.txns.splice(ci,1);
+      renderGrid();
+    }
+  });
+
+  // Tab navigation: move to next cell down, then next column
+  wrap.addEventListener('keydown',e=>{
+    if(e.key==='Tab'&&!e.shiftKey){
+      const ta=e.target;
+      if(!ta.matches('textarea[data-cell]'))return;
+      const [ri,ci]=ta.getAttribute('data-cell').split(',').map(Number);
+      let nextRi=ri+1,nextCi=ci;
+      if(nextRi>=ROWS.length){nextRi=0;nextCi=ci+1}
+      if(nextCi>=ST.txns.length)return; // let default tab behavior proceed
+      const next=wrap.querySelector(`[data-cell="${nextRi},${nextCi}"]`);
+      if(next){e.preventDefault();next.focus();next.select()}
+    }
+  });
+}
+
+// ===================== SAVE / LOAD =====================
+function saveJSON(){
+  syncMeta();snapshotGrid();
+  const payload={_tool:'TP PositionBook',_version:2,_savedAt:new Date().toISOString(),meta:ST.meta,txns:ST.txns};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const safe=(ST.meta.client||'tp-positionbook').replace(/[^a-z0-9_-]+/gi,'-').slice(0,50);
+  a.href=url;a.download=`${safe}-positionbook-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  showOk('Progress saved.');
+}
+
+function loadJSON(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const p=JSON.parse(e.target.result);
+      if(!p._tool)throw new Error('Not a TP PositionBook file.');
+      ST.meta=Object.assign({client:'',biz:'',juris:'',fye:'',ccy:'',prep:'',rev:'',firm:'ABAdvisory Group LLP'},p.meta||{});
+      ST.txns=(p.txns||[]).map(t=>({label:t.label||'',data:t.data||{}}));
+      if(ST.txns.length===0)ST.txns=[{label:'',data:{}}];
+      applyMeta();renderGrid();
+      showOk('Loaded '+ST.txns.length+' transaction(s).');
+    }catch(err){showErr('Could not load: '+err.message)}
+  };
+  reader.readAsText(file);
+}
+
+// ===================== EXCEL EXPORT =====================
+async function exportExcel(){
+  clearMsg();syncMeta();snapshotGrid();
+  if(!ST.meta.client){showErr('Please enter the Client Name before exporting.');return}
+  if(typeof ExcelJS==='undefined'){showErr('Excel library failed to load. Check your internet connection and refresh.');return}
+
+  const wb=new ExcelJS.Workbook();
+  wb.creator=ST.meta.firm||'ABAdvisory Group LLP';
+  wb.created=new Date();
+
+  const GREEN='22430C';const GREEN_L='E8EBE0';const GOLD='E6B91E';const GOLD_L='FDF3D0';
+  const GOLD_LL='FEF9E8';const WHITE='FFFFFF';const INK='1A1614';const INK3='7A866A';
+
+  const borderThin={top:{style:'thin',color:{argb:'D6CBA8'}},bottom:{style:'thin',color:{argb:'D6CBA8'}},left:{style:'thin',color:{argb:'D6CBA8'}},right:{style:'thin',color:{argb:'D6CBA8'}}};
+  const dateStr=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const footerText=`Created through TP PositionBook developed by ${ST.meta.firm||'ABAdvisory Group LLP'} | ${dateStr}`;
+  const n=ST.txns.length;
+
+  const ws=wb.addWorksheet('TP PositionBook',{
+    pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9},
+    headerFooter:{oddFooter:'&L&8'+footerText+'&R&8Page &P of &N'}
+  });
+
+  // Title
+  const r1=ws.addRow([`${ST.meta.client} — TP Position Summary`]);
+  r1.font={bold:true,size:14,color:{argb:GREEN},name:'Georgia'};
+  ws.mergeCells(1,1,1,n+1);
+
+  const r2=ws.addRow([[ST.meta.biz,ST.meta.juris?'Jurisdiction: '+ST.meta.juris:'',ST.meta.fye?'FYE: '+ST.meta.fye:'',ST.meta.ccy?'Currency: '+ST.meta.ccy:''].filter(Boolean).join(' | ')]);
+  r2.font={size:10,color:{argb:INK3},name:'Arial',italic:true};
+  ws.mergeCells(2,1,2,n+1);
+
+  const r3=ws.addRow([[ST.meta.prep?'Preparer: '+ST.meta.prep:'',ST.meta.rev?'Reviewer: '+ST.meta.rev:''].filter(Boolean).join(' | ')]);
+  r3.font={size:9,color:{argb:INK3},name:'Arial'};
+  ws.mergeCells(3,1,3,n+1);
+
+  ws.addRow([]);
+
+  // Column header row: "Particulars" + transaction labels
+  const hdrData=['Particulars'];
+  ST.txns.forEach((t,i)=>hdrData.push(t.label||'Transaction '+(i+1)));
+  const hdrRow=ws.addRow(hdrData);
+  hdrRow.eachCell((cell,ci)=>{
+    cell.font={bold:true,color:{argb:WHITE},size:10,name:'Arial'};
+    cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:GREEN}};
+    cell.border=borderThin;
+    cell.alignment={vertical:'middle',horizontal:ci===1?'left':'center',wrapText:true};
+  });
+
+  // Set column widths
+  ws.getColumn(1).width=34;
+  for(let i=0;i<n;i++)ws.getColumn(i+2).width=28;
+
+  // Data rows
+  ROWS.forEach((rowDef,ri)=>{
+    const rowData=[rowDef.label];
+    ST.txns.forEach(t=>rowData.push(t.data[rowDef.key]||''));
+    const row=ws.addRow(rowData);
+
+    const isGold=rowDef.gold;
+    const isNotes=rowDef.notes;
+
+    row.eachCell((cell,ci)=>{
+      cell.font={size:10,name:'Arial',color:{argb:INK}};
+      cell.border=borderThin;
+      cell.alignment={vertical:'top',wrapText:true};
+
+      if(ci===1){
+        // Row label column
+        cell.font={bold:true,size:10,name:'Georgia',color:{argb:GREEN}};
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:GREEN_L}};
+      } else if(isNotes){
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:GOLD_L}};
+      } else if(isGold){
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:GOLD_LL}};
+        cell.font={bold:true,size:10,name:'Arial',color:{argb:GREEN}};
+      }
+    });
+
+    // Auto row height based on content length
+    const maxLen=Math.max(...ST.txns.map(t=>(t.data[rowDef.key]||'').length));
+    if(isNotes)row.height=Math.max(50,Math.ceil(maxLen/40)*15);
+    else row.height=Math.max(28,Math.ceil(maxLen/40)*15);
+  });
+
+  // Disclaimer row at the bottom
+  ws.addRow([]);
+  const discRow=ws.addRow(['Disclaimer: This document has been generated using TP PositionBook, a free utility developed by '+( ST.meta.firm||'ABAdvisory Group LLP')+'. It does not constitute professional advice. The user is solely responsible for the substance of each position documented.']);
+  discRow.font={size:8,italic:true,color:{argb:INK3},name:'Arial'};
+  ws.mergeCells(discRow.number,1,discRow.number,n+1);
+
+  // Generate and download
+  try{
+    const buffer=await wb.xlsx.writeBuffer();
+    const blob=new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const safe=(ST.meta.client||'tp-positionbook').replace(/[^a-z0-9_-]+/gi,'-').slice(0,50);
+    a.href=url;a.download=`${safe}-TP-PositionBook-${new Date().toISOString().slice(0,10)}.xlsx`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    showOk('Excel exported — review and finalise as needed.');
+  }catch(err){
+    console.error(err);
+    showErr('Could not generate Excel: '+(err.message||err));
+  }
+}
+
+// ===================== INIT =====================
+$('tpb-ack-w').addEventListener('click',e=>{
+  if(e.target.tagName!=='INPUT'&&e.target.tagName!=='LABEL'){
+    $('tpb-ack-c').checked=!$('tpb-ack-c').checked;
+    $('tpb-ack-c').dispatchEvent(new Event('change'));
+  }
+});
+$('tpb-ack-c').addEventListener('change',e=>{$('tpb-ack-btn').disabled=!e.target.checked});
+$('tpb-ack-btn').addEventListener('click',()=>{
+  $('tpb-disc').classList.add('tpb-hidden');
+  $('tpb-tool').classList.remove('tpb-hidden');
+  renderGrid();
+  setupEvents();
+});
+
+$('tpb-add-col').addEventListener('click',()=>{
+  snapshotGrid();
+  ST.txns.push({label:'',data:{}});
+  renderGrid();
+  // Scroll to the right to show the new column
+  const wrap=$('tpb-grid-wrap');
+  setTimeout(()=>{wrap.scrollLeft=wrap.scrollWidth},100);
+});
+
+$('tpb-save').addEventListener('click',saveJSON);
+$('tpb-load').addEventListener('click',()=>$('tpb-load-f').click());
+$('tpb-load-f').addEventListener('change',e=>{if(e.target.files[0])loadJSON(e.target.files[0])});
+$('tpb-clear').addEventListener('click',()=>{
+  if(!confirm('Clear everything and start over?'))return;
+  ST.meta={client:'',biz:'',juris:'',fye:'',ccy:'',prep:'',rev:'',firm:'ABAdvisory Group LLP'};
+  ST.txns=[{label:'',data:{}}];
+  applyMeta();renderGrid();clearMsg();showOk('Cleared.');
+});
+$('tpb-export').addEventListener('click',exportExcel);
+
+})();
+</script>

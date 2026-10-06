@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-playfair: var(--font-playfair);
+  
+  /* Brand Palette */
+  --color-brand-primary: #24440C;
+  --color-brand-accent: #E6B91E;
+  --color-brand-surface: #F9F3E2;
+  --color-brand-text-green: #FCF7E9;
+  --color-brand-badge: #36531F;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
