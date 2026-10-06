@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "Benchmarking Range Calculator | AI Tools",
+  title: "AB Advisory Group | Benchmarking Range Calculator",
 };
 
 export default function BenchmarkingCalculatorPage() {

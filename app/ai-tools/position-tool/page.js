@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "TP Position Tool | AI Tools",
+  title: "AB Advisory Group | TP Position Tool",
 };
 
 export default function TPPositionToolPage() {

@@ -2,7 +2,7 @@ const SITE_URL = "https://abadvisorygroup.in";
 const PAGE_URL = `${SITE_URL}/contact`;
 
 export const metadata = {
-  title: "Contact Us — Transfer Pricing & Pre-IPO Advisory",
+  title: "AB Advisory Group | Contact Us — Transfer Pricing & Pre-IPO Advisory",
   description:
     "Get in touch with AB Advisory Group for transfer pricing documentation, compliance support or pre-IPO advisory. Office in Ahmedabad, Gujarat, India. WhatsApp, email and callback enquiries welcome.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Contact AB Advisory Group — Transfer Pricing & Pre-IPO Advisory India",
+    title: "AB Advisory Group | Contact Us — Transfer Pricing & Pre-IPO Advisory",
     description:
       "Get in touch with AB Advisory Group. Office in Ahmedabad, India. WhatsApp, email and callback enquiries for transfer pricing and pre-IPO advisory.",
     url: PAGE_URL,

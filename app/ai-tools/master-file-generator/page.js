@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "Master File Preparation Tool | AI Tools",
+  title: "AB Advisory Group | Master File Preparation Tool",
 };
 
 export default function MasterFileGeneratorPage() {

@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "Local File Generator | AI Tools",
+  title: "AB Advisory Group | OECD Local File Generator",
 };
 
 export default function LocalFileGeneratorPage() {

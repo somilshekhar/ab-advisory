@@ -2,7 +2,7 @@ const SITE_URL = "https://abadvisorygroup.in";
 const PAGE_URL = `${SITE_URL}/investment-banking`;
 
 export const metadata = {
-  title: "Pre-IPO Readiness & Investor Preparation Advisory — India & UAE",
+  title: "AB Advisory Group | Pre-IPO Readiness & Investment Banking Advisory",
   description:
     "Pre-IPO readiness assessment, FEMA & cross-border structuring, fundraising and investor introductions (Seed to Pre-IPO) for growth companies in India and UAE. Expert advisory by CA Abhiishhek Bhavsar.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Pre-IPO Readiness & Investor Preparation Advisory — India & UAE | AB Advisory Group",
+    title: "AB Advisory Group | Pre-IPO Readiness & Investment Banking Advisory",
     description:
       "Pre-IPO readiness, cross-border structuring, FEMA compliance, fundraising and investor introductions for growth companies in India and UAE. Seed to Pre-IPO.",
     url: PAGE_URL,

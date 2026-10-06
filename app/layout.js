@@ -21,8 +21,16 @@ const SITE_URL = "https://abadvisorygroup.in";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory India",
-    template: "%s | AB Advisory Group",
+    default: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
+    template: "AB Advisory Group | %s",
+  },
+  icons: {
+    icon: [
+      { url: "/AB_logo_vector_transparent.svg", type: "image/svg+xml" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    shortcut: "/AB_logo_vector_transparent.svg",
+    apple: "/logo.png",
   },
   description:
     "Partner-led Global Transfer Pricing documentation, compliance, APA support and Pre-IPO readiness advisory for businesses across India, UAE, Singapore, EU and global markets. Founded by CA Abhiishhek Bhavsar (ex-EY, Nexdigm).",
@@ -69,7 +77,7 @@ export const metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "AB Advisory Group",
-    title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory India",
+    title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
     description:
       "Partner-led TP documentation, compliance, APA and Pre-IPO readiness for India, UAE and global markets. White-label delivery for CA & tax advisory firms.",
     images: [
@@ -83,7 +91,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AB Advisory Group | Transfer Pricing & Pre-IPO Advisory India",
+    title: "AB Advisory Group | Transfer Pricing & Pre-IPO Advisory",
     description:
       "Partner-led global TP documentation, APA support and pre-IPO readiness for India, UAE & global markets.",
     images: ["/og-image.png"],

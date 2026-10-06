@@ -13,7 +13,7 @@ const SITE_URL = "https://abadvisorygroup.in";
 const PAGE_URL = `${SITE_URL}/global-transfer-pricing`;
 
 export const metadata = {
-  title: "Global Transfer Pricing Advisory & Compliance — India, UAE, Singapore",
+  title: "AB Advisory Group | Global Transfer Pricing Advisory & Compliance",
   description:
     "Expert transfer pricing documentation, benchmarking, APA support, Pillar Two analysis and litigation strategy for India, UAE, Singapore, EU and UK. Partner-led, no junior-only teams. White-label TP delivery for CA firms.",
   keywords: [
@@ -41,7 +41,7 @@ export const metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Global Transfer Pricing Advisory & Compliance — India, UAE, Singapore | AB Advisory Group",
+    title: "AB Advisory Group | Global Transfer Pricing Advisory & Compliance",
     description:
       "Expert TP documentation, benchmarking, APA support and white-label delivery for India, UAE, Singapore. Partner-led, no junior-only teams.",
     url: PAGE_URL,

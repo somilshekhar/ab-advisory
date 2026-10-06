@@ -10,7 +10,7 @@ const SITE_URL = "https://abadvisorygroup.in";
 const PAGE_URL = `${SITE_URL}/ai-tools`;
 
 export const metadata = {
-  title: "Free Transfer Pricing Tools & AI Knowledge Bank",
+  title: "AB Advisory Group | Free Transfer Pricing Tools & AI Knowledge Bank",
   description:
     "Free AI-powered transfer pricing tools: OECD Local File generator, benchmarking range calculator, master file preparation tool, TP position tool, and functional analysis GPT. Built for CA firms, tax advisors and MNCs.",
   keywords: [
@@ -31,7 +31,7 @@ export const metadata = {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Free Transfer Pricing Tools & AI Knowledge Bank | AB Advisory Group",
+    title: "AB Advisory Group | Free Transfer Pricing Tools & AI Knowledge Bank",
     description:
       "Free AI-powered TP tools: OECD Local File generator, benchmarking calculator, master file tool and more. Built for CA firms, tax advisors and MNCs.",
     url: PAGE_URL,

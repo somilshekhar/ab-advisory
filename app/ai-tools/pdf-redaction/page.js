@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "PDF Redaction Tool | AI Tools",
+  title: "AB Advisory Group | PDF Redaction Tool",
 };
 
 export default function PDFRedactionToolPage() {

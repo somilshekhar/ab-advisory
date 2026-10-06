@@ -12,7 +12,7 @@ import FadeIn from "../components/FadeIn";
 const SITE_URL = "https://abadvisorygroup.in";
 
 export const metadata = {
-  title: "Global Transfer Pricing & Pre-IPO Advisory | AB Advisory Group India",
+  title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
   description:
     "Partner-led Global Transfer Pricing documentation, compliance, APA support and Pre-IPO readiness for businesses across India, UAE, Singapore and global markets. White-label TP delivery for CA firms.",
   keywords: [
@@ -33,7 +33,7 @@ export const metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Global Transfer Pricing & Pre-IPO Advisory | AB Advisory Group India",
+    title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
     description:
       "Partner-led TP documentation, compliance, APA and Pre-IPO readiness for India, UAE and global markets. White-label delivery for CA & tax advisory firms.",
     url: SITE_URL,

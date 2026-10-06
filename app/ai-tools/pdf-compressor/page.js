@@ -3,7 +3,7 @@ import Footer from "../../../components/Footer";
 import IframeWrapper from "../../../components/IframeWrapper";
 
 export const metadata = {
-  title: "PDF Compressor | AI Tools",
+  title: "AB Advisory Group | PDF Compressor Tool",
 };
 
 export default function PDFCompressorPage() {
