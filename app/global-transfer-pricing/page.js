@@ -15,26 +15,29 @@ const PAGE_URL = `${SITE_URL}/global-transfer-pricing`;
 export const metadata = {
   title: "AB Advisory Group | Global Transfer Pricing Advisory & Compliance",
   description:
-    "Expert transfer pricing documentation, benchmarking, APA support, Pillar Two analysis and litigation strategy for India, UAE, Singapore, EU and UK. Partner-led, no junior-only teams. White-label TP delivery for CA firms.",
+    "Partner-led Global Transfer Pricing documentation, benchmarking, APA support, Pillar Two impact analysis and litigation strategy across Singapore, UAE, EU, UK, India and global markets. White-label TP delivery for CA & tax advisory firms.",
   keywords: [
+    "transfer pricing advisory Singapore",
+    "transfer pricing compliance UAE",
+    "transfer pricing advisory EU",
+    "transfer pricing documentation UK",
     "transfer pricing advisory India",
-    "transfer pricing documentation India",
-    "OECD local file India",
-    "master file preparation India",
-    "CbCR filing India",
-    "APA preparation India",
-    "advance pricing agreement India CBDT",
-    "Pillar Two BEPS India",
-    "safe harbour transfer pricing India",
-    "TP benchmarking India",
-    "transfer pricing litigation India",
-    "intercompany pricing policy India",
-    "transfer pricing UAE",
+    "OECD local file generator",
+    "master file preparation tool",
+    "CbCR filing Singapore UAE EU UK India",
+    "APA preparation Singapore UAE EU UK India",
+    "advance pricing agreement Singapore UAE EU UK India",
+    "Pillar Two BEPS 2.0 analysis EU UK UAE Singapore India",
+    "safe harbour transfer pricing India UAE",
+    "TP benchmarking Singapore UAE EU UK India",
+    "transfer pricing litigation strategy",
+    "intercompany pricing policy global",
     "white label transfer pricing CA firm",
-    "TP outsourcing India",
-    "Section 92D transfer pricing",
-    "Form 3CEB India",
-    "transfer pricing officer India",
+    "TP outsourcing Singapore UAE EU UK India Global",
+    "IRAS transfer pricing Singapore",
+    "FTA corporate tax transfer pricing UAE",
+    "HMRC transfer pricing UK",
+    "EU transfer pricing ATAD Pillar Two",
     "Global Capability Centers transfer pricing",
   ],
   alternates: {
@@ -43,7 +46,7 @@ export const metadata = {
   openGraph: {
     title: "AB Advisory Group | Global Transfer Pricing Advisory & Compliance",
     description:
-      "Expert TP documentation, benchmarking, APA support and white-label delivery for India, UAE, Singapore. Partner-led, no junior-only teams.",
+      "Partner-led TP documentation, benchmarking, APA support and white-label delivery for Singapore, UAE, EU, UK, India and global markets. Partner-led execution.",
     url: PAGE_URL,
     type: "website",
   },
@@ -60,20 +63,20 @@ const gtpServiceSchema = {
   },
   serviceType: "Transfer Pricing Documentation & Advisory",
   description:
-    "Partner-led transfer pricing documentation (Local File, Master File, CbCR), benchmarking studies, APA preparation, Pillar Two impact analysis, TP litigation support and white-label delivery for CA firms across India, UAE, Singapore, EU and UK.",
-  areaServed: ["India", "UAE", "Singapore", "United Kingdom", "European Union", "GCC"],
+    "Partner-led transfer pricing documentation (Local File, Master File, CbCR), benchmarking studies, APA preparation, Pillar Two impact analysis, TP litigation support and white-label delivery for CA & tax advisory firms across Singapore, UAE, EU, UK, India and global markets.",
+  areaServed: ["Singapore", "UAE", "European Union", "United Kingdom", "India", "Global"],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Transfer Pricing Services",
+    name: "Global Transfer Pricing Services",
     itemListElement: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TP Documentation — Local File, Master File, CbCR" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "APA Preparation Support" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pillar Two / BEPS 2.0 Impact Analysis" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TP Benchmarking & Comparable Analysis" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TP Litigation Strategy & Research Support" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "White-label TP Delivery for CA Firms" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Intercompany Pricing Policy Design" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Safe Harbour Evaluation" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TP Documentation — Local File, Master File, CbCR (Singapore, UAE, EU, UK, India, Global)" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "APA Preparation & Negotiation Support" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pillar Two / BEPS 2.0 Global Minimum Tax Impact Analysis" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cross-Border TP Benchmarking & Comparable Analysis" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TP Litigation Strategy & Defense Support" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "White-label TP Delivery for CA & Accounting Firms" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Intercompany Pricing Policy Design & Structuring" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Safe Harbour & Regulatory Exemption Evaluation" } },
     ],
   },
 };
@@ -84,66 +87,66 @@ const gtpFAQSchema = {
   mainEntity: [
     {
       "@type": "Question",
+      name: "Which regions does AB Advisory Group cover for Transfer Pricing compliance?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "AB Advisory Group delivers transfer pricing advisory, OECD-compliant Local File and Master File documentation, CbCR filing, benchmarking, and APA support across Singapore, UAE, EU, UK, India, and global markets. We also provide white-label TP services for accounting and tax advisory firms operating in these jurisdictions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the transfer pricing rules in Singapore (IRAS)?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Under IRAS guidelines, Singapore companies with gross revenue exceeding SGD 10 million must prepare Transfer Pricing Documentation (TPD) for related-party transactions unless safe harbour thresholds apply. AB Advisory assists Singapore entities with OECD Local Files, Master Files, benchmarking, and IRAS advance pricing agreement (APA) filings.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does Transfer Pricing work under UAE Corporate Tax law?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Under UAE Federal Decree-Law No. 47 of 2022 on Corporate Tax, transfer pricing rules apply to all transactions between related parties and connected persons in the UAE. MNEs and UAE entities meeting revenue thresholds must maintain a Disclosure Form, Local File, and Master File adhering to the OECD Transfer Pricing Guidelines. AB Advisory supports UAE businesses with full TP compliance and disclosure filing.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the Transfer Pricing documentation requirements in the UK & EU under Pillar Two?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The UK (HMRC) and EU member states enforce strict OECD Transfer Pricing documentation (Local File, Master File, CbCR) alongside Pillar Two (Global Anti-Base Erosion Rules / 15% Minimum Tax). MNEs operating across UK and EU corridors require robust functional analysis, benchmarking, and country-by-country reporting. AB Advisory provides cross-border TP documentation and Pillar Two impact assessments.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "What is transfer pricing documentation in India?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Transfer pricing documentation in India refers to the records that multinational enterprises must maintain under Section 92D and Rule 10D of the Income Tax Act, 1961. This includes a Local File (Form 3CEB), Master File (Rule 10DA), and Country-by-Country Report (CbCR) for entities with aggregate international transactions exceeding prescribed thresholds. These documents must demonstrate that related-party transactions are conducted at arm's length.",
+        text: "Transfer pricing documentation in India refers to the records that multinational enterprises must maintain under Section 92D and Rule 10D of the Income Tax Act, 1961. This includes a Local File (Form 3CEB), Master File (Rule 10DA), and Country-by-Country Report (CbCR) for entities with aggregate international transactions exceeding prescribed thresholds.",
       },
     },
     {
       "@type": "Question",
-      name: "What is an Advance Pricing Agreement (APA) in India?",
+      name: "What is an Advance Pricing Agreement (APA) and bilateral APA support?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "An Advance Pricing Agreement (APA) in India is a formal agreement between a taxpayer and the CBDT (Central Board of Direct Taxes) that determines the transfer pricing methodology and arm's length price for international related-party transactions in advance, covering a period of up to 5 years. India offers unilateral APAs (with CBDT only) and bilateral/multilateral APAs (involving competent authorities of other countries).",
+        text: "An Advance Pricing Agreement (APA) is a formal agreement between a taxpayer and tax authorities (such as CBDT in India, IRAS in Singapore, FTA in UAE, or HMRC in the UK) that determines the transfer pricing methodology and arm's length price in advance for up to 5 years. AB Advisory assists with unilateral, bilateral, and multilateral APAs.",
       },
     },
     {
       "@type": "Question",
-      name: "What is the Safe Harbour rule in transfer pricing India?",
+      name: "What is white-label transfer pricing delivery for accounting & CA firms?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "India's Safe Harbour Rules (SHR), introduced under Rules 10TA to 10TG of the Income Tax Rules, allow eligible taxpayers to declare their international transactions at or above certain prescribed margins without detailed benchmarking. Safe harbour margins are available for IT/ITeS services, knowledge process outsourcing, contract R&D, financial transactions and more. Opting for safe harbour simplifies compliance but requires careful eligibility assessment.",
+        text: "White-label transfer pricing delivery is a service model where AB Advisory Group completes the full TP documentation, benchmarking, advisory and compliance work on behalf of a CA or tax advisory firm, issued entirely under the partner firm's brand across Singapore, UAE, EU, UK, India, and global markets.",
       },
     },
     {
       "@type": "Question",
-      name: "What is Pillar Two (BEPS 2.0) and how does it affect Indian companies?",
+      name: "What is Pillar Two (BEPS 2.0) and how does it affect global MNEs?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Pillar Two (also called BEPS 2.0 or Global Minimum Tax) is an OECD initiative that imposes a minimum effective tax rate of 15% on large multinational enterprises (consolidated revenue exceeding €750 million). Indian subsidiaries and outbound Indian multinationals operating in participating jurisdictions need to assess their effective tax rates in each country, identify any top-up tax liability, and review their intercompany structures accordingly.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is white-label transfer pricing delivery?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "White-label transfer pricing delivery is a service model where AB Advisory Group completes the full TP documentation, advisory and compliance work on behalf of a CA or tax advisory firm, but the deliverables are issued entirely under the partner firm's brand and letterhead. The end client never knows AB Advisory is involved. This allows smaller CA firms to offer expert TP services without building an in-house TP team.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What documents are required for CbCR filing in India?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Country-by-Country Reporting (CbCR) is mandatory in India for Indian parent entities of MNE groups with consolidated revenue of INR 5,500 crore or more. The CbCR (Form 3CEAD) must be filed with the CBDT and contains jurisdiction-wise data on revenue, profit/loss, taxes, employees and assets. Secondary filing obligations apply for Indian constituent entities whose parent entity is based in a non-reciprocating country.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How is transfer pricing benchmarking done in India?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Transfer pricing benchmarking in India involves searching for comparable unrelated companies using databases such as Prowess IQ, Capitaline TP, or ACE TP. The search selects functionally comparable entities, applies quantitative and qualitative filters, and determines an arm's length range (typically the interquartile range). The most appropriate TP method (TNMM, CUP, CPM, RPM, or PSM) is selected based on the nature of the transaction.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Who needs to comply with transfer pricing regulations in India?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Any Indian company or foreign company operating in India that has international transactions with associated enterprises (related parties) must comply with India's transfer pricing regulations under Sections 92 to 92F of the Income Tax Act, 1961. This includes transactions involving goods, services, intangibles, financial transactions (loans, guarantees) and business restructurings. Even a single related-party international transaction exceeding INR 1 crore triggers Form 3CEB reporting.",
+        text: "Pillar Two (BEPS 2.0) introduces a global minimum effective tax rate of 15% for multinational enterprises with consolidated revenues exceeding €750 million. MNEs across Singapore, UAE, EU, UK, and India must evaluate their effective tax rates jurisdiction by jurisdiction and adjust intercompany transfer pricing strategies to mitigate top-up tax liabilities.",
       },
     },
   ],

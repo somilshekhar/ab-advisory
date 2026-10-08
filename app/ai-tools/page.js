@@ -12,7 +12,7 @@ const PAGE_URL = `${SITE_URL}/ai-tools`;
 export const metadata = {
   title: "AB Advisory Group | Free Transfer Pricing Tools & AI Knowledge Bank",
   description:
-    "Free AI-powered transfer pricing tools: OECD Local File generator, benchmarking range calculator, master file preparation tool, TP position tool, and functional analysis GPT. Built for CA firms, tax advisors and MNCs.",
+    "Free AI-powered transfer pricing tools: OECD Local File generator, benchmarking range calculator, master file preparation tool, TP position tool, and functional analysis GPT. Built for CA firms, tax advisors and MNCs across Singapore, UAE, EU, UK, India and global markets.",
   keywords: [
     "free transfer pricing tools",
     "OECD local file generator free",
@@ -20,12 +20,12 @@ export const metadata = {
     "master file preparation tool free",
     "functional analysis questionnaire transfer pricing",
     "TP position tool",
-    "transfer pricing AI tools India",
+    "transfer pricing AI tools Singapore UAE EU UK India Global",
     "PDF redaction tool",
     "local file transfer pricing free template",
-    "TP compliance tools India",
+    "TP compliance tools Singapore UAE EU UK India",
     "transfer pricing knowledge bank",
-    "free TP documentation tools CA",
+    "free TP documentation tools CA accounting firms",
   ],
   alternates: {
     canonical: PAGE_URL,
@@ -33,7 +33,7 @@ export const metadata = {
   openGraph: {
     title: "AB Advisory Group | Free Transfer Pricing Tools & AI Knowledge Bank",
     description:
-      "Free AI-powered TP tools: OECD Local File generator, benchmarking calculator, master file tool and more. Built for CA firms, tax advisors and MNCs.",
+      "Free AI-powered TP tools: OECD Local File generator, benchmarking calculator, master file tool and more. Built for CA firms, tax advisors and MNCs across Singapore, UAE, EU, UK, India and global markets.",
     url: PAGE_URL,
     type: "website",
   },
@@ -43,7 +43,7 @@ const toolsSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Free Transfer Pricing Tools by AB Advisory Group",
-  description: "Practical AI-powered tools to simplify transfer pricing documentation, analysis and workflows.",
+  description: "Practical AI-powered tools to simplify transfer pricing documentation, analysis and workflows across Singapore, UAE, EU, UK, India and global markets.",
   url: PAGE_URL,
   itemListElement: [
     {

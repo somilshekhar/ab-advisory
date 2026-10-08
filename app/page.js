@@ -14,20 +14,22 @@ const SITE_URL = "https://abadvisorygroup.in";
 export const metadata = {
   title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
   description:
-    "Partner-led Global Transfer Pricing documentation, compliance, APA support and Pre-IPO readiness for businesses across India, UAE, Singapore and global markets. White-label TP delivery for CA firms.",
+    "Partner-led Global Transfer Pricing documentation, compliance, APA support and Pre-IPO readiness for businesses across Singapore, UAE, EU, UK, India and global markets. White-label TP delivery for CA firms.",
   keywords: [
+    "transfer pricing advisory Singapore",
+    "transfer pricing advisory UAE",
+    "transfer pricing advisory EU",
+    "transfer pricing advisory UK",
     "transfer pricing advisory India",
-    "transfer pricing documentation India",
+    "global transfer pricing documentation",
     "white label transfer pricing CA firm",
-    "TP outsourcing India",
-    "pre-IPO advisory India",
-    "cross border tax advisory India",
-    "international tax advisor India",
-    "APA preparation India",
-    "OECD local file India",
-    "transfer pricing UAE",
-    "investor readiness India",
-    "SME IPO advisory India",
+    "TP outsourcing Singapore UAE EU UK India",
+    "pre-IPO advisory Singapore UAE EU UK India",
+    "cross border tax advisory Singapore UAE EU UK India Global",
+    "international tax advisor Singapore UAE EU UK India",
+    "APA preparation Singapore UAE EU UK India",
+    "OECD local file generator",
+    "investor readiness advisory",
   ],
   alternates: {
     canonical: SITE_URL,
@@ -35,7 +37,7 @@ export const metadata = {
   openGraph: {
     title: "AB Advisory Group | Global Transfer Pricing & Pre-IPO Advisory",
     description:
-      "Partner-led TP documentation, compliance, APA and Pre-IPO readiness for India, UAE and global markets. White-label delivery for CA & tax advisory firms.",
+      "Partner-led TP documentation, compliance, APA and Pre-IPO readiness for Singapore, UAE, EU, UK, India and global markets. White-label delivery for CA & tax advisory firms.",
     url: SITE_URL,
     type: "website",
   },
@@ -49,8 +51,8 @@ const homePageSchema = [
     provider: { "@type": "Organization", name: "AB Advisory Group" },
     serviceType: "Transfer Pricing Documentation & Compliance",
     description:
-      "Expert TP documentation (Local File, Master File, CbCR), benchmarking, APA preparation, Pillar Two analysis and white-label delivery for CA firms.",
-    areaServed: ["India", "UAE", "Singapore", "United Kingdom", "European Union"],
+      "Expert TP documentation (Local File, Master File, CbCR), benchmarking, APA preparation, Pillar Two analysis and white-label delivery across Singapore, UAE, EU, UK, India and global corridors.",
+    areaServed: ["Singapore", "UAE", "European Union", "United Kingdom", "India", "Global"],
     availableChannel: {
       "@type": "ServiceChannel",
       serviceUrl: `${SITE_URL}/global-transfer-pricing`,
@@ -63,8 +65,8 @@ const homePageSchema = [
     provider: { "@type": "Organization", name: "AB Advisory Group" },
     serviceType: "Pre-IPO Advisory & Fundraising Support",
     description:
-      "Pre-IPO readiness assessment, FEMA & cross-border structuring, fundraising and investor introductions for growth companies in India and UAE.",
-    areaServed: ["India", "UAE"],
+      "Pre-IPO readiness assessment, FEMA & cross-border structuring, fundraising and investor introductions for growth companies across Singapore, UAE, EU, UK, India and global markets.",
+    areaServed: ["Singapore", "UAE", "European Union", "United Kingdom", "India", "Global"],
     availableChannel: {
       "@type": "ServiceChannel",
       serviceUrl: `${SITE_URL}/investment-banking`,
